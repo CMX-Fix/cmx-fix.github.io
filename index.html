@@ -127,12 +127,51 @@
         .dropdown-content a { display: block; color: #fff; text-decoration: none; font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; padding: 12px 25px; transition: 0.2s; }
         .dropdown-content a:hover { background: rgba(0, 240, 255, 0.1); color: var(--neon-blue); padding-left: 30px; }
 
+        /* --- STIL NOU HERO (Stil NDR PC Setup) --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 20px 60px 20px;
+            /* Fundal cu setup de PC / Gaming iluminat RGB (dark & neon vibe) */
+            background: linear-gradient(rgba(5, 5, 8, 0.65), rgba(5, 5, 8, 0.85)), 
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .hero-banner {
+            background: rgba(10, 10, 15, 0.88);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 16px;
+            padding: 40px 50px;
+            max-width: 750px;
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.15);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-banner h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: #fff;
+            margin: 0 0 20px 0;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+
+        .hero-banner p {
+            font-size: 1.35rem;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            font-weight: 500;
+        }
+
         /* --- SECTIUNI --- */
-        .section-padding { padding-top: 160px; padding-bottom: 60px; min-height: 80vh; }
-        .hero { text-align: center; padding: 220px 20px 100px 20px; border-bottom: 1px solid rgba(0, 240, 255, 0.2); }
-        @keyframes neonPulse { 0%, 100% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); } 50% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); } }
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 5.5rem; color: #fff; margin: 0; letter-spacing: 5px; animation: neonPulse 2s infinite; }
-        .slogan { font-size: 1.8rem; color: var(--neon-red); margin-top: 20px; text-shadow: 0 0 10px rgba(255, 0, 60, 0.8); }
+        .section-padding { padding-top: 140px; padding-bottom: 60px; min-height: 80vh; }
         .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; position: relative; }
         .section-title { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.8rem; color: #fff; margin-bottom: 60px; text-transform: uppercase; }
         .section-title span { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
@@ -177,7 +216,10 @@
 
         @media (max-width: 768px) {
             .nav-top { padding: 15px 20px; } .nav-logo-img { height: 45px; }
-            .nav-menu { flex-wrap: wrap; gap: 15px; } h1 { font-size: 3.5rem; }
+            .nav-menu { flex-wrap: wrap; gap: 15px; } 
+            .hero-banner { padding: 25px 20px; }
+            .hero-banner h1 { font-size: 2.2rem; }
+            .hero-banner p { font-size: 1.1rem; }
             .services-grid { grid-template-columns: 1fr; }
             .search-box.active { width: 150px; }
         }
@@ -281,10 +323,12 @@
         </ul>
     </nav>
 
-    <!-- ACASĂ -->
-    <div id="acasa" class="hero section-padding section-observer" data-bg="radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%)">
-        <h1 data-aos="fade-down" data-aos-duration="1000">CMX FIX</h1>
-        <div class="slogan">Tu vii cu problema, noi venim cu soluția.</div>
+    <!-- ACASĂ (Hero cu Setup Tech și Casetă Stil NDR PC) -->
+    <div id="acasa" class="hero section-observer" data-bg="radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%)">
+        <div class="hero-banner" data-aos="zoom-in" data-aos-duration="1000">
+            <h1>Bine ai venit la CMX!</h1>
+            <p>Servicii IT pentru oricine — de la pasionații de hardware, calculatoare, laptopuri și console, până la oricine are nevoie de o simplă mentenanță sau o soluție rapidă.<br><br>Curând, deschidem și secțiunea de magazin: componente, accesorii variate, produse de îngrijire și multe altele.</p>
+        </div>
     </div>
 
     <div class="container" id="servicii">
@@ -476,9 +520,7 @@
             }
         }
 
-        // ==========================================
-        // SISTEM REAL DE ÎNREGISTRARE ȘI LOGIN
-        // ==========================================
+        // Login & Register Pop-up Toggle Logic
         const userIcon = document.getElementById('user-icon');
         const loginPopup = document.getElementById('login-popup');
         const loginPanel = document.getElementById('login-form-panel');
@@ -505,7 +547,7 @@
             loginPanel.classList.add('active-form');
         });
 
-        // 1. Înregistrare Cont
+        // Înregistrare
         document.getElementById('form-register').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('reg-name').value;
@@ -518,28 +560,22 @@
                 return;
             }
 
-            // Verificăm dacă utilizatorul există deja
             let users = JSON.parse(localStorage.getItem('cmx_users')) || [];
-            const userExists = users.find(u => u.email === email);
-
-            if (userExists) {
-                alert("Acest email este deja înregistrat! Încearcă să te loghezi.");
+            if (users.find(u => u.email === email)) {
+                alert("Acest email este deja înregistrat!");
                 return;
             }
 
-            // Salvăm noul utilizator
             users.push({ name, email, pass });
             localStorage.setItem('cmx_users', JSON.stringify(users));
 
-            alert(`Cont creat cu succes pentru ${name}! Acum te poți conecta.`);
-            
-            // Trecem automat la panoul de login
+            alert(`Cont creat cu succes pentru ${name}! Te poți conecta acum.`);
             registerPanel.classList.remove('active-form');
             loginPanel.classList.add('active-form');
             document.getElementById('form-register').reset();
         });
 
-        // 2. Conectare Cont (Login)
+        // Conectare
         document.getElementById('form-login').addEventListener('submit', function(e) {
             e.preventDefault();
             const emailInput = document.getElementById('login-email').value;
@@ -549,11 +585,11 @@
             const validUser = users.find(u => (u.email === emailInput || u.name === emailInput) && u.pass === passInput);
 
             if (validUser) {
-                alert(`Bun venit înapoi, ${validUser.name}! Conectare reușită.`);
+                alert(`Bun venit înapoi, ${validUser.name}!`);
                 loginPopup.classList.remove('active');
                 document.getElementById('form-login').reset();
             } else {
-                alert("Eroare: Email sau parolă incorecte, sau contul nu există!");
+                alert("Eroare: Date incorecte sau contul nu există!");
             }
         });
 
