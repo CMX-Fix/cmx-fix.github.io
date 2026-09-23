@@ -14,8 +14,8 @@
             --panel-bg: rgba(18, 20, 29, 0.85);
             --neon-blue: #00f0ff;
             --neon-red: #ff003c;
-            --neon-green: #25D366; /* Verde WhatsApp */
-            --neon-yellow: #fce803; /* Galben SMS */
+            --neon-green: #25D366;
+            --neon-yellow: #fce803;
             --text-main: #e0e6ed;
             --text-muted: #8b949e;
         }
@@ -109,7 +109,7 @@
         .container {
             max-width: 1300px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 80px 20px 40px 20px;
             position: relative;
         }
 
@@ -131,6 +131,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
+            margin-bottom: 80px;
         }
 
         .card {
@@ -207,26 +208,79 @@
         .card:hover ul li::before { text-shadow: 0 0 8px var(--neon-blue); }
         .card.red-glow:hover ul li::before { text-shadow: 0 0 8px var(--neon-red); }
 
+        /* --- Secțiune Newsletter --- */
+        .newsletter-box {
+            background: rgba(18, 20, 29, 0.9);
+            border: 1px solid var(--neon-blue);
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        .newsletter-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .newsletter-box p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .newsletter-form input {
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-family: 'Rajdhani', sans-serif;
+            border: 1px solid #2a2d3d;
+            background: #090a0f;
+            color: #fff;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .newsletter-form input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+        .newsletter-form button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            background: var(--neon-blue);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .newsletter-form button:hover {
+            background: #fff;
+            box-shadow: 0 0 20px #fff;
+        }
+
         /* Contact & Footer */
         .contact-footer {
             background-color: rgba(18, 20, 29, 0.9);
             border-top: 2px solid var(--neon-red);
-            padding: 80px 20px;
+            padding: 60px 20px;
             text-align: center;
             box-shadow: 0 -10px 40px rgba(255, 0, 60, 0.15);
             backdrop-filter: blur(5px);
-        }
-
-        .contact-info {
-            font-size: 1.6rem;
-            margin: 20px 0;
-            transition: transform 0.3s;
-        }
-        .contact-info:hover { transform: scale(1.05); }
-        .contact-info span {
-            color: var(--neon-blue);
-            font-weight: 700;
-            text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+            margin-top: 40px;
         }
 
         .location-box {
@@ -234,7 +288,7 @@
             border: 1px solid var(--text-muted);
             border-radius: 10px;
             max-width: 600px;
-            margin: 30px auto;
+            margin: 0 auto 30px auto;
             padding: 20px;
             font-size: 1.3rem;
             line-height: 1.6;
@@ -255,7 +309,6 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
-            margin-top: 40px;
         }
 
         .btn-action {
@@ -307,6 +360,7 @@
         @media (max-width: 768px) {
             h1 { font-size: 4rem; }
             .btn-action { width: 100%; }
+            .newsletter-form input, .newsletter-form button { width: 100%; max-width: 100%; }
         }
     </style>
 </head>
@@ -377,17 +431,21 @@
                 </ul>
             </div>
         </div>
+
+        <!-- Caseta Newsletter Adăugată Aici -->
+        <div class="newsletter-box" data-aos="fade-up" data-aos-duration="1000">
+            <h3>Fii primul care află de oferte!</h3>
+            <p>Abonează-te la newsletter, este rapid și gratuit. Promitem să nu facem spam în căsuța ta.</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Introdu adresa ta de email..." required>
+                <button type="submit">Abonează-te</button>
+            </div>
+        </div>
+
     </div>
 
     <div class="contact-footer" data-aos="fade-up" data-aos-duration="1000">
         <h2 class="section-title">Ai o urgență tehnică? <span>Contactează-ne</span></h2>
-        
-        <div class="contact-info">
-            📞 Telefon: <span>0770 547 916</span>
-        </div>
-        <div class="contact-info">
-            📧 Email: <span>darieclaudiumarian01@gmail.com</span>
-        </div>
         
         <!-- Caseta cu locația -->
         <div class="location-box">
