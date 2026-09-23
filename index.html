@@ -82,22 +82,66 @@
         .nav-icon { font-size: 1.4rem; color: #fff; transition: 0.3s; }
         .nav-icon:hover { color: var(--neon-blue); }
         
-        /* Setari pentru noul Logo Imagine */
+        /* =========================================
+           EFECT NOU LOGO: SPIN & SMOKE NEON
+           ========================================= */
         .nav-logo-link {
-            display: flex; align-items: center; justify-content: center; text-decoration: none;
+            display: flex; align-items: center; justify-content: center; 
+            text-decoration: none; position: relative;
         }
-        .nav-logo-img {
-            height: 60px; /* Poti mari sau micsora valoarea daca vrei logo-ul mai mare/mic */
-            width: auto;
-            border-radius: 8px; /* Rotunjeste colturile pozei */
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-        .nav-logo-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+        
+        /* Stratul de fum / lumină difuză din spate */
+        .nav-logo-link::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 80px; height: 80px; /* Dimensiunea norului de fum */
+            transform: translate(-50%, -50%) rotate(0deg);
+            border-radius: 50%;
+            background: transparent;
+            z-index: -1;
+            opacity: 0;
+            pointer-events: none;
+            /* Umbre multiple blurate pentru efect de nor neon */
+            box-shadow: 
+                0 0 25px 15px rgba(0, 240, 255, 0.5),
+                0 0 45px 25px rgba(255, 0, 60, 0.4),
+                0 0 60px 30px rgba(138, 43, 226, 0.3);
+            filter: blur(8px);
+            transition: opacity 0.5s ease;
         }
 
+        /* Animația activată la hover pe logo */
+        .nav-logo-link:hover::before {
+            opacity: 1;
+            animation: smokeSwirl 3s linear infinite;
+        }
+
+        @keyframes smokeSwirl {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); filter: blur(8px); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2); filter: blur(12px); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); filter: blur(8px); }
+        }
+
+        /* Setările imaginii logo-ului și rotirea */
+        .nav-logo-img {
+            height: 60px;
+            width: auto;
+            border-radius: 8px;
+            /* Tranzitie smooth pentru spin */
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), box-shadow 0.3s;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-logo-link:hover .nav-logo-img {
+            /* Mărire la 1.15 și rotire completă 360 grade */
+            transform: scale(1.15) rotate(360deg);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+        }
+
+        /* --- CONTINUARE MENIU --- */
         .nav-menu {
             display: flex; justify-content: center; gap: 35px; list-style: none;
             margin: 0; padding: 5px 0 15px 0;
@@ -141,26 +185,13 @@
         .title-red span { color: var(--neon-red); text-shadow: 0 0 15px var(--neon-red); }
 
         /* --- GRID SERVICII & 3D CARDS --- */
-        .services-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;
-        }
-
-        .card {
-            background-color: var(--panel-bg); border: 1px solid rgba(42, 45, 61, 0.5); border-radius: 15px; padding: 40px;
-            backdrop-filter: blur(15px); position: relative; overflow: hidden; transform-style: preserve-3d; 
-        }
-        
-        .card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.2), transparent);
-            transform: rotate(45deg); transition: 0.6s; opacity: 0; pointer-events: none;
-        }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        .card { background-color: var(--panel-bg); border: 1px solid rgba(42, 45, 61, 0.5); border-radius: 15px; padding: 40px; backdrop-filter: blur(15px); position: relative; overflow: hidden; transform-style: preserve-3d; }
+        .card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.2), transparent); transform: rotate(45deg); transition: 0.6s; opacity: 0; pointer-events: none; }
         .card.red-glow::before { background: linear-gradient(45deg, transparent, rgba(255, 0, 60, 0.2), transparent); }
-        
         .card:hover { border-color: var(--neon-blue); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.3); }
         .card:hover::before { opacity: 1; left: 100%; }
         .card.red-glow:hover { border-color: var(--neon-red); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 0, 60, 0.3); }
-
         .card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #fff; border-bottom: 2px solid #2a2d3d; padding-bottom: 15px; transform: translateZ(30px); }
         .card:hover h3 { color: var(--neon-blue); }
         .card.red-glow:hover h3 { color: var(--neon-red); }
@@ -173,11 +204,7 @@
         .placeholder-box { background: var(--panel-bg); border: 1px dashed var(--text-muted); border-radius: 10px; padding: 50px; text-align: center; font-size: 1.5rem; color: var(--text-muted); }
 
         /* --- CONTACT & NEWSLETTER --- */
-        .newsletter-box {
-            background: rgba(18, 20, 29, 0.8); border: 1px solid var(--neon-blue); border-radius: 15px;
-            padding: 40px 20px; text-align: center; max-width: 800px; margin: 60px auto;
-            backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
-        }
+        .newsletter-box { background: rgba(18, 20, 29, 0.8); border: 1px solid var(--neon-blue); border-radius: 15px; padding: 40px 20px; text-align: center; max-width: 800px; margin: 60px auto; backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(0, 240, 255, 0.1); }
         .newsletter-box h3 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 2rem; margin-top: 0; }
         .newsletter-form { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
         .newsletter-form input { padding: 15px; font-size: 1.1rem; background: #090a0f; border: 1px solid #2a2d3d; color: #fff; border-radius: 8px; width: 300px; }
@@ -203,7 +230,6 @@
 </head>
 <body>
 
-    <!-- STRATURILE DE FUNDAL -->
     <div id="dynamic-bg"></div>
     <div class="tech-grid"></div>
     <div id="particles-js"></div>
@@ -211,14 +237,13 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- MENIU PRINCIPAL CU LOGO IMAGINE -->
     <nav class="navbar">
         <div class="nav-top">
             <div class="nav-icon" title="Căutare">🔍</div>
             
-            <!-- Aici este integrat Logo-ul tau -->
+            <!-- LOGO: Aici trebuie sa pui inapoi numele pozei tale la src="" -->
             <a href="#acasa" class="nav-logo-link">
-                <img src="logo.jfif" alt="CMX Fix Logo" class="nav-logo-img">
+                <img src="PUNE_NUMELE_POZEI_TALE_AICI" alt="CMX Fix Logo" class="nav-logo-img">
             </a>
 
             <div class="nav-icon" title="Contul Meu">👤</div>
@@ -245,11 +270,9 @@
     </div>
 
     <div class="container" id="servicii">
-        
         <!-- HARDWARE -->
         <div id="hardware" class="section-padding section-observer" data-bg="radial-gradient(circle at top right, rgba(255, 0, 60, 0.15) 0%, #090a0f 70%)">
             <h2 class="section-title title-red" data-aos="zoom-in">Servicii IT <span>Hardware</span></h2>
-            
             <div class="services-grid">
                 <div class="card red-glow" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
                     <h3>💻 Mentenanță Laptop / PC</h3>
@@ -260,7 +283,6 @@
                         <li>Reparații balamale & carcase</li>
                     </ul>
                 </div>
-
                 <div class="card red-glow" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-aos-delay="200">
                     <h3>🎮 Mentenanță Console</h3>
                     <ul>
@@ -276,7 +298,6 @@
         <!-- SOFTWARE -->
         <div id="software" class="section-padding section-observer" data-bg="radial-gradient(circle at top left, rgba(0, 240, 255, 0.15) 0%, #090a0f 70%)">
             <h2 class="section-title" data-aos="zoom-in">Servicii IT <span>Software</span></h2>
-            
             <div class="services-grid">
                 <div class="card" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
                     <h3>📀 Instalare & Optimizare</h3>
@@ -287,7 +308,6 @@
                         <li>Optimizări pentru Gaming</li>
                     </ul>
                 </div>
-
                 <div class="card" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-aos-delay="200">
                     <h3>⚙️ BIOS & Recuperare</h3>
                     <ul>
