@@ -657,7 +657,6 @@
         </div>
 
         <div class="shop-controls">
-            <!-- Pop-up Filtrează pe deasupra -->
             <div class="filter-dropdown-container">
                 <button class="btn-control-bar" id="filter-btn">
                     ⚙️ Filtrează <span id="current-filter-label" style="color:var(--neon-blue); margin-left:5px;">(Toate serviciile)</span>
@@ -786,18 +785,8 @@
                     <button class="btn-add-to-cart" id="btn-add-cart">Adaugă în coș</button>
                 </div>
 
-                <div class="product-description-box">
-                    <h4 id="detail-desc-title">Asamblare Premium (pentru performanță maximă)[cite: 12]:</h4>
-                    <ul id="detail-desc-list">
-                        <li>Montare și organizare componente[cite: 12]</li>
-                        <li>Cooling management[cite: 12]</li>
-                        <li>Aplicare pastă termo premium (Thermal Grizzly Kryonaut)[cite: 12]</li>
-                        <li>Cable management profesionist[cite: 12]</li>
-                        <li>Verificare componente[cite: 12]</li>
-                    </ul>
-                    <p id="detail-extra-info" style="margin-top: 15px; color:var(--neon-blue); font-weight: bold;">
-                        ⚡ Transport rapid prin curier - execuție în 24-72 de ore!
-                    </p>
+                <div class="product-description-box" id="detail-desc-container">
+                    <!-- Dinamic injectat conform textului tău -->
                 </div>
             </div>
         </div>
@@ -857,7 +846,7 @@
         }, 60);
 
         // ==========================================
-        // DATE SERVICII HARDWARE
+        // DATE SERVICII HARDWARE (Inclusiv textul tău exact pentru Asamblare PC)
         // ==========================================
         const servicesData = {
             "asamblare-pc": {
@@ -869,16 +858,31 @@
                     "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=800&auto=format&fit=crop",
                     "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=800&auto=format&fit=crop"
                 ],
-                descTitle: "Asamblare Premium (pentru performanță maximă)[cite: 12]:",
-                items: [
-                    "Montare și organizare componente[cite: 12]",
-                    "Cooling management[cite: 12]",
-                    "Aplicare pastă termo premium (Thermal Grizzly Kryonaut)[cite: 12]",
-                    "Cable management profesionist[cite: 12]",
-                    "Verificare componente[cite: 12]",
-                    "Instalare sistem de operare (Windows 11 Home/PRO)",
-                    "Update BIOS la ultima versiune și teste de temperatură"
-                ]
+                isCustomText: true,
+                htmlContent: `
+                    <p style="color:var(--neon-yellow); font-weight:bold; margin-bottom:12px;">⚠️ Pentru PC-urile în valoare de peste 5000 lei, prețul asamblării este 10% din valoarea pieselor.</p>
+                    <p style="margin-bottom:10px;">Vrei un PC nou, dar nu știi cum să-l asamblezi? 🤔</p>
+                    <p style="margin-bottom:12px;">💻 Îți construim PC-ul de la zero, rapid și profesionist! Fie că ai nevoie de un PC de gaming sau unul de office, noi ne ocupăm de tot procesul!</p>
+                    <h4 style="font-family:'Orbitron',sans-serif; font-size:1.1rem; color:#fff; margin-top:15px;">🔹 Asamblare Premium (pentru performanță maximă):</h4>
+                    <ul style="padding-left:20px; color:var(--text-muted); margin-bottom:12px;">
+                        <li>Montare și organizare componente</li>
+                        <li>Cooling management</li>
+                        <li>Aplicare pastă termo premium (Thermal Grizzly Kryonaut)</li>
+                        <li>Cable management profesionist</li>
+                        <li>Verificare componente</li>
+                    </ul>
+                    <h4 style="font-family:'Orbitron',sans-serif; font-size:1.1rem; color:#fff; margin-top:15px;">❗În asamblarea premium, ne ocupăm și de partea de software:</h4>
+                    <ul style="padding-left:20px; color:var(--text-muted); margin-bottom:12px;">
+                        <li>Instalare sistem de operare (Windows 11 Home/ PRO)</li>
+                        <li>Instalare drivere și ultimele update-uri de sistem</li>
+                        <li>Instalare programele dorite + suita Office</li>
+                        <li>Optimizare sistem pentru cele mai înalte performanțe</li>
+                        <li>Update de BIOS la ultima versiune</li>
+                        <li>Teste pentru temperaturi și stabilitate</li>
+                    </ul>
+                    <p style="margin-bottom:15px;">Practic Asamblarea premium pregătește cap coada un PC, tu doar îl bagi in priza, iti conectezi conturile tale si il folosesti cu spor!</p>
+                    <p style="color:var(--neon-blue); font-weight:bold;">🚀 Transport rapid prin curier – execuție în 24-72h!</p>
+                `
             },
             "mentenanta-pc": {
                 title: "Mentenanță PC",
@@ -886,9 +890,9 @@
                 price: "De la 399,99 lei",
                 images: [
                     "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=800&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=800&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop"
+                    "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=800&auto=format&fit=crop"
                 ],
+                isCustomText: false,
                 descTitle: "Pachet Curățare & Revizie Generală PC:",
                 items: [
                     "Curățare profesională completă de praf (Before & After)",
@@ -896,7 +900,8 @@
                     "Curățare ventilatoare și radiatoare",
                     "Verificare temperaturi și teste de stres",
                     "Optimizare sistem operare"
-                ]
+                ],
+                extraInfo: "⚡ Transport rapid prin curier - execuție în 24-72 de ore!"
             },
             "inlocuire-componente-pc": {
                 title: "Înlocuire componente - PC",
@@ -906,13 +911,15 @@
                     "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=800&auto=format&fit=crop",
                     "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop"
                 ],
+                isCustomText: false,
                 descTitle: "Upgrade & Schimb Piese Hardware:",
                 items: [
                     "Montare placă video nouă (GPU)",
                     "Upgrade memorie RAM sau stocare SSD M.2",
                     "Schimbare sursă de alimentare sau placă de bază",
                     "Testare de compatibilitate și stabilitate"
-                ]
+                ],
+                extraInfo: "⚡ Transport rapid prin curier - execuție în 24-72 de ore!"
             },
             "mentenanta-laptop": {
                 title: "Mentenanță laptop",
@@ -922,13 +929,15 @@
                     "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop",
                     "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=800&auto=format&fit=crop"
                 ],
+                isCustomText: false,
                 descTitle: "Revizie Laptop (Curățare & Răcire):",
                 items: [
                     "Desfacere completă și curățare de praf pe cooler",
                     "Înlocuire pastă termoconductoare de înaltă calitate",
                     "Curățare tastatură și ecran",
                     "Verificare stadiu baterie și hard disk"
-                ]
+                ],
+                extraInfo: "⚡ Transport rapid prin curier - execuție în 24-72 de ore!"
             },
             "inlocuire-piese-laptop": {
                 title: "Înlocuire piese - Laptop",
@@ -938,13 +947,15 @@
                     "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=800&auto=format&fit=crop",
                     "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop"
                 ],
+                isCustomText: false,
                 descTitle: "Intervenții Hardware Laptop:",
                 items: [
                     "Înlocuire display spart / tastatură defectă",
                     "Reparații sau înlocuire carcase și balamale rupte",
                     "Schimbare mufă alimentare sau porturi USB",
                     "Upgrade SSD / RAM"
-                ]
+                ],
+                extraInfo: "⚡ Transport rapid prin curier - execuție în 24-72 de ore!"
             },
             "mentenanta-console": {
                 title: "Mentenanță console",
@@ -954,13 +965,15 @@
                     "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=800&auto=format&fit=crop",
                     "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop"
                 ],
+                isCustomText: false,
                 descTitle: "Service Specializat PS5 / Xbox / PS4:",
                 items: [
                     "Curățare profundă de praf și aerisiri",
                     "Înlocuire metal lichid (la PS5) sau pastă termică",
                     "Remediere zgomot excesiv / supraîncălzire",
                     "Reparații stick drift controllere"
-                ]
+                ],
+                extraInfo: "⚡ Transport rapid prin curier - execuție în 24-72 de ore!"
             }
         };
 
@@ -1004,15 +1017,18 @@
             document.getElementById('detail-title').textContent = data.title;
             document.getElementById('detail-reviews').textContent = data.reviews;
             document.getElementById('detail-price').textContent = data.price;
-            document.getElementById('detail-desc-title').textContent = data.descTitle;
             
-            const ul = document.getElementById('detail-desc-list');
-            ul.innerHTML = "";
-            data.items.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                ul.appendChild(li);
-            });
+            const descContainer = document.getElementById('detail-desc-container');
+            if (data.isCustomText) {
+                descContainer.innerHTML = data.htmlContent;
+            } else {
+                let html = `<h4 style="font-family:'Orbitron',sans-serif; font-size:1.2rem; color:#fff; margin-top:0;">${data.descTitle}</h4>`;
+                html += `<ul style="padding-left:20px; color:var(--text-muted); margin-bottom:15px;">`;
+                data.items.forEach(item => { html += `<li>${item}</li>`; });
+                html += `</ul>`;
+                html += `<p style="margin-top: 15px; color:var(--neon-blue); font-weight: bold;">${data.extraInfo}</p>`;
+                descContainer.innerHTML = html;
+            }
 
             const mainImg = document.getElementById('main-product-img');
             mainImg.src = data.images[0];
