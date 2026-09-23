@@ -95,7 +95,7 @@
             font-size: 0.85rem; color: #fff; box-shadow: 0 15px 40px rgba(0,0,0,0.9);
             display: none; z-index: 9999; line-height: 1.4;
         }
-        .copyright-popup.active { display: block; animation: fadeInPopup 0.3s ease; }
+        .copyright-popup.active { display: block; animation: fadeInPopup 0.25s ease; }
         @keyframes fadeInPopup { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .copyright-popup h5 { margin: 0 0 8px 0; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 0.85rem; border-bottom: 1px solid #2a2d3d; padding-bottom: 5px; }
         .copyright-popup p { margin: 0 0 5px 0; font-size: 0.8rem; color: var(--text-muted); word-break: break-all; }
@@ -357,8 +357,7 @@
         .thumb-img img { width: 100%; height: 100%; object-fit: cover; }
 
         .product-detail-info h2 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #fff; margin: 0 0 10px 0; }
-        .product-reviews { color: var(--neon-yellow); font-size: 1.1rem; margin-bottom: 15px; }
-        .product-detail-price { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--neon-blue); font-weight: bold; margin-bottom: 25px; }
+        .product-detail-price { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--neon-blue); font-weight: bold; margin-bottom: 25px; margin-top: 10px; }
 
         .cart-action-box { display: flex; gap: 15px; align-items: center; margin-bottom: 30px; }
         .quantity-selector {
@@ -454,9 +453,9 @@
         <div class="copyright-popup" id="copyright-popup">
             <button class="close-cp" id="close-cp-btn">✕</button>
             <h5 id="cp-song-title">Song: Gabriaawll - Recall</h5>
-            <p>Music provided by NoCopyrightSounds[cite: 3]</p>
-            <p>Free Download/Stream:<br><a id="cp-link-stream" href="http://ncs.io/Recall" target="_blank" style="color:var(--neon-blue);">http://ncs.io/Recall</a>[cite: 3]</p>
-            <p>Watch:<br><a id="cp-link-watch" href="http://ncs.link.to/RecallAT/youtube" target="_blank" style="color:var(--neon-blue);">http://ncs.link.to/RecallAT/youtube</a>[cite: 3]</p>
+            <p>Music provided by NoCopyrightSounds</p>
+            <p>Free Download/Stream:<br><a id="cp-link-stream" href="http://ncs.io/Recall" target="_blank" style="color:var(--neon-blue);">http://ncs.io/Recall</a></p>
+            <p>Watch:<br><a id="cp-link-watch" href="http://ncs.link.to/RecallAT/youtube" target="_blank" style="color:var(--neon-blue);">http://ncs.link.to/RecallAT/youtube</a></p>
         </div>
 
         <div class="music-controls">
@@ -478,7 +477,7 @@
         
         <div class="music-info" id="music-info-clickable" title="Apasă pentru detalii Copyright">
             <div class="music-title-container">
-                <span class="music-title" id="music-title-text">Gabriaawll - Recall</span>[cite: 3]
+                <span class="music-title" id="music-title-text">Gabriaawll - Recall</span>
             </div>
             <span class="music-status">CMX Radio (Info)</span>
         </div>
@@ -684,7 +683,7 @@
 
         <div class="hardware-grid" id="hardware-cards-grid">
             
-            <!-- 1. Asamblare PC (Folosind pozele tale de la asamblare: asamblat & în timpul asamblării) -->
+            <!-- 1. Asamblare PC (Cu pozele tale: After asamblare & În timpul asamblării la hover) -->
             <div class="product-card" data-id="asamblare-pc" data-category="pc" data-price="499.99">
                 <div class="product-img-box">
                     <img src="after asamblare.jfif" alt="PC Asamblat" class="img-default">
@@ -758,7 +757,7 @@
         </div>
     </div>
 
-    <!-- PAGINA NOUĂ: DETALIU PRODUS -->
+    <!-- PAGINA NOUĂ: DETALIU PRODUS (Fără recenzii) -->
     <div id="product-detail-wrapper" class="product-detail-page">
         <button class="back-to-shop-btn" id="back-to-list-btn">← Înapoi la Servicii Hardware</button>
         
@@ -772,7 +771,6 @@
 
             <div class="product-detail-info">
                 <h2 id="detail-title">Asamblare PC</h2>
-                <div class="product-reviews" id="detail-reviews">★★★★★ 2 recenzii[cite: 12]</div>
                 <div class="product-detail-price" id="detail-price">499,99 lei</div>
 
                 <div class="cart-action-box">
@@ -845,12 +843,11 @@
         }, 60);
 
         // ==========================================
-        // DATE SERVICII HARDWARE (Folosind pozele tale pentru Asamblare PC)
+        // DATE SERVICII HARDWARE (Folosind cele 3 poze tale pentru Asamblare PC: After, În timpul, Before)
         // ==========================================
         const servicesData = {
             "asamblare-pc": {
                 title: "Asamblare PC",
-                reviews: "★★★★★ 2 recenzii[cite: 12]",
                 price: "499,99 lei",
                 images: [
                     "after asamblare.jfif",
@@ -885,7 +882,6 @@
             },
             "mentenanta-pc": {
                 title: "Mentenanță PC",
-                reviews: "★★★★★ 5 recenzii",
                 price: "De la 399,99 lei",
                 images: [
                     "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=800&auto=format&fit=crop",
@@ -904,7 +900,6 @@
             },
             "inlocuire-componente-pc": {
                 title: "Înlocuire componente - PC",
-                reviews: "★★★★★ 4 recenzii",
                 price: "De la 29,99 lei",
                 images: [
                     "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=800&auto=format&fit=crop",
@@ -922,7 +917,6 @@
             },
             "mentenanta-laptop": {
                 title: "Mentenanță laptop",
-                reviews: "★★★★★ 8 recenzii",
                 price: "De la 249,99 lei",
                 images: [
                     "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop",
@@ -940,7 +934,6 @@
             },
             "inlocuire-piese-laptop": {
                 title: "Înlocuire piese - Laptop",
-                reviews: "★★★★★ 3 recenzii",
                 price: "De la 99,99 lei",
                 images: [
                     "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=800&auto=format&fit=crop",
@@ -958,7 +951,6 @@
             },
             "mentenanta-console": {
                 title: "Mentenanță console",
-                reviews: "★★★★★ 12 recenzii",
                 price: "De la 199,99 lei",
                 images: [
                     "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=800&auto=format&fit=crop",
@@ -1014,7 +1006,6 @@
             if (!data) return;
 
             document.getElementById('detail-title').textContent = data.title;
-            document.getElementById('detail-reviews').textContent = data.reviews;
             document.getElementById('detail-price').textContent = data.price;
             
             const descContainer = document.getElementById('detail-desc-container');
