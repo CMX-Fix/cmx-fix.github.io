@@ -25,11 +25,31 @@
 
         body { margin: 0; background-color: var(--bg-dark); color: var(--text-main); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
 
-        /* --- Cursor Custom --- */
+        /* --- CURSOR CUSTOM CU EFECT DE FUM --- */
         .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
-        .cursor-dot { width: 8px; height: 8px; background-color: var(--neon-blue); }
-        .cursor-outline { width: 40px; height: 40px; border: 2px solid var(--neon-blue); transition: width 0.2s, height 0.2s, border-color 0.2s; }
-        a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline, .nav-icon:hover ~ .cursor-outline, .nav-logo-link:hover ~ .cursor-outline, input:hover ~ .cursor-outline { width: 60px; height: 60px; border-color: var(--neon-red); background-color: rgba(255, 0, 60, 0.1); }
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
+        .cursor-outline { width: 40px; height: 40px; border: 2px solid var(--neon-blue); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
+        
+        a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline, .nav-icon:hover ~ .cursor-outline, .nav-logo-link:hover ~ .cursor-outline, input:hover ~ .cursor-outline { 
+            width: 60px; height: 60px; border-color: var(--neon-red); background-color: rgba(255, 0, 60, 0.1); 
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+        }
+
+        /* Particule de fum lăsate de cursor */
+        .cursor-smoke {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,240,255,0.6) 0%, rgba(255,0,60,0.2) 50%, transparent 80%);
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            animation: smokeFade 0.8s linear forwards;
+        }
+
+        @keyframes smokeFade {
+            0% { width: 10px; height: 10px; opacity: 0.8; filter: blur(2px); }
+            100% { width: 45px; height: 45px; opacity: 0; filter: blur(6px); transform: translate(-50%, -50%) scale(1.5); }
+        }
 
         /* --- FUNDALURI DINAMICE & TECH GRID --- */
         #dynamic-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%); transition: background 1.5s ease-in-out; }
@@ -155,7 +175,6 @@
             z-index: 2;
         }
 
-        /* Efectul de fum / lumină difuză în spatele casetei la hover */
         .hero-banner::before {
             content: '';
             position: absolute;
@@ -477,11 +496,32 @@
             "interactivity": { "detect_on": "window", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } } }, "retina_detect": true
         });
 
+        // Cursor custom și generator de fum la mișcare
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
+        
         window.addEventListener('mousemove', function(e) {
-            cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
-            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 150, fill: "forwards" });
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            cursorDot.style.left = `${posX}px`; 
+            cursorDot.style.top = `${posY}px`;
+            
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 150, fill: "forwards" });
+
+            // Generare dâră de fum fină în spatele cursorului
+            if (Math.random() < 0.3) { // controlează frecvența fumului
+                const smoke = document.createElement('div');
+                smoke.classList.add('cursor-smoke');
+                smoke.style.left = `${posX}px`;
+                smoke.style.top = `${posY}px`;
+                document.body.appendChild(smoke);
+
+                // Șterge elementul după ce animația de fade s-a terminat
+                setTimeout(() => {
+                    smoke.remove();
+                }, 800);
+            }
         });
 
         const sections = document.querySelectorAll('.section-observer');
