@@ -86,7 +86,6 @@
         .login-popup input[type="text"], .login-popup input[type="password"], .login-popup input[type="email"] { width: 100%; padding: 10px 45px 10px 15px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; transition: 0.3s; }
         .login-popup input:focus { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
 
-        /* Butonul de ochi pentru vizibilitate parolă */
         .toggle-password {
             position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
             background: none; border: none; color: var(--text-muted); cursor: pointer;
@@ -219,9 +218,9 @@
                     <!-- Formular Conectare -->
                     <div id="login-form-panel" class="form-panel active-form">
                         <h4>Conectare Cont</h4>
-                        <form onsubmit="event.preventDefault(); alert('Conectare reușită! (Demo)');">
+                        <form id="form-login">
                             <div class="input-group">
-                                <input type="text" placeholder="Email / Utilizator" required>
+                                <input type="text" id="login-email" placeholder="Email / Utilizator" required>
                             </div>
                             <div class="input-group">
                                 <input type="password" id="login-password" placeholder="Parolă" required>
@@ -241,12 +240,12 @@
                     <!-- Formular Creare Cont -->
                     <div id="register-form-panel" class="form-panel">
                         <h4>Creare Cont Nou</h4>
-                        <form onsubmit="event.preventDefault(); alert('Cont creat cu succes! (Demo)');">
+                        <form id="form-register">
                             <div class="input-group">
-                                <input type="text" placeholder="Nume complet" required>
+                                <input type="text" id="reg-name" placeholder="Nume complet" required>
                             </div>
                             <div class="input-group">
-                                <input type="email" placeholder="Adresă Email" required>
+                                <input type="email" id="reg-email" placeholder="Adresă Email" required>
                             </div>
                             <div class="input-group">
                                 <input type="password" id="reg-password" placeholder="Parolă" required>
@@ -465,19 +464,21 @@
             }
         });
 
-        // Funcție pentru a arăta / ascunde parola (Toggle Password)
+        // Vizibilitate Parolă (Toggle)
         function togglePassword(fieldId, btn) {
             const passwordInput = document.getElementById(fieldId);
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
-                btn.textContent = "🙈"; // Schimbă iconița când e vizibilă
+                btn.textContent = "🙈";
             } else {
                 passwordInput.type = "password";
-                btn.textContent = "👁️"; // Revine la ochi normal
+                btn.textContent = "👁️";
             }
         }
 
-        // Login & Register Pop-up Toggle Logic
+        // ==========================================
+        // SISTEM REAL DE ÎNREGISTRARE ȘI LOGIN
+        // ==========================================
         const userIcon = document.getElementById('user-icon');
         const loginPopup = document.getElementById('login-popup');
         const loginPanel = document.getElementById('login-form-panel');
@@ -502,6 +503,58 @@
             e.preventDefault();
             registerPanel.classList.remove('active-form');
             loginPanel.classList.add('active-form');
+        });
+
+        // 1. Înregistrare Cont
+        document.getElementById('form-register').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-password').value;
+            const confirmPass = document.getElementById('reg-confirm-password').value;
+
+            if (pass !== confirmPass) {
+                alert("Eroare: Parolele nu coincid!");
+                return;
+            }
+
+            // Verificăm dacă utilizatorul există deja
+            let users = JSON.parse(localStorage.getItem('cmx_users')) || [];
+            const userExists = users.find(u => u.email === email);
+
+            if (userExists) {
+                alert("Acest email este deja înregistrat! Încearcă să te loghezi.");
+                return;
+            }
+
+            // Salvăm noul utilizator
+            users.push({ name, email, pass });
+            localStorage.setItem('cmx_users', JSON.stringify(users));
+
+            alert(`Cont creat cu succes pentru ${name}! Acum te poți conecta.`);
+            
+            // Trecem automat la panoul de login
+            registerPanel.classList.remove('active-form');
+            loginPanel.classList.add('active-form');
+            document.getElementById('form-register').reset();
+        });
+
+        // 2. Conectare Cont (Login)
+        document.getElementById('form-login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('login-email').value;
+            const passInput = document.getElementById('login-password').value;
+
+            let users = JSON.parse(localStorage.getItem('cmx_users')) || [];
+            const validUser = users.find(u => (u.email === emailInput || u.name === emailInput) && u.pass === passInput);
+
+            if (validUser) {
+                alert(`Bun venit înapoi, ${validUser.name}! Conectare reușită.`);
+                loginPopup.classList.remove('active');
+                document.getElementById('form-login').reset();
+            } else {
+                alert("Eroare: Email sau parolă incorecte, sau contul nu există!");
+            }
         });
 
         document.addEventListener('click', (e) => {
