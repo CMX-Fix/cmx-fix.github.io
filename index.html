@@ -40,13 +40,10 @@
         .navbar { position: fixed; top: 0; width: 100%; background: #050505; z-index: 1000; display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #1a1a1a; }
         .nav-top { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1300px; padding: 10px 30px; position: relative; }
         
-        /* Iconițe cu animație fină de atenție la hover */
         .nav-icon { 
-            font-size: 1.5rem; 
-            color: #fff; 
+            font-size: 1.5rem; color: #fff; 
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            z-index: 10; 
-            display: inline-block;
+            z-index: 10; display: inline-block; 
         }
         .nav-icon:hover { 
             color: var(--neon-blue); 
@@ -66,10 +63,10 @@
         .search-results li:last-child { border-bottom: none; }
         .search-results li:hover { background: rgba(0, 240, 255, 0.15); color: var(--neon-blue); padding-left: 20px; }
 
-        /* --- USER LOGIN POP-UP (Cu tranziție elastică/bounce) --- */
+        /* --- USER LOGIN / REGISTER POP-UP --- */
         .user-container { position: relative; display: flex; align-items: center; z-index: 1002; }
         .login-popup { 
-            position: absolute; top: 50px; right: 0; width: 300px; 
+            position: absolute; top: 50px; right: 0; width: 320px; 
             background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-red); border-radius: 15px; padding: 25px; 
             box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 20px rgba(255, 0, 60, 0.2); backdrop-filter: blur(10px); 
             transform: translateY(-20px) scale(0.95); opacity: 0; pointer-events: none; 
@@ -80,16 +77,21 @@
             opacity: 1; 
             pointer-events: auto; 
         }
-        .login-popup h4 { margin: 0 0 20px 0; font-family: 'Orbitron', sans-serif; font-size: 1.4rem; color: #fff; text-align: center; border-bottom: 1px solid #2a2d3d; padding-bottom: 10px; }
-        .login-popup input[type="text"], .login-popup input[type="password"] { width: 100%; padding: 10px 15px; margin-bottom: 15px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; transition: 0.3s; }
+        .form-panel { display: none; }
+        .form-panel.active-form { display: block; }
+
+        .login-popup h4 { margin: 0 0 20px 0; font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: #fff; text-align: center; border-bottom: 1px solid #2a2d3d; padding-bottom: 10px; }
+        .login-popup input[type="text"], .login-popup input[type="password"], .login-popup input[type="email"] { width: 100%; padding: 10px 15px; margin-bottom: 15px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; transition: 0.3s; }
         .login-popup input:focus { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
         .login-options { display: flex; justify-content: space-between; align-items: center; font-size: 1rem; color: var(--text-muted); margin-bottom: 20px; }
         .login-options label { display: flex; align-items: center; gap: 5px; }
-        .btn-login { width: 100%; padding: 12px; background: var(--neon-blue); color: #000; font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 1.1rem; border: none; border-radius: 8px; transition: 0.3s; }
-        .btn-login:hover { background: #fff; box-shadow: 0 0 15px #fff; }
-        .create-account { text-align: center; margin-top: 15px; font-size: 1rem; color: var(--text-muted); }
-        .create-account a { color: var(--neon-red); text-decoration: none; font-weight: bold; transition: 0.3s; }
-        .create-account a:hover { text-shadow: 0 0 8px var(--neon-red); }
+        
+        .btn-auth { width: 100%; padding: 12px; background: var(--neon-blue); color: #000; font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 1.1rem; border: none; border-radius: 8px; transition: 0.3s; cursor: pointer; }
+        .btn-auth:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+        
+        .switch-form { text-align: center; margin-top: 15px; font-size: 1rem; color: var(--text-muted); }
+        .switch-form a { color: var(--neon-red); text-decoration: none; font-weight: bold; transition: 0.3s; cursor: pointer; }
+        .switch-form a:hover { text-shadow: 0 0 8px var(--neon-red); }
 
         /* --- EFECT LOGO: SPIN & SMOKE NEON --- */
         .nav-logo-link { display: flex; align-items: center; justify-content: center; text-decoration: none; position: relative; }
@@ -107,54 +109,12 @@
         .arrow { display: inline-block; font-size: 0.8rem; margin-left: 3px; transition: transform 0.3s; }
         
         .dropdown { position: relative; }
-        
-        /* Zona de siguranță invizibilă (podul) ca să nu dispară meniul când muți mouse-ul */
-        .dropdown::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            height: 25px; /* Spațiul dintre text și pop-up */
-            background: transparent;
-        }
-
-        .dropdown-content {
-            display: none; 
-            position: absolute; 
-            top: calc(100% + 20px); /* Poziționat sub pod */
-            left: 50%; 
-            transform: translateX(-50%);
-            background: #000; 
-            min-width: 200px; 
-            border-radius: 12px; 
-            padding: 10px 0;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9); 
-            border: 1px solid #1a1a1a; 
-            z-index: 1001;
-        }
-
-        /* Menținem pop-up-ul deschis cu o mică întârziere la ieșire */
-        .dropdown:hover .dropdown-content { 
-            display: block; 
-            animation: fadeIn 0.25s ease; 
-        }
+        .dropdown::after { content: ''; position: absolute; top: 100%; left: 0; width: 100%; height: 25px; background: transparent; }
+        .dropdown-content { display: none; position: absolute; top: calc(100% + 20px); left: 50%; transform: translateX(-50%); background: #000; min-width: 200px; border-radius: 12px; padding: 10px 0; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9); border: 1px solid #1a1a1a; z-index: 1001; }
+        .dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.25s ease; }
         .dropdown:hover .arrow { transform: rotate(180deg); color: var(--neon-blue); }
-
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translate(-50%, 15px); } 
-            to { opacity: 1; transform: translate(-50%, 0); } 
-        }
-
-        .dropdown-content a { 
-            display: block; 
-            color: #fff; 
-            text-decoration: none; 
-            font-family: 'Rajdhani', sans-serif; 
-            font-size: 1.15rem; 
-            padding: 12px 25px; 
-            transition: 0.2s; 
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, 15px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        .dropdown-content a { display: block; color: #fff; text-decoration: none; font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; padding: 12px 25px; transition: 0.2s; }
         .dropdown-content a:hover { background: rgba(0, 240, 255, 0.1); color: var(--neon-blue); padding-left: 30px; }
 
         /* --- SECTIUNI --- */
@@ -239,24 +199,44 @@
                 <img src="logo.jfif" alt="CMX Fix Logo" class="nav-logo-img">
             </a>
 
-            <!-- CONT LOGIN POP-UP -->
+            <!-- CONT LOGIN & REGISTER POP-UP -->
             <div class="user-container">
                 <div class="nav-icon" id="user-icon" title="Contul Meu">👤</div>
                 
                 <div class="login-popup" id="login-popup">
-                    <h4>Conectare Cont</h4>
-                    <form onsubmit="event.preventDefault(); alert('Conectare reușită! (Demo UI)');">
-                        <input type="text" placeholder="Email / Utilizator" required>
-                        <input type="password" placeholder="Parolă" required>
-                        <div class="login-options">
-                            <label><input type="checkbox"> Rămâi conectat</label>
-                            <a href="#" style="color:var(--neon-blue); text-decoration:none;">Ai uitat parola?</a>
+                    
+                    <!-- Formular Conectare -->
+                    <div id="login-form-panel" class="form-panel active-form">
+                        <h4>Conectare Cont</h4>
+                        <form onsubmit="event.preventDefault(); alert('Conectare reușită! (Demo)');">
+                            <input type="text" placeholder="Email / Utilizator" required>
+                            <input type="password" placeholder="Parolă" required>
+                            <div class="login-options">
+                                <label><input type="checkbox"> Rămâi conectat</label>
+                                <a href="#" style="color:var(--neon-blue); text-decoration:none;">Ai uitat parola?</a>
+                            </div>
+                            <button type="submit" class="btn-auth">LOGIN</button>
+                        </form>
+                        <div class="switch-form">
+                            Nu ai cont? <a id="to-register">Creează unul</a>
                         </div>
-                        <button type="submit" class="btn-login">LOGIN</button>
-                    </form>
-                    <div class="create-account">
-                        Nu ai cont? <a href="#" onclick="alert('Pagina de creare cont va fi adăugată curând!');">Creează unul</a>
                     </div>
+
+                    <!-- Formular Creare Cont -->
+                    <div id="register-form-panel" class="form-panel">
+                        <h4>Creare Cont Nou</h4>
+                        <form onsubmit="event.preventDefault(); alert('Cont creat cu succes! (Demo)');">
+                            <input type="text" placeholder="Nume complet" required>
+                            <input type="email" placeholder="Adresă Email" required>
+                            <input type="password" placeholder="Parolă" required>
+                            <input type="password" placeholder="Confirmă Parola" required>
+                            <button type="submit" class="btn-auth">ÎNREGISTRARE</button>
+                        </form>
+                        <div class="switch-form">
+                            Ai deja cont? <a id="to-login">Conectare</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -459,15 +439,31 @@
             }
         });
 
-        // Login Pop-up
+        // Login & Register Pop-up Toggle Logic
         const userIcon = document.getElementById('user-icon');
         const loginPopup = document.getElementById('login-popup');
+        const loginPanel = document.getElementById('login-form-panel');
+        const registerPanel = document.getElementById('register-form-panel');
+        const toRegister = document.getElementById('to-register');
+        const toLogin = document.getElementById('to-login');
 
         userIcon.addEventListener('click', (e) => {
             e.stopPropagation();
             loginPopup.classList.toggle('active');
             searchBox.classList.remove('active');
             searchResults.style.display = 'none';
+        });
+
+        toRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginPanel.classList.remove('active-form');
+            registerPanel.classList.add('active-form');
+        });
+
+        toLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerPanel.classList.remove('active-form');
+            loginPanel.classList.add('active-form');
         });
 
         document.addEventListener('click', (e) => {
