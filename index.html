@@ -448,7 +448,7 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- AUDIO PLAYER CMX RADIO -->
+    <!-- AUDIO PLAYER CMX RADIO (Volum 25%) -->
     <div class="music-player-widget" id="music-widget">
         <div class="copyright-popup" id="copyright-popup">
             <button class="close-cp" id="close-cp-btn">✕</button>
@@ -466,7 +466,7 @@
             <div class="volume-container">
                 <button class="music-btn" title="Volum">🔊</button>
                 <div class="volume-slider-popup">
-                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5">
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.25">
                 </div>
             </div>
         </div>
@@ -683,7 +683,7 @@
 
         <div class="hardware-grid" id="hardware-cards-grid">
             
-            <!-- 1. Asamblare PC (Cu pozele tale: After asamblare & În timpul asamblării la hover) -->
+            <!-- 1. Asamblare PC (Folosind pozele tale: after asamblare & in timpul asamblarii) -->
             <div class="product-card" data-id="asamblare-pc" data-category="pc" data-price="499.99">
                 <div class="product-img-box">
                     <img src="after asamblare.jfif" alt="PC Asamblat" class="img-default">
@@ -843,7 +843,7 @@
         }, 60);
 
         // ==========================================
-        // DATE SERVICII HARDWARE (Folosind cele 3 poze tale pentru Asamblare PC: After, În timpul, Before)
+        // DATE SERVICII HARDWARE (Folosind cele 3 poze tale pentru Asamblare PC)
         // ==========================================
         const servicesData = {
             "asamblare-pc": {
@@ -1254,8 +1254,8 @@
         function initAudioOnInteraction() {
             if (!isPlaying) {
                 loadTrack(currentTrackIndex);
-                bgAudio.volume = 0.5;
-                volumeSlider.value = 0.5;
+                bgAudio.volume = 0.25; // Setat la 25%
+                volumeSlider.value = 0.25;
                 playTrack();
                 window.removeEventListener('click', initAudioOnInteraction);
                 window.removeEventListener('scroll', initAudioOnInteraction);
@@ -1265,7 +1265,7 @@
         window.addEventListener('scroll', initAudioOnInteraction);
 
         loadTrack(currentTrackIndex);
-        bgAudio.volume = 0.5;
+        bgAudio.volume = 0.25; // Volum inițial 25%
 
         // --- RESTUL FUNCȚIONALITĂȚILOR (Search, Login, Scroll) ---
         const sections = document.querySelectorAll('.section-observer');
