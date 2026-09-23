@@ -6,21 +6,23 @@
     <title>CMX Fix | Service IT & Console</title>
     <!-- Fonturi -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-    <!-- Biblioteca AOS (Animate On Scroll) pentru efecte de intrare -->
+    <!-- Biblioteca AOS pentru efecte de intrare -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #090a0f;
-            --panel-bg: rgba(18, 20, 29, 0.85); /* Fundal ușor transparent pentru a vedea efectul din spate */
+            --panel-bg: rgba(18, 20, 29, 0.85);
             --neon-blue: #00f0ff;
             --neon-red: #ff003c;
+            --neon-green: #25D366; /* Verde WhatsApp */
+            --neon-yellow: #fce803; /* Galben SMS */
             --text-main: #e0e6ed;
             --text-muted: #8b949e;
         }
 
         * {
             box-sizing: border-box;
-            cursor: none; /* Ascundem cursorul default pentru a-l folosi pe cel custom */
+            cursor: none;
         }
 
         body {
@@ -31,7 +33,7 @@
             overflow-x: hidden;
         }
 
-        /* --- Cursor Custom cu efect --- */
+        /* --- Cursor Custom --- */
         .cursor-dot, .cursor-outline {
             position: fixed;
             top: 0; left: 0;
@@ -41,36 +43,30 @@
             pointer-events: none;
         }
         .cursor-dot {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             background-color: var(--neon-blue);
         }
         .cursor-outline {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 2px solid var(--neon-blue);
             transition: width 0.2s, height 0.2s, border-color 0.2s;
         }
-        /* Când e pe link-uri/butoane */
         a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline {
-            width: 60px;
-            height: 60px;
+            width: 60px; height: 60px;
             border-color: var(--neon-red);
             background-color: rgba(255, 0, 60, 0.1);
         }
 
-        /* --- Fundal Interactiv (Particule) --- */
+        /* --- Fundal Interactiv --- */
         #particles-js {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
+            width: 100%; height: 100%;
+            top: 0; left: 0;
             z-index: -1;
             background: radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%);
         }
 
-        /* Zona de antet (Hero) */
+        /* Hero Section */
         .hero {
             text-align: center;
             padding: 150px 20px;
@@ -80,7 +76,6 @@
             background: linear-gradient(to bottom, rgba(9, 10, 15, 0.2), rgba(9, 10, 15, 0.9));
         }
 
-        /* Animație puls pentru titlu */
         @keyframes neonPulse {
             0%, 100% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue); }
             50% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); }
@@ -102,7 +97,7 @@
             text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
             letter-spacing: 2px;
             opacity: 0;
-            animation: slideUp 1s forwards 0.5s; /* Efect de intrare întârziat */
+            animation: slideUp 1s forwards 0.5s;
         }
 
         @keyframes slideUp {
@@ -110,12 +105,12 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        /* Containerul principal */
+        /* Structura */
         .container {
             max-width: 1300px;
             margin: 0 auto;
             padding: 80px 20px;
-            position: relative; /* Pentru a sta peste particule */
+            position: relative;
         }
 
         .section-title {
@@ -131,7 +126,7 @@
             text-shadow: 0 0 15px var(--neon-blue);
         }
 
-        /* Grila cu servicii */
+        /* Servicii (Grilă) */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -143,13 +138,12 @@
             border: 1px solid rgba(42, 45, 61, 0.5);
             border-radius: 15px;
             padding: 40px;
-            backdrop-filter: blur(10px); /* Efect de geam mat */
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animație bounce fină */
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
         }
 
-        /* Efect de lumină care se plimbă pe marginea cardului la hover */
         .card::before {
             content: '';
             position: absolute;
@@ -171,10 +165,7 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 255, 0.4);
             z-index: 10;
         }
-        .card:hover::before {
-            opacity: 1;
-            left: 100%;
-        }
+        .card:hover::before { opacity: 1; left: 100%; }
 
         .card.red-glow:hover {
             border-color: var(--neon-red);
@@ -190,7 +181,6 @@
             padding-bottom: 15px;
             transition: color 0.3s ease;
         }
-
         .card:hover h3 { color: var(--neon-blue); }
         .card.red-glow:hover h3 { color: var(--neon-red); text-shadow: 0 0 10px rgba(255, 0, 60, 0.5);}
 
@@ -200,36 +190,24 @@
             font-size: 1.25rem;
             color: var(--text-muted);
         }
-
         .card ul li {
             margin-bottom: 12px;
             padding-left: 25px;
             position: relative;
             transition: transform 0.3s ease, color 0.3s ease;
         }
-        
-        .card:hover ul li {
-            color: #fff;
-            transform: translateX(5px);
-        }
+        .card:hover ul li { color: #fff; transform: translateX(5px); }
 
         .card ul li::before {
-            content: "▹";
-            position: absolute;
-            left: 0;
+            content: "▹"; position: absolute; left: 0;
             color: var(--neon-blue);
             transition: color 0.3s, text-shadow 0.3s;
         }
         .card.red-glow ul li::before { color: var(--neon-red); }
+        .card:hover ul li::before { text-shadow: 0 0 8px var(--neon-blue); }
+        .card.red-glow:hover ul li::before { text-shadow: 0 0 8px var(--neon-red); }
 
-        .card:hover ul li::before {
-            text-shadow: 0 0 8px var(--neon-blue);
-        }
-        .card.red-glow:hover ul li::before {
-            text-shadow: 0 0 8px var(--neon-red);
-        }
-
-        /* Secțiunea de contact / footer */
+        /* Contact & Footer */
         .contact-footer {
             background-color: rgba(18, 20, 29, 0.9);
             border-top: 2px solid var(--neon-red);
@@ -241,68 +219,106 @@
 
         .contact-info {
             font-size: 1.6rem;
-            margin: 25px 0;
+            margin: 20px 0;
             transition: transform 0.3s;
         }
-        .contact-info:hover {
-            transform: scale(1.05);
-        }
+        .contact-info:hover { transform: scale(1.05); }
         .contact-info span {
             color: var(--neon-blue);
             font-weight: 700;
             text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
         }
 
-        /* Buton animat */
-        .btn-call {
-            display: inline-block;
-            background: transparent;
+        .location-box {
+            background: rgba(42, 45, 61, 0.3);
+            border: 1px solid var(--text-muted);
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+
+        .location-box span {
+            display: block;
+            margin-top: 10px;
             color: var(--neon-blue);
-            border: 2px solid var(--neon-blue);
-            padding: 18px 50px;
+            font-weight: bold;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
+        }
+
+        /* Action Buttons Grid */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: transparent;
+            padding: 15px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
             font-weight: bold;
             text-decoration: none;
-            text-transform: uppercase;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: all 0.3s ease;
-            margin-top: 30px;
+            min-width: 200px;
+            border: 2px solid;
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
 
-        .btn-call::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: var(--neon-blue);
-            transition: all 0.4s ease;
-            z-index: -1;
+        .btn-action::before {
+            content: ''; position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            transition: all 0.4s ease; z-index: -1;
         }
+        .btn-action:hover::before { left: 0; }
+        .btn-action:hover { color: var(--bg-dark); }
 
-        .btn-call:hover {
-            color: var(--bg-dark);
-            box-shadow: 0 0 30px var(--neon-blue);
-        }
-        
-        .btn-call:hover::before {
-            left: 0;
+        /* Culori individuale butoane */
+        .btn-call { color: var(--neon-blue); border-color: var(--neon-blue); }
+        .btn-call::before { background: var(--neon-blue); }
+        .btn-call:hover { box-shadow: 0 0 25px var(--neon-blue); }
+
+        .btn-sms { color: var(--neon-yellow); border-color: var(--neon-yellow); }
+        .btn-sms::before { background: var(--neon-yellow); }
+        .btn-sms:hover { box-shadow: 0 0 25px var(--neon-yellow); }
+
+        .btn-wa { color: var(--neon-green); border-color: var(--neon-green); }
+        .btn-wa::before { background: var(--neon-green); }
+        .btn-wa:hover { box-shadow: 0 0 25px var(--neon-green); }
+
+        .btn-email { color: var(--neon-red); border-color: var(--neon-red); }
+        .btn-email::before { background: var(--neon-red); }
+        .btn-email:hover { box-shadow: 0 0 25px var(--neon-red); }
+
+        /* Media Query pt telefoane (scris adaptat) */
+        @media (max-width: 768px) {
+            h1 { font-size: 4rem; }
+            .btn-action { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Container pentru efectul de fundal (particule) -->
+    <!-- Punctele interactive -->
     <div id="particles-js"></div>
 
-    <!-- Cursor Custom (HTML-ul pt el) -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
     <div class="hero">
-        <!-- data-aos e comanda pentru animația de intrare (Fade Down) -->
         <h1 data-aos="fade-down" data-aos-duration="1000">CMX FIX</h1>
         <div class="slogan">Tu vii cu problema, noi venim cu soluția.</div>
     </div>
@@ -311,7 +327,6 @@
         <h2 class="section-title" data-aos="zoom-in" data-aos-duration="800">Portofoliu <span>Servicii</span></h2>
         
         <div class="services-grid">
-            
             <div class="card" data-aos="fade-up" data-aos-delay="100">
                 <h3>💻 Mentenanță Laptop & PC</h3>
                 <ul>
@@ -368,61 +383,52 @@
         <h2 class="section-title">Ai o urgență tehnică? <span>Contactează-ne</span></h2>
         
         <div class="contact-info">
-            Telefon: <span>[Aici pui numărul tău]</span>
+            📞 Telefon: <span>0770 547 916</span>
         </div>
         <div class="contact-info">
-            Email: <span>[Aici pui adresa de email]</span>
+            📧 Email: <span>darieclaudiumarian01@gmail.com</span>
         </div>
-        <div class="contact-info" style="color: var(--text-muted); font-size: 1.3rem;">
-            📍 Locație: [Aici pui locația service-ului]
+        
+        <!-- Caseta cu locația -->
+        <div class="location-box">
+            📍 Momentan intervențiile se efectuează exclusiv <strong>remote</strong> sau la <strong>domiciliul clientului</strong>.
+            <span>* În curând vom deschide un sediu fizic în București, Sector 4.</span>
         </div>
 
-        <a href="#" class="btn-call">Sună Acum</a>
+        <!-- Butoanele de actiune -->
+        <div class="action-buttons">
+            <a href="tel:+40770547916" class="btn-action btn-call">📞 Apel Direct</a>
+            <a href="sms:+40770547916" class="btn-action btn-sms">💬 Trimite SMS</a>
+            <a href="https://wa.me/40770547916" class="btn-action btn-wa">🟩 WhatsApp</a>
+            <a href="mailto:darieclaudiumarian01@gmail.com" class="btn-action btn-email">📧 Trimite Email</a>
+        </div>
     </div>
 
-    <!-- Scripturi pentru animații și particule -->
-    <!-- Biblioteca AOS -->
+    <!-- Scripturi -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Biblioteca Particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <script>
-        // Inițializare AOS (animațiile de intrare la scroll)
-        AOS.init({
-            once: false, // animațiile se repetă când dai scroll sus/jos
-            offset: 100
-        });
+        AOS.init({ once: false, offset: 100 });
 
-        // Configurare Particule Interactive
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": ["#00f0ff", "#ff003c"] }, // Culori neon
+                "color": { "value": ["#00f0ff", "#ff003c"] },
                 "shape": { "type": "circle" },
                 "opacity": { "value": 0.5, "random": true },
                 "size": { "value": 3, "random": true },
                 "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#00f0ff",
-                    "opacity": 0.2,
-                    "width": 1
+                    "enable": true, "distance": 150, "color": "#00f0ff",
+                    "opacity": 0.2, "width": 1
                 },
-                "move": {
-                    "enable": true,
-                    "speed": 2,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                }
+                "move": { "enable": true, "speed": 2, "out_mode": "out" }
             },
             "interactivity": {
                 "detect_on": "window",
                 "events": {
-                    "onhover": { "enable": true, "mode": "grab" }, // Se conectează la cursor
-                    "onclick": { "enable": true, "mode": "push" }, // Adaugă particule la click
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" },
                     "resize": true
                 },
                 "modes": {
@@ -433,22 +439,13 @@
             "retina_detect": true
         });
 
-        // Logica pentru Cursor Custom
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
 
         window.addEventListener('mousemove', function(e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
-
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-            
-            // Animatie smooth pentru cerculetul exterior
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 150, fill: "forwards" });
+            const posX = e.clientX; const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 150, fill: "forwards" });
         });
     </script>
 </body>
