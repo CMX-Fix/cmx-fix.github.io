@@ -11,7 +11,7 @@
     <style>
         :root {
             --bg-dark: #090a0f;
-            --panel-bg: rgba(18, 20, 29, 0.6);
+            --panel-bg: rgba(18, 20, 29, 0.7);
             --neon-blue: #00f0ff;
             --neon-red: #ff003c;
             --neon-green: #25D366;
@@ -30,7 +30,7 @@
         .cursor-dot { width: 8px; height: 8px; background-color: #e5e7eb; box-shadow: 0 0 10px rgba(229, 231, 235, 0.9); }
         .cursor-outline { width: 40px; height: 40px; border: 2px solid rgba(229, 231, 235, 0.5); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 12px rgba(229, 231, 235, 0.2); }
         
-        a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline, .nav-icon:hover ~ .cursor-outline, .nav-logo-link:hover ~ .cursor-outline, input:hover ~ .cursor-outline { 
+        a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline, .product-card:hover ~ .cursor-outline, .nav-icon:hover ~ .cursor-outline, .nav-logo-link:hover ~ .cursor-outline, input:hover ~ .cursor-outline { 
             width: 60px; height: 60px; border-color: var(--neon-blue); background-color: rgba(0, 240, 255, 0.1); 
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
         }
@@ -76,7 +76,6 @@
             width: 160px; overflow: hidden; position: relative; cursor: pointer; 
         }
         
-        /* Titlu Cursiv (Marquee) dacă depășește spațiul */
         .music-title-container { width: 100%; overflow: hidden; white-space: nowrap; }
         .music-title { 
             font-size: 0.75rem; color: var(--neon-blue); letter-spacing: 0.5px; 
@@ -89,7 +88,6 @@
         }
         .music-status { font-size: 0.65rem; color: var(--text-muted); }
 
-        /* Fereastra Copyright care apare DOAR la click pe titlu */
         .copyright-popup {
             position: absolute; bottom: 65px; right: 0; width: 320px;
             background: rgba(8, 10, 15, 0.98); border: 1px solid var(--neon-blue);
@@ -103,7 +101,6 @@
         .copyright-popup p { margin: 0 0 5px 0; font-size: 0.8rem; color: var(--text-muted); word-break: break-all; }
         .close-cp { position: absolute; top: 8px; right: 10px; background: none; border: none; color: var(--neon-red); font-weight: bold; cursor: pointer; font-size: 0.9rem; }
 
-        /* Control Volum Interactiv */
         .volume-container { position: relative; display: flex; align-items: center; }
         .volume-slider-popup {
             position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%) scaleY(0);
@@ -260,14 +257,92 @@
 
         .hero-banner p { font-size: 1.35rem; color: var(--text-main); line-height: 1.6; margin: 0; font-weight: 500; }
 
-        /* --- SECTIUNI --- */
+        /* --- PAGINA DE SERVICII HARDWARE (Stil NDR PC) --- */
+        .hardware-page { display: none; padding: 140px 20px 80px 20px; min-height: 100vh; max-width: 1300px; margin: 0 auto; }
+        .hardware-page.active { display: block; }
+
+        .hardware-hero {
+            background: linear-gradient(rgba(5, 5, 8, 0.7), rgba(5, 5, 8, 0.85)), 
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 16px; padding: 60px 20px; text-align: center; margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        }
+        .hardware-hero h2 { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; color: #fff; margin: 0; text-shadow: 0 0 15px var(--neon-blue); }
+
+        /* Bara de control */
+        .shop-controls {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--panel-bg); border: 1px solid rgba(42, 45, 61, 0.8);
+            border-radius: 12px; padding: 15px 25px; margin-bottom: 40px; backdrop-filter: blur(10px);
+            flex-wrap: wrap; gap: 15px;
+        }
+        .filter-dropdown-container { position: relative; }
+        .btn-control-bar {
+            background: rgba(9, 10, 15, 0.9); border: 1px solid var(--neon-blue); color: #fff;
+            padding: 8px 18px; border-radius: 8px; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem;
+            cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px;
+        }
+        .btn-control-bar:hover { background: rgba(0, 240, 255, 0.15); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
+
+        .filter-menu {
+            position: absolute; top: calc(100% + 10px); left: 0; background: #090a0f; border: 1px solid var(--neon-blue);
+            border-radius: 10px; width: 180px; display: none; list-style: none; padding: 5px 0; margin: 0; z-index: 100;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
+        }
+        .filter-menu.active { display: block; }
+        .filter-menu li { padding: 10px 15px; cursor: pointer; transition: 0.2s; color: var(--text-main); font-size: 1.1rem; }
+        .filter-menu li:hover { background: rgba(0, 240, 255, 0.15); color: var(--neon-blue); padding-left: 20px; }
+
+        .sort-container { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
+        .sort-container select {
+            background: rgba(9, 10, 15, 0.9); border: 1px solid #2a2d3d; color: #fff;
+            padding: 8px 15px; border-radius: 8px; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; cursor: pointer;
+        }
+        .sort-container select:focus { border-color: var(--neon-blue); }
+
+        .products-counter { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--neon-blue); }
+
+        /* --- CARDURI INTERACTIVE CU SCHIMBARE DE IMAGINE LA HOVER --- */
+        .hardware-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .product-card {
+            background: var(--panel-bg); border: 1px solid rgba(42, 45, 61, 0.8); border-radius: 15px;
+            overflow: hidden; backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-8px); border-color: var(--neon-blue);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 30px rgba(0, 240, 255, 0.4);
+        }
+        .product-card:hover .product-title {
+            text-decoration: underline; text-underline-offset: 6px; color: var(--neon-blue);
+        }
+        
+        .product-img-box { width: 100%; height: 200px; background: #000; overflow: hidden; position: relative; }
+        
+        /* Gestionarea imaginii principale și a celei de la hover (Before/After sau Asamblat) */
+        .product-img-box img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease;
+        }
+        .product-img-box .img-hover { opacity: 0; }
+        .product-card:hover .product-img-box .img-default { opacity: 0; transform: scale(1.05); }
+        .product-card:hover .product-img-box .img-hover { opacity: 1; transform: scale(1.05); }
+
+        .product-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .product-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: #fff; margin: 0 0 10px 0; transition: color 0.3s; }
+        .product-price { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: var(--neon-blue); font-weight: bold; margin-top: 10px; }
+
+        /* --- SECTIUNI PRINCIPALE --- */
+        .main-home-content { display: block; }
+        .main-home-content.hidden { display: none; }
+
         .section-padding { padding-top: 140px; padding-bottom: 60px; min-height: 80vh; }
         .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; position: relative; }
         .section-title { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.8rem; color: #fff; margin-bottom: 60px; text-transform: uppercase; }
         .section-title span { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
         .title-red span { color: var(--neon-red); text-shadow: 0 0 15px var(--neon-red); }
 
-        /* --- GRID SERVICII & 3D CARDS --- */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
         .card { background-color: var(--panel-bg); border: 1px solid rgba(42, 45, 61, 0.5); border-radius: 15px; padding: 40px; backdrop-filter: blur(15px); position: relative; overflow: hidden; transform-style: preserve-3d; }
         .card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.2), transparent); transform: rotate(45deg); transition: 0.6s; opacity: 0; pointer-events: none; }
@@ -313,6 +388,7 @@
             .services-grid { grid-template-columns: 1fr; }
             .search-box.active { width: 150px; }
             .music-player-widget { bottom: 10px; right: 10px; padding: 8px 12px; }
+            .shop-controls { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
@@ -327,14 +403,12 @@
 
     <!-- AUDIO PLAYER CMX RADIO -->
     <div class="music-player-widget" id="music-widget">
-        
-        <!-- Fereastra de Atribuire Copyright (Apare DOAR la click pe titlu) -->
         <div class="copyright-popup" id="copyright-popup">
             <button class="close-cp" id="close-cp-btn">✕</button>
             <h5 id="cp-song-title">Song: Gabriaawll - Recall</h5>
-            <p>Music provided by NoCopyrightSounds</p>
-            <p>Free Download/Stream:<br><a id="cp-link-stream" href="http://ncs.io/Recall" target="_blank" style="color:var(--neon-blue);">http://ncs.io/Recall</a></p>
-            <p>Watch:<br><a id="cp-link-watch" href="http://ncs.link.to/RecallAT/youtube" target="_blank" style="color:var(--neon-blue);">http://ncs.link.to/RecallAT/youtube</a></p>
+            <p>Music provided by NoCopyrightSounds[cite: 3]</p>
+            <p>Free Download/Stream:<br><a id="cp-link-stream" href="http://ncs.io/Recall" target="_blank" style="color:var(--neon-blue);">http://ncs.io/Recall</a>[cite: 3]</p>
+            <p>Watch:<br><a id="cp-link-watch" href="http://ncs.link.to/RecallAT/youtube" target="_blank" style="color:var(--neon-blue);">http://ncs.link.to/RecallAT/youtube</a>[cite: 3]</p>
         </div>
 
         <div class="music-controls">
@@ -342,7 +416,6 @@
             <button class="music-btn-main" id="music-toggle-btn" title="Play/Pause">▶</button>
             <button class="music-btn" id="music-next" title="Melodia Următoare">⏭</button>
             
-            <!-- Buton Volum cu Slider -->
             <div class="volume-container">
                 <button class="music-btn" title="Volum">🔊</button>
                 <div class="volume-slider-popup">
@@ -357,7 +430,7 @@
         
         <div class="music-info" id="music-info-clickable" title="Apasă pentru detalii Copyright">
             <div class="music-title-container">
-                <span class="music-title" id="music-title-text">Gabriaawll - Recall</span>
+                <span class="music-title" id="music-title-text">Gabriaawll - Recall</span>[cite: 3]
             </div>
             <span class="music-status">CMX Radio (Info)</span>
         </div>
@@ -367,8 +440,6 @@
 
     <nav class="navbar">
         <div class="nav-top">
-            
-            <!-- CĂUTARE LIVE -->
             <div class="search-container">
                 <div class="nav-icon" id="search-icon" title="Căutare">🔍</div>
                 <div class="search-box" id="search-box">
@@ -377,18 +448,13 @@
                 </div>
             </div>
             
-            <!-- LOGO -->
-            <a href="#acasa" class="nav-logo-link">
+            <a href="#acasa" class="nav-logo-link" id="logo-home-link">
                 <img src="logo.jfif" alt="CMX Fix Logo" class="nav-logo-img">
             </a>
 
-            <!-- CONT LOGIN & REGISTER POP-UP -->
             <div class="user-container">
                 <div class="nav-icon" id="user-icon" title="Contul Meu">👤</div>
-                
                 <div class="login-popup" id="login-popup">
-                    
-                    <!-- Formular Conectare -->
                     <div id="login-form-panel" class="form-panel active-form">
                         <h4>Conectare Cont</h4>
                         <form id="form-login">
@@ -410,7 +476,6 @@
                         </div>
                     </div>
 
-                    <!-- Formular Creare Cont -->
                     <div id="register-form-panel" class="form-panel">
                         <h4>Creare Cont Nou</h4>
                         <form id="form-register">
@@ -434,17 +499,15 @@
                             Ai deja cont? <a id="to-login">Conectare</a>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
         <ul class="nav-menu">
-            <li><a href="#acasa">Acasă</a></li>
+            <li><a href="#acasa" id="nav-acasa">Acasă</a></li>
             <li class="dropdown">
                 <a href="#servicii">Servicii IT <span class="arrow">v</span></a>
                 <div class="dropdown-content">
-                    <a href="#hardware">Hardware</a>
+                    <a href="#hardware" id="nav-hardware">Hardware</a>
                     <a href="#software">Software</a>
                 </div>
             </li>
@@ -454,88 +517,199 @@
         </ul>
     </nav>
 
-    <!-- ACASĂ -->
-    <div id="acasa" class="hero section-observer" data-bg="radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%)">
-        <div class="hero-banner" data-aos="zoom-in" data-aos-duration="1000">
-            <h1>Bine ai venit la CMX!</h1>
-            <p>Servicii IT pentru oricine — de la pasionații de hardware, calculatoare, laptopuri și console, până la oricine are nevoie de o simplă mentenanță sau o soluție rapidă.<br><br>Curând, deschidem și secțiunea de magazin: componente, accesorii variate, produse de îngrijire și multe altele.</p>
+    <!-- CONȚINUTUL PRINCIPAL (ACASĂ) -->
+    <div id="main-home-wrapper" class="main-home-content">
+        <div id="acasa" class="hero section-observer" data-bg="radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%)">
+            <div class="hero-banner" data-aos="zoom-in" data-aos-duration="1000">
+                <h1>Bine ai venit la CMX!</h1>
+                <p>Servicii IT pentru oricine — de la pasionații de hardware, calculatoare, laptopuri și console, până la oricine are nevoie de o simplă mentenanță sau o soluție rapidă.<br><br>Curând, deschidem și secțiunea de magazin: componente, accesorii variate, produse de îngrijire și multe altele.</p>
+            </div>
+        </div>
+
+        <div class="container" id="servicii">
+            <div id="hardware" class="section-padding section-observer" data-bg="radial-gradient(circle at top right, rgba(255, 0, 60, 0.15) 0%, #090a0f 70%)">
+                <h2 class="section-title title-red" data-aos="zoom-in">Servicii IT <span>Hardware</span></h2>
+                <div class="services-grid">
+                    <div class="card red-glow" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2" id="card-goto-hardware" style="cursor: pointer;">
+                        <h3>💻 Mentenanță Laptop / PC</h3>
+                        <ul>
+                            <li>Curățare profesională de praf</li>
+                            <li>Înlocuire pastă termoconductoare</li>
+                            <li>Schimbare display / tastatură</li>
+                            <li>Reparații balamale & carcase</li>
+                        </ul>
+                        <p style="color:var(--neon-blue); margin-top:15px; font-weight:bold;">👉 Apasă pentru a vizualiza toate Serviciile Hardware</p>
+                    </div>
+                    <div class="card red-glow" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-aos-delay="200">
+                        <h3>🎮 Mentenanță Console</h3>
+                        <ul>
+                            <li>Curățare PS5 / Xbox Series X</li>
+                            <li>Schimbare metal lichid</li>
+                            <li>Remediere supraîncălzire</li>
+                            <li>Reparații controllere (Stick drift)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="software" class="section-padding section-observer" data-bg="radial-gradient(circle at top left, rgba(0, 240, 255, 0.15) 0%, #090a0f 70%)">
+                <h2 class="section-title" data-aos="zoom-in">Servicii IT <span>Software</span></h2>
+                <div class="services-grid">
+                    <div class="card" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
+                        <h3>📀 Instalare & Optimizare</h3>
+                        <ul>
+                            <li>Instalare Windows 10/11</li>
+                            <li>Instalare drivere & Office</li>
+                            <li>Devirusare sistem</li>
+                            <li>Optimizări pentru Gaming</li>
+                        </ul>
+                    </div>
+                    <div class="card" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-aos-delay="200">
+                        <h3>⚙️ BIOS & Recuperare</h3>
+                        <ul>
+                            <li>Update BIOS în siguranță</li>
+                            <li>Recuperare date pierdute (HDD/SSD)</li>
+                            <li>Configurare partiții</li>
+                            <li>Backup profesional</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="faq" class="section-padding section-observer" data-bg="radial-gradient(circle at center, rgba(252, 232, 3, 0.1) 0%, #090a0f 80%)">
+                <h2 class="section-title" data-aos="zoom-in" style="color:#fff;">Întrebări <span>Frecvente</span></h2>
+                <div class="placeholder-box">
+                    [Aici vom pune întrebările clienților...]
+                </div>
+            </div>
+            
+            <div id="despre" class="section-padding section-observer" data-bg="radial-gradient(circle at bottom, rgba(37, 211, 102, 0.1) 0%, #090a0f 80%)">
+                <h2 class="section-title" data-aos="zoom-in" style="color:#fff;">Despre <span>Mine</span></h2>
+                <div class="placeholder-box">
+                    [Aici vom pune povestea ta...]
+                </div>
+            </div>
+
+            <div class="newsletter-box" data-aos="fade-up">
+                <h3>Fii primul care află de oferte!</h3>
+                <p style="color:var(--text-muted); font-size:1.2rem;">Abonează-te la newsletter, este rapid și gratuit.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Introdu adresa ta de email..." required>
+                    <button type="submit">Abonează-te</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="container" id="servicii">
-        <!-- HARDWARE -->
-        <div id="hardware" class="section-padding section-observer" data-bg="radial-gradient(circle at top right, rgba(255, 0, 60, 0.15) 0%, #090a0f 70%)">
-            <h2 class="section-title title-red" data-aos="zoom-in">Servicii IT <span>Hardware</span></h2>
-            <div class="services-grid">
-                <div class="card red-glow" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
-                    <h3>💻 Mentenanță Laptop / PC</h3>
-                    <ul>
-                        <li>Curățare profesională de praf</li>
-                        <li>Înlocuire pastă termoconductoare</li>
-                        <li>Schimbare display / tastatură</li>
-                        <li>Reparații balamale & carcase</li>
-                    </ul>
-                </div>
-                <div class="card red-glow" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-aos-delay="200">
-                    <h3>🎮 Mentenanță Console</h3>
-                    <ul>
-                        <li>Curățare PS5 / Xbox Series X</li>
-                        <li>Schimbare metal lichid</li>
-                        <li>Remediere supraîncălzire</li>
-                        <li>Reparații controllere (Stick drift)</li>
-                    </ul>
-                </div>
+    <!-- PAGINA NOUĂ: SERVICII HARDWARE (Cu Hover Interactiv Before/After și Asamblat) -->
+    <div id="hardware-page-wrapper" class="hardware-page">
+        <div class="hardware-hero">
+            <h2>Servicii IT pentru device-urile tale</h2>
+        </div>
+
+        <div class="shop-controls">
+            <!-- Filtrează -->
+            <div class="filter-dropdown-container">
+                <button class="btn-control-bar" id="filter-btn">
+                    ⚙️ Filtrează <span id="current-filter-label" style="color:var(--neon-blue); margin-left:5px;">(Toate)</span>
+                </button>
+                <ul class="filter-menu" id="filter-menu">
+                    <li data-filter="all">Toate serviciile</li>
+                    <li data-filter="pc">Doar PC</li>
+                    <li data-filter="laptop">Doar Laptop</li>
+                    <li data-filter="consola">Doar Consolă</li>
+                </ul>
+            </div>
+
+            <!-- Sortează după -->
+            <div class="sort-container">
+                <span>Sortează după:</span>
+                <select id="sort-select">
+                    <option value="recomandat">Recomandat</option>
+                    <option value="crescator">Preț crescător</option>
+                    <option value="descrescator">Preț descrescător</option>
+                </select>
+            </div>
+
+            <!-- Contor produse dinamice -->
+            <div class="products-counter">
+                <span id="products-count-number">0</span> produse
             </div>
         </div>
 
-        <!-- SOFTWARE -->
-        <div id="software" class="section-padding section-observer" data-bg="radial-gradient(circle at top left, rgba(0, 240, 255, 0.15) 0%, #090a0f 70%)">
-            <h2 class="section-title" data-aos="zoom-in">Servicii IT <span>Software</span></h2>
-            <div class="services-grid">
-                <div class="card" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
-                    <h3>📀 Instalare & Optimizare</h3>
-                    <ul>
-                        <li>Instalare Windows 10/11</li>
-                        <li>Instalare drivere & Office</li>
-                        <li>Devirusare sistem</li>
-                        <li>Optimizări pentru Gaming</li>
-                    </ul>
+        <!-- Grila cu Serviciile Hardware -->
+        <div class="hardware-grid" id="hardware-cards-grid">
+            
+            <!-- 1. Asamblare PC -->
+            <div class="product-card" data-category="pc" data-price="499.99">
+                <div class="product-img-box">
+                    <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=600&auto=format&fit=crop" alt="Componente Neasamblate" class="img-default">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="PC Asamblat și Curat" class="img-hover">
                 </div>
-                <div class="card" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-aos-delay="200">
-                    <h3>⚙️ BIOS & Recuperare</h3>
-                    <ul>
-                        <li>Update BIOS în siguranță</li>
-                        <li>Recuperare date pierdute (HDD/SSD)</li>
-                        <li>Configurare partiții</li>
-                        <li>Backup profesional</li>
-                    </ul>
+                <div class="product-content">
+                    <h3 class="product-title">Asamblare PC</h3>
+                    <p class="product-price">499,99 lei</p>
                 </div>
             </div>
-        </div>
 
-        <!-- FAQ -->
-        <div id="faq" class="section-padding section-observer" data-bg="radial-gradient(circle at center, rgba(252, 232, 3, 0.1) 0%, #090a0f 80%)">
-            <h2 class="section-title" data-aos="zoom-in" style="color:#fff;">Întrebări <span>Frecvente</span></h2>
-            <div class="placeholder-box">
-                [Aici vom pune întrebările clienților...]
+            <!-- 2. Mentenanță PC -->
+            <div class="product-card" data-category="pc" data-price="399.99">
+                <div class="product-img-box">
+                    <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=600&auto=format&fit=crop" alt="PC Prafuiesc / Before" class="img-default">
+                    <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=600&auto=format&fit=crop" alt="PC Curat / After" class="img-hover">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Mentenanță PC</h3>
+                    <p class="product-price">De la 399,99 lei</p>
+                </div>
             </div>
-        </div>
-        
-        <!-- DESPRE MINE -->
-        <div id="despre" class="section-padding section-observer" data-bg="radial-gradient(circle at bottom, rgba(37, 211, 102, 0.1) 0%, #090a0f 80%)">
-            <h2 class="section-title" data-aos="zoom-in" style="color:#fff;">Despre <span>Mine</span></h2>
-            <div class="placeholder-box">
-                [Aici vom pune povestea ta...]
-            </div>
-        </div>
 
-        <!-- NEWSLETTER -->
-        <div class="newsletter-box" data-aos="fade-up">
-            <h3>Fii primul care află de oferte!</h3>
-            <p style="color:var(--text-muted); font-size:1.2rem;">Abonează-te la newsletter, este rapid și gratuit.</p>
-            <div class="newsletter-form">
-                <input type="email" placeholder="Introdu adresa ta de email..." required>
-                <button type="submit">Abonează-te</button>
+            <!-- 3. Înlocuire componente PC -->
+            <div class="product-card" data-category="pc" data-price="29.99">
+                <div class="product-img-box">
+                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop" alt="Componente Vechi" class="img-default">
+                    <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=600&auto=format&fit=crop" alt="Componente Noi" class="img-hover">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Înlocuire componente - PC</h3>
+                    <p class="product-price">De la 29,99 lei</p>
+                </div>
+            </div>
+
+            <!-- 4. Mentenanță laptop -->
+            <div class="product-card" data-category="laptop" data-price="249.99">
+                <div class="product-img-box">
+                    <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=600&auto=format&fit=crop" alt="Laptop Murdar" class="img-default">
+                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop" alt="Laptop Curățat" class="img-hover">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Mentenanță laptop</h3>
+                    <p class="product-price">De la 249,99 lei</p>
+                </div>
+            </div>
+
+            <!-- 5. Înlocuire piese laptop -->
+            <div class="product-card" data-category="laptop" data-price="99.99">
+                <div class="product-img-box">
+                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop" alt="Piese Uzate" class="img-default">
+                    <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=600&auto=format&fit=crop" alt="Piese Schimbate" class="img-hover">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Înlocuire piese - Laptop</h3>
+                    <p class="product-price">De la 99,99 lei</p>
+                </div>
+            </div>
+
+            <!-- 6. Mentenanță console -->
+            <div class="product-card" data-category="consola" data-price="199.99">
+                <div class="product-img-box">
+                    <img src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=600&auto=format&fit=crop" alt="Consolă Prafuita" class="img-default">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Consolă Curățată" class="img-hover">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Mentenanță console</h3>
+                    <p class="product-price">De la 199,99 lei</p>
+                </div>
             </div>
         </div>
     </div>
@@ -569,7 +743,7 @@
             "interactivity": { "detect_on": "window", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } } }, "retina_detect": true
         });
 
-        // Cursor custom și fum natural de lumânare (gri-alb)
+        // Cursor custom și fum natural de lumânare
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         let mouseX = window.innerWidth / 2;
@@ -594,7 +768,114 @@
         }, 60);
 
         // ==========================================
-        // CMX RADIO - PLAYER AUDIO CU DETALII NCS LA CLICK
+        // COMUTARE PAGINĂ ACASĂ <-> HARDWARE PAGE
+        // ==========================================
+        const mainHomeWrapper = document.getElementById('main-home-wrapper');
+        const hardwarePageWrapper = document.getElementById('hardware-page-wrapper');
+        const navHardware = document.getElementById('nav-hardware');
+        const cardGotoHardware = document.getElementById('card-goto-hardware');
+        const navAcasa = document.getElementById('nav-acasa');
+        const logoHomeLink = document.getElementById('logo-home-link');
+
+        function showHomePage() {
+            hardwarePageWrapper.classList.remove('active');
+            mainHomeWrapper.classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function showHardwarePage() {
+            mainHomeWrapper.classList.add('hidden');
+            hardwarePageWrapper.classList.add('active');
+            window.scrollTo(0, 0);
+            updateProductsCount();
+        }
+
+        navHardware.addEventListener('click', (e) => {
+            e.preventDefault();
+            showHardwarePage();
+        });
+
+        cardGotoHardware.addEventListener('click', () => {
+            showHardwarePage();
+        });
+
+        navAcasa.addEventListener('click', (e) => {
+            e.preventDefault();
+            showHomePage();
+        });
+
+        logoHomeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showHomePage();
+        });
+
+        // ==========================================
+        // FILTRARE, SORTARE ȘI CONTOR PRODUSE HARDWARE
+        // ==========================================
+        const filterBtn = document.getElementById('filter-btn');
+        const filterMenu = document.getElementById('filter-menu');
+        const currentFilterLabel = document.getElementById('current-filter-label');
+        const sortSelect = document.getElementById('sort-select');
+        const productsCountNumber = document.getElementById('products-count-number');
+        const gridContainer = document.getElementById('hardware-cards-grid');
+        const productCards = Array.from(gridContainer.getElementsByClassName('product-card'));
+
+        let activeFilter = 'all';
+
+        filterBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            filterMenu.classList.toggle('active');
+        });
+
+        filterMenu.querySelectorAll('li').forEach(li => {
+            li.addEventListener('click', () => {
+                activeFilter = li.getAttribute('data-filter');
+                currentFilterLabel.textContent = `(${li.textContent})`;
+                filterMenu.classList.remove('active');
+                filterAndSortProducts();
+            });
+        });
+
+        sortSelect.addEventListener('change', () => {
+            filterAndSortProducts();
+        });
+
+        function updateProductsCount() {
+            const visibleCards = productCards.filter(card => card.style.display !== 'none');
+            productsCountNumber.textContent = visibleCards.length;
+        }
+
+        function filterAndSortProducts() {
+            productCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                if (activeFilter === 'all' || category === activeFilter) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const sortVal = sortSelect.value;
+            let visibleCards = productCards.filter(card => card.style.display !== 'none');
+
+            visibleCards.sort((a, b) => {
+                const priceA = parseFloat(a.getAttribute('data-price'));
+                const priceB = parseFloat(b.getAttribute('data-price'));
+                if (sortVal === 'crescator') return priceA - priceB;
+                if (sortVal === 'descrescator') return priceB - priceA;
+                return 0;
+            });
+
+            visibleCards.forEach(card => gridContainer.appendChild(card));
+            updateProductsCount();
+        }
+
+        document.addEventListener('click', () => {
+            filterMenu.classList.remove('active');
+        });
+
+        // ==========================================
+        // CMX RADIO - PLAYER AUDIO CU DETALII NCS
         // ==========================================
         const playlist = [
             { 
@@ -629,7 +910,6 @@
         const musicTitleText = document.getElementById('music-title-text');
         const volumeSlider = document.getElementById('volume-slider');
         
-        // Elemente pop-up copyright
         const musicInfoClickable = document.getElementById('music-info-clickable');
         const copyrightPopup = document.getElementById('copyright-popup');
         const closeCpBtn = document.getElementById('close-cp-btn');
@@ -682,12 +962,10 @@
             playTrack();
         });
 
-        // Control Volum
         volumeSlider.addEventListener('input', (e) => {
             bgAudio.volume = e.target.value;
         });
 
-        // Toggle Pop-up Copyright la click pe titlu
         musicInfoClickable.addEventListener('click', (e) => {
             e.stopPropagation();
             copyrightPopup.classList.toggle('active');
@@ -738,7 +1016,7 @@
         const searchResults = document.getElementById('search-results');
 
         const siteKeywords = [
-            { title: "Servicii Hardware (Laptop / PC)", link: "#hardware" },
+            { title: "Servicii Hardware (Asamblare, Mentenanță)", link: "#hardware" },
             { title: "Curățare Praf și Pastă", link: "#hardware" },
             { title: "Reparații Console (PS5, Xbox)", link: "#hardware" },
             { title: "Servicii Software (Windows)", link: "#software" },
@@ -766,6 +1044,7 @@
                         const li = document.createElement('li');
                         li.textContent = item.title;
                         li.onclick = () => {
+                            showHomePage();
                             window.location.href = item.link;
                             searchBox.classList.remove('active');
                             searchInput.value = '';
