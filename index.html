@@ -25,25 +25,30 @@
 
         body { margin: 0; background-color: var(--bg-dark); color: var(--text-main); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
 
-        /* --- CURSOR CUSTOM CU EFECT DE FUM --- */
+        /* --- CURSOR CUSTOM CU CEAȚĂ CONTINUĂ --- */
         .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
-        .cursor-dot { width: 8px; height: 8px; background-color: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
-        .cursor-outline { width: 40px; height: 40px; border: 2px solid var(--neon-blue); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--neon-blue); box-shadow: 0 0 12px var(--neon-blue); }
+        .cursor-outline { width: 40px; height: 40px; border: 2px solid var(--neon-blue); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
         
         a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline, .nav-icon:hover ~ .cursor-outline, .nav-logo-link:hover ~ .cursor-outline, input:hover ~ .cursor-outline { 
             width: 60px; height: 60px; border-color: var(--neon-red); background-color: rgba(255, 0, 60, 0.1); 
-            box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+            box-shadow: 0 0 25px rgba(255, 0, 60, 0.5);
         }
 
+        /* Particule de ceață/fum constante din cursor */
         .cursor-smoke {
-            position: fixed; pointer-events: none; border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,240,255,0.6) 0%, rgba(255,0,60,0.2) 50%, transparent 80%);
-            z-index: 9998; transform: translate(-50%, -50%);
-            animation: smokeFade 0.8s linear forwards;
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,240,255,0.7) 0%, rgba(255,0,60,0.3) 40%, transparent 80%);
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            animation: smokeRise 1.2s ease-out forwards;
         }
-        @keyframes smokeFade {
-            0% { width: 10px; height: 10px; opacity: 0.8; filter: blur(2px); }
-            100% { width: 45px; height: 45px; opacity: 0; filter: blur(6px); transform: translate(-50%, -50%) scale(1.5); }
+
+        @keyframes smokeRise {
+            0% { width: 15px; height: 15px; opacity: 0.9; filter: blur(3px); transform: translate(-50%, -50%) scale(1); }
+            100% { width: 60px; height: 60px; opacity: 0; filter: blur(8px); transform: translate(calc(-50% + (var(--rand-x, 0) * 20px)), calc(-50% - 30px)) scale(1.8); }
         }
 
         /* --- MUSIC PLAYER AMBIENTAL --- */
@@ -65,7 +70,6 @@
         .music-title { font-size: 0.8rem; color: var(--neon-blue); letter-spacing: 1px; }
         .music-status { font-size: 0.7rem; color: var(--text-muted); }
 
-        /* Egalizator animat */
         .equalizer { display: flex; align-items: flex-end; gap: 2px; height: 14px; width: 16px; }
         .equalizer span { display: block; width: 3px; background: var(--neon-blue); animation: eqAnim 0.8s infinite ease-in-out alternate; }
         .equalizer span:nth-child(2) { animation-delay: 0.2s; }
@@ -277,7 +281,7 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- AUDIO PLAYER WIDGET (Muzică ambientală de fundal) -->
+    <!-- AUDIO PLAYER WIDGET -->
     <div class="music-player-widget" id="music-widget">
         <button class="music-btn" id="music-toggle-btn" title="Play/Pause">▶</button>
         <div class="equalizer paused" id="eq-bars">
@@ -287,7 +291,6 @@
             <span class="music-title">CMX Chill Vibe</span>
             <span class="music-status" id="music-status-text">Apasă pentru sunet</span>
         </div>
-        <!-- Link direct către un mix audio ambiental stabil (Lofi / Chill) -->
         <audio id="bg-audio" loop>
             <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
         </audio>
@@ -497,27 +500,34 @@
             "interactivity": { "detect_on": "window", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } } }, "retina_detect": true
         });
 
-        // Cursor custom și fum neon
+        // Cursor custom și generator de ceață continuă (chiar și când stă pe loc)
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         
-        window.addEventListener('mousemove', function(e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            
-            cursorDot.style.left = `${posX}px`; 
-            cursorDot.style.top = `${posY}px`;
-            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 150, fill: "forwards" });
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
 
-            if (Math.random() < 0.3) {
-                const smoke = document.createElement('div');
-                smoke.classList.add('cursor-smoke');
-                smoke.style.left = `${posX}px`;
-                smoke.style.top = `${posY}px`;
-                document.body.appendChild(smoke);
-                setTimeout(() => { smoke.remove(); }, 800);
-            }
+        window.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.left = `${mouseX}px`; 
+            cursorDot.style.top = `${mouseY}px`;
+            cursorOutline.animate({ left: `${mouseX}px`, top: `${mouseY}px` }, { duration: 150, fill: "forwards" });
         });
+
+        // Creează continuu particule de ceață în poziția curentă a cursorului (chiar și pe loc)
+        setInterval(() => {
+            const smoke = document.createElement('div');
+            smoke.classList.add('cursor-smoke');
+            smoke.style.left = `${mouseX}px`;
+            smoke.style.top = `${mouseY}px`;
+            smoke.style.setProperty('--rand-x', (Math.random() - 0.5));
+            document.body.appendChild(smoke);
+
+            setTimeout(() => {
+                smoke.remove();
+            }, 1200);
+        }, 100); // generează o particulă de ceață la fiecare 0.1 secunde
 
         // --- PLAYER AUDIO LOGIC ---
         const bgAudio = document.getElementById('bg-audio');
@@ -540,14 +550,13 @@
                     musicStatusText.textContent = "Redare Ambientală";
                     isPlaying = true;
                 }).catch(e => {
-                    console.log("Autoplay blocat de browser până la primul gest al utilizatorului.");
+                    console.log("Autoplay blocat de browser.");
                 });
             }
         }
 
         musicToggleBtn.addEventListener('click', toggleMusic);
 
-        // Încearcă să pornească automat la prima interacțiune pe pagină (click sau scroll)
         function autoPlayAudioOnce() {
             if (!isPlaying) {
                 bgAudio.play().then(() => {
