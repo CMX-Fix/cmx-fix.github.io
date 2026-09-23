@@ -39,26 +39,47 @@
         /* --- MENIU PRINCIPAL --- */
         .navbar { position: fixed; top: 0; width: 100%; background: #050505; z-index: 1000; display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #1a1a1a; }
         .nav-top { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1300px; padding: 10px 30px; position: relative; }
-        .nav-icon { font-size: 1.4rem; color: #fff; transition: 0.3s; z-index: 10; }
-        .nav-icon:hover { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+        
+        /* Iconițe cu animație fină de atenție la hover */
+        .nav-icon { 
+            font-size: 1.5rem; 
+            color: #fff; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            z-index: 10; 
+            display: inline-block;
+        }
+        .nav-icon:hover { 
+            color: var(--neon-blue); 
+            transform: scale(1.2) rotate(15deg);
+            text-shadow: 0 0 15px var(--neon-blue); 
+        }
 
-        /* --- SEARCH BAR (Extensibilă) --- */
+        /* --- SEARCH BAR --- */
         .search-container { display: flex; align-items: center; position: relative; z-index: 1002; }
         .search-box { display: flex; align-items: center; width: 0; overflow: hidden; transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); margin-left: 10px; position: relative; }
         .search-box.active { width: 250px; }
-        .search-box input { width: 100%; padding: 8px 15px; border-radius: 20px; border: 1px solid var(--neon-blue); background: rgba(9, 10, 15, 0.8); color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+        .search-box input { width: 100%; padding: 8px 15px; border-radius: 20px; border: 1px solid var(--neon-blue); background: rgba(9, 10, 15, 0.9); color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
         .search-box input:focus { box-shadow: 0 0 15px rgba(0, 240, 255, 0.5); }
         
-        /* Dropdown Search Results */
         .search-results { display: none; position: absolute; top: 40px; left: 0; width: 250px; background: #050505; border: 1px solid var(--neon-blue); border-radius: 10px; list-style: none; padding: 5px 0; margin: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.8); }
         .search-results li { padding: 10px 15px; font-size: 1.1rem; color: #fff; border-bottom: 1px solid #1a1a1a; transition: 0.2s; }
         .search-results li:last-child { border-bottom: none; }
         .search-results li:hover { background: rgba(0, 240, 255, 0.15); color: var(--neon-blue); padding-left: 20px; }
 
-        /* --- USER LOGIN POP-UP --- */
+        /* --- USER LOGIN POP-UP (Cu tranziție elastică/bounce) --- */
         .user-container { position: relative; display: flex; align-items: center; z-index: 1002; }
-        .login-popup { position: absolute; top: 45px; right: 0; width: 300px; background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-red); border-radius: 15px; padding: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 20px rgba(255, 0, 60, 0.2); backdrop-filter: blur(10px); transform: translateY(-20px); opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-        .login-popup.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .login-popup { 
+            position: absolute; top: 50px; right: 0; width: 300px; 
+            background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-red); border-radius: 15px; padding: 25px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 20px rgba(255, 0, 60, 0.2); backdrop-filter: blur(10px); 
+            transform: translateY(-20px) scale(0.95); opacity: 0; pointer-events: none; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .login-popup.active { 
+            transform: translateY(0) scale(1); 
+            opacity: 1; 
+            pointer-events: auto; 
+        }
         .login-popup h4 { margin: 0 0 20px 0; font-family: 'Orbitron', sans-serif; font-size: 1.4rem; color: #fff; text-align: center; border-bottom: 1px solid #2a2d3d; padding-bottom: 10px; }
         .login-popup input[type="text"], .login-popup input[type="password"] { width: 100%; padding: 10px 15px; margin-bottom: 15px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; transition: 0.3s; }
         .login-popup input:focus { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
@@ -79,17 +100,61 @@
         .nav-logo-img { height: 60px; width: auto; border-radius: 8px; transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), box-shadow 0.3s; box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); position: relative; z-index: 1; }
         .nav-logo-link:hover .nav-logo-img { transform: scale(1.15) rotate(360deg); box-shadow: 0 0 20px rgba(0, 240, 255, 0.8); }
 
-        /* --- CONTINUARE MENIU --- */
+        /* --- MENIU & DROPDOWN STABILIZAT --- */
         .nav-menu { display: flex; justify-content: center; gap: 35px; list-style: none; margin: 0; padding: 5px 0 15px 0; }
         .nav-menu > li > a { color: #fff; text-decoration: none; font-family: 'Rajdhani', sans-serif; font-size: 1.25rem; letter-spacing: 0.5px; padding-bottom: 4px; transition: 0.3s; }
         .nav-menu > li > a:hover { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; color: var(--neon-blue); }
         .arrow { display: inline-block; font-size: 0.8rem; margin-left: 3px; transition: transform 0.3s; }
-        .dropdown:hover .arrow { transform: rotate(180deg); color: var(--neon-blue); }
+        
         .dropdown { position: relative; }
-        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: #000; min-width: 200px; border-radius: 12px; padding: 10px 0; margin-top: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9); border: 1px solid #1a1a1a; z-index: 1001; }
-        .dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
-        .dropdown-content a { display: block; color: #fff; text-decoration: none; font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; padding: 12px 25px; transition: 0.2s; }
+        
+        /* Zona de siguranță invizibilă (podul) ca să nu dispară meniul când muți mouse-ul */
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 25px; /* Spațiul dintre text și pop-up */
+            background: transparent;
+        }
+
+        .dropdown-content {
+            display: none; 
+            position: absolute; 
+            top: calc(100% + 20px); /* Poziționat sub pod */
+            left: 50%; 
+            transform: translateX(-50%);
+            background: #000; 
+            min-width: 200px; 
+            border-radius: 12px; 
+            padding: 10px 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9); 
+            border: 1px solid #1a1a1a; 
+            z-index: 1001;
+        }
+
+        /* Menținem pop-up-ul deschis cu o mică întârziere la ieșire */
+        .dropdown:hover .dropdown-content { 
+            display: block; 
+            animation: fadeIn 0.25s ease; 
+        }
+        .dropdown:hover .arrow { transform: rotate(180deg); color: var(--neon-blue); }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translate(-50%, 15px); } 
+            to { opacity: 1; transform: translate(-50%, 0); } 
+        }
+
+        .dropdown-content a { 
+            display: block; 
+            color: #fff; 
+            text-decoration: none; 
+            font-family: 'Rajdhani', sans-serif; 
+            font-size: 1.15rem; 
+            padding: 12px 25px; 
+            transition: 0.2s; 
+        }
         .dropdown-content a:hover { background: rgba(0, 240, 255, 0.1); color: var(--neon-blue); padding-left: 30px; }
 
         /* --- SECTIUNI --- */
@@ -169,7 +234,7 @@
                 </div>
             </div>
             
-            <!-- LOGO: setat direct cu logo.jfif -->
+            <!-- LOGO -->
             <a href="#acasa" class="nav-logo-link">
                 <img src="logo.jfif" alt="CMX Fix Logo" class="nav-logo-img">
             </a>
