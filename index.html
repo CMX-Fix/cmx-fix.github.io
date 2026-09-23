@@ -127,7 +127,7 @@
         .dropdown-content a { display: block; color: #fff; text-decoration: none; font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; padding: 12px 25px; transition: 0.2s; }
         .dropdown-content a:hover { background: rgba(0, 240, 255, 0.1); color: var(--neon-blue); padding-left: 30px; }
 
-        /* --- STIL NOU HERO (Stil NDR PC Setup) --- */
+        /* --- HERO & EFECT DE FUM NEON PE CASETĂ --- */
         .hero {
             position: relative;
             min-height: 100vh;
@@ -136,13 +136,13 @@
             justify-content: center;
             text-align: center;
             padding: 140px 20px 60px 20px;
-            /* Fundal cu setup de PC / Gaming iluminat RGB (dark & neon vibe) */
             background: linear-gradient(rgba(5, 5, 8, 0.65), rgba(5, 5, 8, 0.85)), 
                         url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
             border-bottom: 2px solid rgba(0, 240, 255, 0.3);
         }
 
         .hero-banner {
+            position: relative;
             background: rgba(10, 10, 15, 0.88);
             border: 1px solid rgba(0, 240, 255, 0.3);
             border-radius: 16px;
@@ -151,6 +151,45 @@
             width: 100%;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.15);
             backdrop-filter: blur(12px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+        }
+
+        /* Efectul de fum / lumină difuză în spatele casetei la hover */
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 105%; height: 105%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            border-radius: 20px;
+            background: transparent;
+            z-index: -1;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 
+                0 0 30px 15px rgba(0, 240, 255, 0.4),
+                0 0 60px 30px rgba(255, 0, 60, 0.3),
+                0 0 90px 45px rgba(138, 43, 226, 0.2);
+            filter: blur(15px);
+            transition: opacity 0.5s ease;
+        }
+
+        .hero-banner:hover::before {
+            opacity: 1;
+            animation: bannerSmoke 4s linear infinite;
+        }
+
+        @keyframes bannerSmoke {
+            0% { filter: blur(15px) hue-rotate(0deg); transform: translate(-50%, -50%) scale(1); }
+            50% { filter: blur(20px) hue-rotate(180deg); transform: translate(-50%, -50%) scale(1.02); }
+            100% { filter: blur(15px) hue-rotate(360deg); transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .hero-banner:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: var(--neon-blue);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 240, 255, 0.4);
         }
 
         .hero-banner h1 {
@@ -323,7 +362,7 @@
         </ul>
     </nav>
 
-    <!-- ACASĂ (Hero cu Setup Tech și Casetă Stil NDR PC) -->
+    <!-- ACASĂ (Hero cu Casetă și Efect Neon Smoked la Hover) -->
     <div id="acasa" class="hero section-observer" data-bg="radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%)">
         <div class="hero-banner" data-aos="zoom-in" data-aos-duration="1000">
             <h1>Bine ai venit la CMX!</h1>
