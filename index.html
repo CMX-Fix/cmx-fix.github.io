@@ -25,31 +25,31 @@
 
         body { margin: 0; background-color: var(--bg-dark); color: var(--text-main); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
 
-        /* --- CURSOR CUSTOM CU CEAȚĂ VIZIBILĂ ȘI INTENSĂ --- */
+        /* --- CURSOR CUSTOM CU CEAȚĂ CLASICĂ DE LUMÂNARE (GRI-ALB) --- */
         .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
-        .cursor-dot { width: 10px; height: 10px; background-color: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
-        .cursor-outline { width: 45px; height: 45px; border: 2px solid var(--neon-blue); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+        .cursor-dot { width: 10px; height: 10px; background-color: #d1d5db; box-shadow: 0 0 10px rgba(209, 213, 219, 0.8); }
+        .cursor-outline { width: 45px; height: 45px; border: 2px solid rgba(209, 213, 219, 0.6); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 15px rgba(209, 213, 219, 0.2); }
         
         a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline, .nav-icon:hover ~ .cursor-outline, .nav-logo-link:hover ~ .cursor-outline, input:hover ~ .cursor-outline { 
-            width: 65px; height: 65px; border-color: var(--neon-red); background-color: rgba(255, 0, 60, 0.15); 
-            box-shadow: 0 0 30px rgba(255, 0, 60, 0.6);
+            width: 65px; height: 65px; border-color: var(--neon-blue); background-color: rgba(0, 240, 255, 0.1); 
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
         }
 
         .cursor-smoke {
             position: fixed; pointer-events: none; border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,240,255,0.85) 0%, rgba(255,0,60,0.5) 45%, transparent 85%);
+            background: radial-gradient(circle, rgba(220, 225, 235, 0.75) 0%, rgba(140, 150, 165, 0.35) 45%, transparent 80%);
             z-index: 9998; transform: translate(-50%, -50%);
-            animation: heavySmokeRise 1.5s ease-out forwards;
+            animation: candleSmokeRise 1.6s ease-out forwards;
         }
-        @keyframes heavySmokeRise {
-            0% { width: 20px; height: 20px; opacity: 0.95; filter: blur(4px); transform: translate(-50%, -50%) scale(1); }
-            100% { width: 90px; height: 90px; opacity: 0; filter: blur(12px); transform: translate(calc(-50% + (var(--rand-x, 0) * 40px)), calc(-50% - 50px)) scale(2.2); }
+        @keyframes candleSmokeRise {
+            0% { width: 18px; height: 18px; opacity: 0.85; filter: blur(4px); transform: translate(-50%, -50%) scale(1); }
+            100% { width: 85px; height: 85px; opacity: 0; filter: blur(14px); transform: translate(calc(-50% + (var(--rand-x, 0) * 35px)), calc(-50% - 60px)) scale(2); }
         }
 
-        /* --- MUSIC PLAYER CMX RADIO --- */
+        /* --- MUSIC PLAYER CMX RADIO & COPYRIGHT POP-UP --- */
         .music-player-widget {
             position: fixed; bottom: 20px; right: 20px; z-index: 9997;
-            background: rgba(10, 10, 15, 0.92); border: 1px solid var(--neon-blue);
+            background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-blue);
             border-radius: 20px; padding: 12px 18px; display: flex; align-items: center; gap: 10px;
             backdrop-filter: blur(12px); box-shadow: 0 5px 25px rgba(0, 240, 255, 0.3);
             transition: 0.3s;
@@ -58,22 +58,48 @@
         
         .music-controls { display: flex; align-items: center; gap: 6px; }
         .music-btn {
-            background: transparent; border: 1px solid var(--neon-blue); width: 32px; height: 32px; border-radius: 50%;
-            color: var(--neon-blue); font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+            background: transparent; border: 1px solid var(--neon-blue); width: 30px; height: 30px; border-radius: 50%;
+            color: var(--neon-blue); font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: 0.3s;
         }
         .music-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 10px var(--neon-blue); }
         
         .music-btn-main {
-            background: var(--neon-blue); border: none; width: 38px; height: 38px; border-radius: 50%;
-            color: #000; font-size: 1rem; display: flex; align-items: center; justify-content: center;
+            background: var(--neon-blue); border: none; width: 36px; height: 36px; border-radius: 50%;
+            color: #000; font-size: 0.95rem; display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: 0.3s; font-weight: bold;
         }
         .music-btn-main:hover { background: #fff; transform: scale(1.08); box-shadow: 0 0 15px #fff; }
 
-        .music-info { font-family: 'Orbitron', sans-serif; color: #fff; display: flex; flex-direction: column; min-width: 140px; }
+        .music-info { font-family: 'Orbitron', sans-serif; color: #fff; display: flex; flex-direction: column; min-width: 140px; position: relative; }
         .music-title { font-size: 0.75rem; color: var(--neon-blue); letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
         .music-status { font-size: 0.65rem; color: var(--text-muted); }
+
+        /* Fereastra flotantă cu detalii Copyright la hover pe player */
+        .copyright-tooltip {
+            position: absolute; bottom: 65px; right: 0; width: 300px;
+            background: rgba(8, 10, 15, 0.96); border: 1px solid var(--neon-blue);
+            border-radius: 12px; padding: 15px; font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+            opacity: 0; pointer-events: none; transform: translateY(10px);
+            transition: all 0.3s ease; z-index: 9999; line-height: 1.4;
+        }
+        .music-player-widget:hover .copyright-tooltip {
+            opacity: 1; pointer-events: auto; transform: translateY(0);
+        }
+        .copyright-tooltip h5 { margin: 0 0 8px 0; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 0.85rem; border-bottom: 1px solid #2a2d3d; padding-bottom: 5px; }
+        .copyright-tooltip p { margin: 0; font-size: 0.8rem; color: var(--text-muted); word-break: break-all; }
+
+        /* Control Volum */
+        .volume-container { position: relative; display: flex; align-items: center; }
+        .volume-slider-popup {
+            position: absolute; bottom: 45px; left: 50%; transform: translateX(-50%) scaleY(0);
+            transform-origin: bottom; background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-blue);
+            padding: 15px 10px; border-radius: 10px; transition: transform 0.2s ease; display: flex; justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.8); z-index: 1000;
+        }
+        .volume-container:hover .volume-slider-popup, .volume-slider-popup:hover { transform: translateX(-50%) scaleY(1); }
+        .volume-slider-popup input[type="range"] { writing-mode: vertical-lr; direction: rtl; width: 8px; height: 80px; accent-color: var(--neon-blue); cursor: pointer; }
 
         .equalizer { display: flex; align-items: flex-end; gap: 2px; height: 12px; width: 14px; margin-left: 4px; }
         .equalizer span { display: block; width: 2.5px; background: var(--neon-blue); animation: eqAnim 0.8s infinite ease-in-out alternate; }
@@ -286,21 +312,39 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- AUDIO PLAYER CMX RADIO -->
+    <!-- AUDIO PLAYER CMX RADIO CU POP-UP COPYRIGHT & CONTROL VOLUM -->
     <div class="music-player-widget" id="music-widget">
+        
+        <!-- Fereastra de Atribuire Copyright (Apare la hover pe player) -->
+        <div class="copyright-tooltip" id="copyright-box">
+            <h5 id="cp-song-title">Song: Gabriaawll - Recall</h5>
+            <p>Music provided by NoCopyrightSounds[cite: 5]</p>
+            <p style="margin-top: 4px;">Free Download / Stream:<br><span id="cp-link-stream" style="color:var(--neon-blue);">http://ncs.io/Recall</span>[cite: 5]</p>
+        </div>
+
         <div class="music-controls">
             <button class="music-btn" id="music-prev" title="Melodia Anterioară">⏮</button>
             <button class="music-btn-main" id="music-toggle-btn" title="Play/Pause">▶</button>
             <button class="music-btn" id="music-next" title="Melodia Următoare">⏭</button>
+            
+            <!-- Buton cu Slider Volum -->
+            <div class="volume-container">
+                <button class="music-btn" title="Volum">🔊</button>
+                <div class="volume-slider-popup">
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.8">
+                </div>
+            </div>
         </div>
+
         <div class="equalizer paused" id="eq-bars">
             <span></span><span></span><span></span>
         </div>
+        
         <div class="music-info">
-            <span class="music-title" id="music-title-text">CMX Radio</span>
-            <span class="music-status" id="music-status-text">Apasă play</span>
+            <span class="music-title" id="music-title-text">Gabriaawll - Recall</span>[cite: 5]
+            <span class="music-status" id="music-status-text">CMX Radio (Hover pentru info)</span>
         </div>
-        <!-- Elementul Audio care va rula piesele tale NCS -->
+
         <audio id="bg-audio"></audio>
     </div>
 
@@ -508,7 +552,7 @@
             "interactivity": { "detect_on": "window", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } } }, "retina_detect": true
         });
 
-        // Cursor custom și generator de ceață intensă vizibilă (și pe loc, și în mișcare)
+        // Cursor custom și fum clasic de lumânare (gri-alb, vizibil pe loc și în mișcare)
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         let mouseX = window.innerWidth / 2;
@@ -529,16 +573,31 @@
             smoke.style.top = `${mouseY}px`;
             smoke.style.setProperty('--rand-x', (Math.random() - 0.5));
             document.body.appendChild(smoke);
-            setTimeout(() => { smoke.remove(); }, 1500);
-        }, 80);
+            setTimeout(() => { smoke.remove(); }, 1600);
+        }, 70);
 
         // ==========================================
-        // CMX RADIO - PLAYER AUDIO NCS
+        // CMX RADIO - PLAYER AUDIO CU COPYRIGHT & VOLUM
         // ==========================================
         const playlist = [
-            { title: "Gabriaawll - Recall", src: "melodie1.mp3" },
-            { title: "Crushed Candy - Oh My Gawd", src: "melodie2.mp3" },
-            { title: "MANSHN - Code", src: "melodie3.mp3" }
+            { 
+                title: "Gabriaawll - Recall", 
+                src: "melodie1.mp3",
+                cpTitle: "Song: Gabriaawll - Recall",
+                cpLink: "http://ncs.io/Recall"
+            },
+            { 
+                title: "Crushed Candy - Oh My Gawd", 
+                src: "melodie2.mp3",
+                cpTitle: "Song: Crushed Candy - Oh My Gawd",
+                cpLink: "http://ncs.io/CC_OMG"
+            },
+            { 
+                title: "MANSHN - Code", 
+                src: "melodie3.mp3",
+                cpTitle: "Song: MANSHN - Code",
+                cpLink: "http://ncs.io/Code"
+            }
         ];
 
         let currentTrackIndex = 0;
@@ -549,11 +608,16 @@
         const eqBars = document.getElementById('eq-bars');
         const musicTitleText = document.getElementById('music-title-text');
         const musicStatusText = document.getElementById('music-status-text');
+        const volumeSlider = document.getElementById('volume-slider');
+        const cpSongTitle = document.getElementById('cp-song-title');
+        const cpLinkStream = document.getElementById('cp-link-stream');
         let isPlaying = false;
 
         function loadTrack(index) {
             bgAudio.src = playlist[index].src;
             musicTitleText.textContent = playlist[index].title;
+            cpSongTitle.textContent = playlist[index].cpTitle;
+            cpLinkStream.textContent = playlist[index].cpLink;
             bgAudio.load();
         }
 
@@ -564,7 +628,7 @@
                 eqBars.classList.remove('paused');
                 musicStatusText.textContent = "CMX Radio Live";
             }).catch(e => {
-                console.log("Redarea automată necesită o interacțiune pe pagină.");
+                console.log("Redarea automată necesită interacțiune.");
             });
         }
 
@@ -577,11 +641,7 @@
         }
 
         musicToggleBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                pauseTrack();
-            } else {
-                playTrack();
-            }
+            if (isPlaying) { pauseTrack(); } else { playTrack(); }
         });
 
         musicNextBtn.addEventListener('click', () => {
@@ -594,6 +654,11 @@
             currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
             loadTrack(currentTrackIndex);
             playTrack();
+        });
+
+        // Control Volum
+        volumeSlider.addEventListener('input', (e) => {
+            bgAudio.volume = e.target.value;
         });
 
         bgAudio.addEventListener('ended', () => {
@@ -614,6 +679,7 @@
         window.addEventListener('scroll', initAudioOnInteraction);
 
         loadTrack(currentTrackIndex);
+        bgAudio.volume = 0.8; // Setare volum inițial
 
         // --- RESTUL FUNCȚIONALITĂȚILOR (Search, Login, Scroll) ---
         const sections = document.querySelectorAll('.section-observer');
