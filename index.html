@@ -274,7 +274,7 @@
             display: flex; justify-content: space-between; align-items: center;
             background: var(--panel-bg); border: 1px solid rgba(42, 45, 61, 0.8);
             border-radius: 12px; padding: 15px 25px; margin-bottom: 40px; backdrop-filter: blur(10px);
-            flex-wrap: wrap; gap: 15px;
+            flex-wrap: wrap; gap: 15px; position: relative; z-index: 100;
         }
         .filter-dropdown-container { position: relative; }
         .btn-control-bar {
@@ -284,14 +284,16 @@
         }
         .btn-control-bar:hover { background: rgba(0, 240, 255, 0.15); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
 
+        /* --- POP-UP FILTREAZĂ PE DEASUPRA --- */
         .filter-menu {
-            position: absolute; top: calc(100% + 10px); left: 0; background: #090a0f; border: 1px solid var(--neon-blue);
-            border-radius: 10px; width: 180px; display: none; list-style: none; padding: 5px 0; margin: 0; z-index: 100;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
+            position: absolute; top: calc(100% + 10px); left: 0; background: rgba(9, 10, 15, 0.98); border: 1px solid var(--neon-blue);
+            border-radius: 12px; width: 220px; display: none; list-style: none; padding: 10px 0; margin: 0; z-index: 1000;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.95), 0 0 20px rgba(0, 240, 255, 0.2); backdrop-filter: blur(15px);
         }
-        .filter-menu.active { display: block; }
-        .filter-menu li { padding: 10px 15px; cursor: pointer; transition: 0.2s; color: var(--text-main); font-size: 1.1rem; }
-        .filter-menu li:hover { background: rgba(0, 240, 255, 0.15); color: var(--neon-blue); padding-left: 20px; }
+        .filter-menu.active { display: block; animation: fadeInPopup 0.25s ease; }
+        .filter-menu li { padding: 12px 20px; cursor: pointer; transition: 0.2s; color: var(--text-main); font-size: 1.15rem; border-bottom: 1px solid #1a1a1a; }
+        .filter-menu li:last-child { border-bottom: none; }
+        .filter-menu li:hover { background: rgba(0, 240, 255, 0.15); color: var(--neon-blue); padding-left: 25px; }
 
         .sort-container { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
         .sort-container select {
@@ -306,7 +308,7 @@
         .product-card {
             background: var(--panel-bg); border: 1px solid rgba(42, 45, 61, 0.8); border-radius: 15px;
             overflow: hidden; backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; position: relative; cursor: pointer;
+            display: flex; flex-direction: column; position: relative; cursor: pointer; z-index: 1;
         }
         .product-card:hover {
             transform: translateY(-8px); border-color: var(--neon-blue);
@@ -329,7 +331,7 @@
         .product-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: #fff; margin: 0 0 10px 0; transition: color 0.3s; }
         .product-price { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: var(--neon-blue); font-weight: bold; margin-top: 10px; }
 
-        /* --- PAGINĂ DETALIU PRODUS (Stil NDR PC din screenshot) --- */
+        /* --- PAGINĂ DETALIU PRODUS --- */
         .product-detail-page { display: none; padding: 140px 20px 80px 20px; min-height: 100vh; max-width: 1300px; margin: 0 auto; }
         .product-detail-page.active { display: block; }
 
@@ -655,15 +657,16 @@
         </div>
 
         <div class="shop-controls">
+            <!-- Pop-up Filtrează pe deasupra -->
             <div class="filter-dropdown-container">
                 <button class="btn-control-bar" id="filter-btn">
-                    ⚙️ Filtrează <span id="current-filter-label" style="color:var(--neon-blue); margin-left:5px;">(Toate)</span>
+                    ⚙️ Filtrează <span id="current-filter-label" style="color:var(--neon-blue); margin-left:5px;">(Toate serviciile)</span>
                 </button>
                 <ul class="filter-menu" id="filter-menu">
                     <li data-filter="all">Toate serviciile</li>
-                    <li data-filter="pc">Doar PC</li>
-                    <li data-filter="laptop">Doar Laptop</li>
-                    <li data-filter="consola">Doar Consolă</li>
+                    <li data-filter="pc">Servicii PC</li>
+                    <li data-filter="laptop">Servicii Laptop</li>
+                    <li data-filter="consola">Servicii Console</li>
                 </ul>
             </div>
 
@@ -757,25 +760,21 @@
         </div>
     </div>
 
-    <!-- PAGINA NOUĂ: DETALIU PRODUS (Stil NDR PC din screenshot) -->
+    <!-- PAGINA NOUĂ: DETALIU PRODUS -->
     <div id="product-detail-wrapper" class="product-detail-page">
         <button class="back-to-shop-btn" id="back-to-list-btn">← Înapoi la Servicii Hardware</button>
         
         <div class="product-detail-layout">
-            <!-- Galeria Foto -->
             <div>
                 <div class="product-gallery-main">
                     <img id="main-product-img" src="" alt="Produs CMX">
                 </div>
-                <div class="product-thumbnails" id="product-thumbs-container">
-                    <!-- Miniaturile generate dinamic -->
-                </div>
+                <div class="product-thumbnails" id="product-thumbs-container"></div>
             </div>
 
-            <!-- Informații Produs -->
             <div class="product-detail-info">
                 <h2 id="detail-title">Asamblare PC</h2>
-                <div class="product-reviews" id="detail-reviews">★★★★★ 2 recenzii</div>
+                <div class="product-reviews" id="detail-reviews">★★★★★ 2 recenzii[cite: 12]</div>
                 <div class="product-detail-price" id="detail-price">499,99 lei</div>
 
                 <div class="cart-action-box">
@@ -788,15 +787,15 @@
                 </div>
 
                 <div class="product-description-box">
-                    <h4 id="detail-desc-title">Asamblare Premium (pentru performanță maximă):</h4>
+                    <h4 id="detail-desc-title">Asamblare Premium (pentru performanță maximă)[cite: 12]:</h4>
                     <ul id="detail-desc-list">
-                        <li>Montare și organizare componente</li>
-                        <li>Cooling management</li>
-                        <li>Aplicare pastă termo premium</li>
-                        <li>Cable management profesionist</li>
-                        <li>Verificare componente</li>
+                        <li>Montare și organizare componente[cite: 12]</li>
+                        <li>Cooling management[cite: 12]</li>
+                        <li>Aplicare pastă termo premium (Thermal Grizzly Kryonaut)[cite: 12]</li>
+                        <li>Cable management profesionist[cite: 12]</li>
+                        <li>Verificare componente[cite: 12]</li>
                     </ul>
-                    <p id="detail-extra-info" style="margin-top: 15px; color:var(--text-muted);">
+                    <p id="detail-extra-info" style="margin-top: 15px; color:var(--neon-blue); font-weight: bold;">
                         ⚡ Transport rapid prin curier - execuție în 24-72 de ore!
                     </p>
                 </div>
@@ -858,19 +857,19 @@
         }, 60);
 
         // ==========================================
-        // DATE SERVICII HARDWARE (Detalii pentru pagini individuale)
+        // DATE SERVICII HARDWARE
         // ==========================================
         const servicesData = {
             "asamblare-pc": {
                 title: "Asamblare PC",
-                reviews: "★★★★★ 2 recenzii",
+                reviews: "★★★★★ 2 recenzii[cite: 12]",
                 price: "499,99 lei",
                 images: [
                     "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop",
                     "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=800&auto=format&fit=crop",
                     "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=800&auto=format&fit=crop"
                 ],
-                descTitle: "Asamblare Premium (pentru performanță maximă):",
+                descTitle: "Asamblare Premium (pentru performanță maximă)[cite: 12]:",
                 items: [
                     "Montare și organizare componente[cite: 12]",
                     "Cooling management[cite: 12]",
@@ -942,7 +941,7 @@
                 descTitle: "Intervenții Hardware Laptop:",
                 items: [
                     "Înlocuire display spart / tastatură defectă",
-                    "Reparații sau înlocuire carcase și balamale rupe",
+                    "Reparații sau înlocuire carcase și balamale rupte",
                     "Schimbare mufă alimentare sau porturi USB",
                     "Upgrade SSD / RAM"
                 ]
@@ -966,7 +965,7 @@
         };
 
         // ==========================================
-        // COMUTARE PAGINI (Acasă <-> Listă Hardware <-> Detaliu Produs)
+        // COMUTARE PAGINI
         // ==========================================
         const mainHomeWrapper = document.getElementById('main-home-wrapper');
         const hardwarePageWrapper = document.getElementById('hardware-page-wrapper');
@@ -1015,7 +1014,6 @@
                 ul.appendChild(li);
             });
 
-            // Setare Galerie
             const mainImg = document.getElementById('main-product-img');
             mainImg.src = data.images[0];
 
@@ -1033,7 +1031,6 @@
                 thumbsContainer.appendChild(thumb);
             });
 
-            // Reset cantitate la 1
             document.getElementById('qty-input').value = "1";
         }
 
@@ -1043,7 +1040,6 @@
         logoHomeLink.addEventListener('click', (e) => { e.preventDefault(); showHomePage(); });
         backToListBtn.addEventListener('click', () => { showHardwarePage(); });
 
-        // Click pe cardurile de produse pentru a deschide pagina de detaliu
         document.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('click', () => {
                 const sId = card.getAttribute('data-id');
@@ -1051,9 +1047,7 @@
             });
         });
 
-        // ==========================================
-        // SELECTOR CANTITATE & ADAUGĂ ÎN COȘ
-        // ==========================================
+        // Selector cantitate & Coș
         const qtyInput = document.getElementById('qty-input');
         document.getElementById('qty-minus').addEventListener('click', () => {
             let val = parseInt(qtyInput.value);
@@ -1071,7 +1065,7 @@
         });
 
         // ==========================================
-        // FILTRARE, SORTARE ȘI CONTOR PRODUSE HARDWARE
+        // FILTRARE, SORTARE ȘI CONTOR PRODUSE
         // ==========================================
         const filterBtn = document.getElementById('filter-btn');
         const filterMenu = document.getElementById('filter-menu');
@@ -1131,8 +1125,10 @@
             updateProductsCount();
         }
 
-        document.addEventListener('click', () => {
-            filterMenu.classList.remove('active');
+        document.addEventListener('click', (e) => {
+            if (!filterMenu.contains(e.target) && e.target !== filterBtn) {
+                filterMenu.classList.remove('active');
+            }
         });
 
         // ==========================================
