@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMX Fix | Service IT & Console</title>
     <!-- Fonturi -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Biblioteca AOS pentru efecte de intrare -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
@@ -20,9 +20,10 @@
             --text-muted: #8b949e;
         }
 
-        * {
-            box-sizing: border-box;
-            cursor: none;
+        * { box-sizing: border-box; cursor: none; }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -42,171 +43,182 @@
             z-index: 9999;
             pointer-events: none;
         }
-        .cursor-dot {
-            width: 8px; height: 8px;
-            background-color: var(--neon-blue);
-        }
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--neon-blue); }
         .cursor-outline {
-            width: 40px; height: 40px;
-            border: 2px solid var(--neon-blue);
+            width: 40px; height: 40px; border: 2px solid var(--neon-blue);
             transition: width 0.2s, height 0.2s, border-color 0.2s;
         }
-        a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline {
-            width: 60px; height: 60px;
-            border-color: var(--neon-red);
+        a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline, .nav-icon:hover ~ .cursor-outline {
+            width: 60px; height: 60px; border-color: var(--neon-red);
             background-color: rgba(255, 0, 60, 0.1);
         }
 
         /* --- Fundal Interactiv --- */
         #particles-js {
-            position: fixed;
-            width: 100%; height: 100%;
-            top: 0; left: 0;
-            z-index: -1;
+            position: fixed; width: 100%; height: 100%;
+            top: 0; left: 0; z-index: -1;
             background: radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%);
         }
 
-        /* Hero Section */
+        /* =========================================
+           MENIU PRINCIPAL (Stil NDR.PC curat)
+           ========================================= */
+        .navbar {
+            position: fixed;
+            top: 0; width: 100%;
+            background: #050505; /* Fundal negru curat */
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        
+        .nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1300px;
+            padding: 15px 30px;
+        }
+
+        .nav-icon {
+            font-size: 1.4rem;
+            color: #fff;
+            transition: 0.3s;
+        }
+        .nav-icon:hover {
+            color: var(--neon-blue);
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+            text-transform: uppercase;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            list-style: none;
+            margin: 0;
+            padding: 5px 0 15px 0;
+        }
+
+        .nav-menu > li > a {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            padding-bottom: 4px;
+        }
+
+        /* Efectul de subliniere albă ca în poză */
+        .nav-menu > li > a:hover {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+            text-decoration-thickness: 1px;
+        }
+
+        /* Săgeata pentru dropdown */
+        .arrow {
+            display: inline-block;
+            font-size: 0.8rem;
+            margin-left: 3px;
+            transition: transform 0.3s;
+        }
+        .dropdown:hover .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown (Pop-up pentru Servicii) - Negru, rotunjit */
+        .dropdown { position: relative; }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            min-width: 200px;
+            border-radius: 12px;
+            padding: 10px 0;
+            margin-top: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+            border: 1px solid #1a1a1a;
+            z-index: 1001;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, 10px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        .dropdown-content a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.15rem;
+            padding: 12px 25px;
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+        }
+
+        /* --- Secțiuni Generale --- */
+        .section-padding {
+            padding-top: 160px; /* Ca să nu fie acoperite de meniul fix */
+            padding-bottom: 60px;
+        }
+
         .hero {
             text-align: center;
-            padding: 150px 20px;
-            border-bottom: 2px solid var(--neon-blue);
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.15);
+            padding: 220px 20px 100px 20px;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.3);
             position: relative;
-            background: linear-gradient(to bottom, rgba(9, 10, 15, 0.2), rgba(9, 10, 15, 0.9));
         }
 
         @keyframes neonPulse {
-            0%, 100% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue); }
-            50% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); }
+            0%, 100% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); }
+            50% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); }
         }
 
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 6rem;
-            color: #ffffff;
-            margin: 0;
-            letter-spacing: 6px;
-            animation: neonPulse 2s infinite;
-        }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 5rem; color: #fff; margin: 0; letter-spacing: 5px; animation: neonPulse 2s infinite; }
+        .slogan { font-size: 1.8rem; color: var(--neon-red); margin-top: 20px; text-shadow: 0 0 10px rgba(255, 0, 60, 0.8); }
 
-        .slogan {
-            font-size: 2rem;
-            color: var(--neon-red);
-            margin-top: 20px;
-            text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
-            letter-spacing: 2px;
-            opacity: 0;
-            animation: slideUp 1s forwards 0.5s;
-        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; position: relative; }
+        .section-title { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.5rem; color: #fff; margin-bottom: 50px; text-transform: uppercase; }
+        .section-title span { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
 
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Structura */
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 80px 20px 40px 20px;
-            position: relative;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
+        .placeholder-box {
+            background: var(--panel-bg);
+            border: 1px dashed var(--neon-blue);
+            border-radius: 10px;
+            padding: 50px;
             text-align: center;
-            font-size: 3rem;
-            color: #fff;
-            margin-bottom: 60px;
-            text-transform: uppercase;
-        }
-        .section-title span {
-            color: var(--neon-blue);
-            text-shadow: 0 0 15px var(--neon-blue);
-        }
-
-        /* Servicii (Grilă) */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-bottom: 80px;
-        }
-
-        .card {
-            background-color: var(--panel-bg);
-            border: 1px solid rgba(42, 45, 61, 0.5);
-            border-radius: 15px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: 0.6s;
-            opacity: 0;
-            pointer-events: none;
-        }
-        .card.red-glow::before {
-            background: linear-gradient(45deg, transparent, rgba(255, 0, 60, 0.1), transparent);
-        }
-
-        .card:hover {
-            transform: translateY(-15px) scale(1.02);
-            border-color: var(--neon-blue);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 255, 0.4);
-            z-index: 10;
-        }
-        .card:hover::before { opacity: 1; left: 100%; }
-
-        .card.red-glow:hover {
-            border-color: var(--neon-red);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 0, 60, 0.4);
-        }
-
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.6rem;
-            margin-top: 0;
-            color: #fff;
-            border-bottom: 2px solid #2a2d3d;
-            padding-bottom: 15px;
-            transition: color 0.3s ease;
-        }
-        .card:hover h3 { color: var(--neon-blue); }
-        .card.red-glow:hover h3 { color: var(--neon-red); text-shadow: 0 0 10px rgba(255, 0, 60, 0.5);}
-
-        .card ul {
-            list-style: none;
-            padding: 0; margin: 0;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             color: var(--text-muted);
+            margin-bottom: 50px;
         }
-        .card ul li {
-            margin-bottom: 12px;
-            padding-left: 25px;
-            position: relative;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-        .card:hover ul li { color: #fff; transform: translateX(5px); }
-
-        .card ul li::before {
-            content: "▹"; position: absolute; left: 0;
-            color: var(--neon-blue);
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-        .card.red-glow ul li::before { color: var(--neon-red); }
-        .card:hover ul li::before { text-shadow: 0 0 8px var(--neon-blue); }
-        .card.red-glow:hover ul li::before { text-shadow: 0 0 8px var(--neon-red); }
 
         /* --- Secțiune Newsletter --- */
         .newsletter-box {
@@ -216,224 +228,110 @@
             padding: 40px 20px;
             text-align: center;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 60px auto;
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
-            backdrop-filter: blur(10px);
-            position: relative;
         }
-        .newsletter-box h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: #fff;
-            font-size: 2rem;
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-        .newsletter-box p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-        }
-        .newsletter-form {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .newsletter-form input {
-            padding: 15px 20px;
-            font-size: 1.1rem;
-            font-family: 'Rajdhani', sans-serif;
-            border: 1px solid #2a2d3d;
-            background: #090a0f;
-            color: #fff;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .newsletter-form input:focus {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-        }
-        .newsletter-form button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            background: var(--neon-blue);
-            color: var(--bg-dark);
-            border: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        .newsletter-form button:hover {
-            background: #fff;
-            box-shadow: 0 0 20px #fff;
-        }
+        .newsletter-box h3 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 2rem; margin-top: 0; margin-bottom: 10px; }
+        .newsletter-box p { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 25px; }
+        .newsletter-form { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .newsletter-form input { padding: 15px 20px; font-size: 1.1rem; border: 1px solid #2a2d3d; background: #090a0f; color: #fff; border-radius: 8px; width: 100%; max-width: 400px; outline: none; }
+        .newsletter-form input:focus { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+        .newsletter-form button { padding: 15px 30px; font-size: 1.2rem; font-family: 'Orbitron', sans-serif; font-weight: bold; background: var(--neon-blue); color: var(--bg-dark); border: none; border-radius: 8px; transition: all 0.3s; }
+        .newsletter-form button:hover { background: #fff; box-shadow: 0 0 20px #fff; }
 
         /* Contact & Footer */
-        .contact-footer {
-            background-color: rgba(18, 20, 29, 0.9);
-            border-top: 2px solid var(--neon-red);
-            padding: 60px 20px;
-            text-align: center;
-            box-shadow: 0 -10px 40px rgba(255, 0, 60, 0.15);
-            backdrop-filter: blur(5px);
-            margin-top: 40px;
-        }
-
-        .location-box {
-            background: rgba(42, 45, 61, 0.3);
-            border: 1px solid var(--text-muted);
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 0 auto 30px auto;
-            padding: 20px;
-            font-size: 1.3rem;
-            line-height: 1.6;
-        }
-
-        .location-box span {
-            display: block;
-            margin-top: 10px;
-            color: var(--neon-blue);
-            font-weight: bold;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-        }
-
-        /* Action Buttons Grid */
-        .action-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .btn-action {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: transparent;
-            padding: 15px 30px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            min-width: 200px;
-            border: 2px solid;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .btn-action::before {
-            content: ''; position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            transition: all 0.4s ease; z-index: -1;
-        }
+        .contact-footer { background-color: rgba(18, 20, 29, 0.9); border-top: 2px solid var(--neon-red); padding: 60px 20px; text-align: center; margin-top: 40px; }
+        .location-box { background: rgba(42, 45, 61, 0.3); border: 1px solid var(--text-muted); border-radius: 10px; max-width: 600px; margin: 0 auto 30px auto; padding: 20px; font-size: 1.3rem; line-height: 1.6; }
+        .location-box span { display: block; margin-top: 10px; color: var(--neon-blue); font-weight: bold; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; }
+        .action-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .btn-action { display: flex; align-items: center; justify-content: center; gap: 10px; background: transparent; padding: 15px 30px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: bold; text-decoration: none; border-radius: 8px; transition: all 0.3s; min-width: 200px; border: 2px solid; position: relative; overflow: hidden; z-index: 1; }
+        .btn-action::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; transition: all 0.4s; z-index: -1; }
         .btn-action:hover::before { left: 0; }
         .btn-action:hover { color: var(--bg-dark); }
+        .btn-call { color: var(--neon-blue); border-color: var(--neon-blue); } .btn-call::before { background: var(--neon-blue); }
+        .btn-sms { color: var(--neon-yellow); border-color: var(--neon-yellow); } .btn-sms::before { background: var(--neon-yellow); }
+        .btn-wa { color: var(--neon-green); border-color: var(--neon-green); } .btn-wa::before { background: var(--neon-green); }
+        .btn-email { color: var(--neon-red); border-color: var(--neon-red); } .btn-email::before { background: var(--neon-red); }
 
-        /* Culori individuale butoane */
-        .btn-call { color: var(--neon-blue); border-color: var(--neon-blue); }
-        .btn-call::before { background: var(--neon-blue); }
-        .btn-call:hover { box-shadow: 0 0 25px var(--neon-blue); }
-
-        .btn-sms { color: var(--neon-yellow); border-color: var(--neon-yellow); }
-        .btn-sms::before { background: var(--neon-yellow); }
-        .btn-sms:hover { box-shadow: 0 0 25px var(--neon-yellow); }
-
-        .btn-wa { color: var(--neon-green); border-color: var(--neon-green); }
-        .btn-wa::before { background: var(--neon-green); }
-        .btn-wa:hover { box-shadow: 0 0 25px var(--neon-green); }
-
-        .btn-email { color: var(--neon-red); border-color: var(--neon-red); }
-        .btn-email::before { background: var(--neon-red); }
-        .btn-email:hover { box-shadow: 0 0 25px var(--neon-red); }
-
-        /* Media Query pt telefoane (scris adaptat) */
         @media (max-width: 768px) {
-            h1 { font-size: 4rem; }
+            .nav-top { padding: 15px 20px; }
+            .nav-logo { font-size: 1.8rem; }
+            .nav-menu { flex-wrap: wrap; gap: 15px; }
+            h1 { font-size: 3.5rem; }
             .btn-action { width: 100%; }
-            .newsletter-form input, .newsletter-form button { width: 100%; max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Punctele interactive -->
     <div id="particles-js"></div>
-
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <div class="hero">
+    <!-- MENIU PRINCIPAL -->
+    <nav class="navbar">
+        <div class="nav-top">
+            <div class="nav-icon" title="Căutare">🔍</div>
+            <div class="nav-logo">CMX FIX</div>
+            <div class="nav-icon" title="Contul Meu">👤</div>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#acasa">Acasă</a></li>
+            <li class="dropdown">
+                <a href="#servicii">Servicii IT <span class="arrow">v</span></a>
+                <div class="dropdown-content">
+                    <a href="#hardware">Hardware</a>
+                    <a href="#software">Software</a>
+                </div>
+            </li>
+            <li><a href="#faq">Întrebări frecvente</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#despre">Despre mine</a></li>
+        </ul>
+    </nav>
+
+    <!-- ACASĂ -->
+    <div id="acasa" class="hero section-padding">
         <h1 data-aos="fade-down" data-aos-duration="1000">CMX FIX</h1>
         <div class="slogan">Tu vii cu problema, noi venim cu soluția.</div>
     </div>
 
     <div class="container">
-        <h2 class="section-title" data-aos="zoom-in" data-aos-duration="800">Portofoliu <span>Servicii</span></h2>
         
-        <div class="services-grid">
-            <div class="card" data-aos="fade-up" data-aos-delay="100">
-                <h3>💻 Mentenanță Laptop & PC</h3>
-                <ul>
-                    <li>Curățare profesională de praf</li>
-                    <li>Înlocuire pastă termoconductoare (Grizzly / MX-6)</li>
-                    <li>Schimbare display, tastatură, baterie</li>
-                    <li>Reparații balamale & carcase</li>
-                </ul>
-            </div>
-
-            <div class="card red-glow" data-aos="fade-up" data-aos-delay="200">
-                <h3>⚙️ Custom Builds & Asamblare</h3>
-                <ul>
-                    <li>Asamblare PC din piesele clientului</li>
-                    <li>Cable management premium</li>
-                    <li>Montare sisteme răcire (AIO / Custom)</li>
-                    <li>Teste de stres & termale</li>
-                </ul>
-            </div>
-
-            <div class="card" data-aos="fade-up" data-aos-delay="300">
-                <h3>📀 Software & Optimizări</h3>
-                <ul>
-                    <li>Instalare / Reinstalare Windows</li>
-                    <li>Instalare drivere și Office</li>
-                    <li>Update BIOS</li>
-                    <li>Optimizări maxime pentru Gaming</li>
-                </ul>
-            </div>
-
-            <div class="card red-glow" data-aos="fade-up" data-aos-delay="400">
-                <h3>🎮 Mentenanță Console</h3>
-                <ul>
-                    <li>Curățare PS4/PS5 și Xbox</li>
-                    <li>Schimbare pastă / metal lichid</li>
-                    <li>Remediere supraîncălzire</li>
-                    <li>Reparații controllere (Stick drift)</li>
-                </ul>
-            </div>
-
-            <div class="card" data-aos="fade-up" data-aos-delay="500">
-                <h3>📦 Piese & Accesorii</h3>
-                <ul>
-                    <li>Vânzare SSD-uri și RAM</li>
-                    <li>Cabluri, adaptoare și periferice</li>
-                    <li>Piese de schimb la comandă</li>
-                    <li>Upgrade-uri hardware rapide</li>
-                </ul>
+        <!-- HARDWARE -->
+        <div id="hardware" class="section-padding">
+            <h2 class="section-title" data-aos="zoom-in">Servicii IT <span>Hardware</span></h2>
+            <div class="placeholder-box">
+                [Aici vom detalia reparațiile fizice, asamblările și mentenanța...]
             </div>
         </div>
 
-        <!-- Caseta Newsletter Adăugată Aici -->
-        <div class="newsletter-box" data-aos="fade-up" data-aos-duration="1000">
+        <!-- SOFTWARE -->
+        <div id="software" class="section-padding">
+            <h2 class="section-title" data-aos="zoom-in">Servicii IT <span>Software</span></h2>
+            <div class="placeholder-box">
+                [Aici vom detalia instalările de Windows, optimizările și devirusările...]
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="section-padding">
+            <h2 class="section-title" data-aos="zoom-in">Întrebări <span>Frecvente</span></h2>
+            <div class="placeholder-box">
+                [Aici vom pune întrebările clienților, ex: "Cât durează o diagnosticare?"]
+            </div>
+        </div>
+        
+        <!-- DESPRE MINE -->
+        <div id="despre" class="section-padding">
+            <h2 class="section-title" data-aos="zoom-in">Despre <span>Mine</span></h2>
+            <div class="placeholder-box">
+                [Aici vom pune povestea ta, experiența și pasiunea pentru IT...]
+            </div>
+        </div>
+
+        <!-- NEWSLETTER -->
+        <div class="newsletter-box" data-aos="fade-up">
             <h3>Fii primul care află de oferte!</h3>
             <p>Abonează-te la newsletter, este rapid și gratuit. Promitem să nu facem spam în căsuța ta.</p>
             <div class="newsletter-form">
@@ -441,19 +339,15 @@
                 <button type="submit">Abonează-te</button>
             </div>
         </div>
-
     </div>
 
-    <div class="contact-footer" data-aos="fade-up" data-aos-duration="1000">
+    <!-- CONTACT -->
+    <div id="contact" class="contact-footer section-padding">
         <h2 class="section-title">Ai o urgență tehnică? <span>Contactează-ne</span></h2>
-        
-        <!-- Caseta cu locația -->
         <div class="location-box">
             📍 Momentan intervențiile se efectuează exclusiv <strong>remote</strong> sau la <strong>domiciliul clientului</strong>.
             <span>* În curând vom deschide un sediu fizic în București, Sector 4.</span>
         </div>
-
-        <!-- Butoanele de actiune -->
         <div class="action-buttons">
             <a href="tel:+40770547916" class="btn-action btn-call">📞 Apel Direct</a>
             <a href="sms:+40770547916" class="btn-action btn-sms">💬 Trimite SMS</a>
@@ -462,48 +356,33 @@
         </div>
     </div>
 
-    <!-- Scripturi -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    
     <script>
         AOS.init({ once: false, offset: 100 });
-
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": 80 },
                 "color": { "value": ["#00f0ff", "#ff003c"] },
                 "shape": { "type": "circle" },
                 "opacity": { "value": 0.5, "random": true },
                 "size": { "value": 3, "random": true },
-                "line_linked": {
-                    "enable": true, "distance": 150, "color": "#00f0ff",
-                    "opacity": 0.2, "width": 1
-                },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00f0ff", "opacity": 0.2, "width": 1 },
                 "move": { "enable": true, "speed": 2, "out_mode": "out" }
             },
             "interactivity": {
                 "detect_on": "window",
-                "events": {
-                    "onhover": { "enable": true, "mode": "grab" },
-                    "onclick": { "enable": true, "mode": "push" },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } },
-                    "push": { "particles_nb": 4 }
-                }
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } }
             },
             "retina_detect": true
         });
 
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
-
         window.addEventListener('mousemove', function(e) {
-            const posX = e.clientX; const posY = e.clientY;
-            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
-            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 150, fill: "forwards" });
+            cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 150, fill: "forwards" });
         });
     </script>
 </body>
