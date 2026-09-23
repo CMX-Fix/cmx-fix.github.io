@@ -449,7 +449,7 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- AUDIO PLAYER CMX RADIO (Volum 50% & Autoplay la prima interacțiune) -->
+    <!-- AUDIO PLAYER CMX RADIO -->
     <div class="music-player-widget" id="music-widget">
         <div class="copyright-popup" id="copyright-popup">
             <button class="close-cp" id="close-cp-btn">✕</button>
@@ -656,7 +656,6 @@
         </div>
 
         <div class="shop-controls">
-            <!-- Pop-up Filtrează pe deasupra -->
             <div class="filter-dropdown-container">
                 <button class="btn-control-bar" id="filter-btn">
                     ⚙️ Filtrează <span id="current-filter-label" style="color:var(--neon-blue); margin-left:5px;">(Toate serviciile)</span>
@@ -685,11 +684,11 @@
 
         <div class="hardware-grid" id="hardware-cards-grid">
             
-            <!-- 1. Asamblare PC -->
+            <!-- 1. Asamblare PC (Folosind pozele tale de la asamblare: asamblat & în timpul asamblării) -->
             <div class="product-card" data-id="asamblare-pc" data-category="pc" data-price="499.99">
                 <div class="product-img-box">
-                    <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=600&auto=format&fit=crop" alt="Componente" class="img-default">
-                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Asamblat" class="img-hover">
+                    <img src="after asamblare.jfif" alt="PC Asamblat" class="img-default">
+                    <img src="in timpul asamblarii.jfif" alt="În timpul asamblării" class="img-hover">
                 </div>
                 <div class="product-content">
                     <h3 class="product-title">Asamblare PC</h3>
@@ -846,7 +845,7 @@
         }, 60);
 
         // ==========================================
-        // DATE SERVICII HARDWARE
+        // DATE SERVICII HARDWARE (Folosind pozele tale pentru Asamblare PC)
         // ==========================================
         const servicesData = {
             "asamblare-pc": {
@@ -854,9 +853,9 @@
                 reviews: "★★★★★ 2 recenzii[cite: 12]",
                 price: "499,99 lei",
                 images: [
-                    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=800&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=800&auto=format&fit=crop"
+                    "after asamblare.jfif",
+                    "in timpul asamblarii.jfif",
+                    "before asamblare.jfif"
                 ],
                 isCustomText: true,
                 htmlContent: `
@@ -1148,7 +1147,7 @@
         });
 
         // ==========================================
-        // CMX RADIO - PLAYER AUDIO (Volum 50% & Autoplay la interacțiune)
+        // CMX RADIO - PLAYER AUDIO
         // ==========================================
         const playlist = [
             { 
@@ -1261,11 +1260,10 @@
             playTrack();
         });
 
-        // Autoplay la prima interacțiune pe pagină (click sau scroll) pe volum 50%
         function initAudioOnInteraction() {
             if (!isPlaying) {
                 loadTrack(currentTrackIndex);
-                bgAudio.volume = 0.5; // Setat la 50% conform cerinței
+                bgAudio.volume = 0.5;
                 volumeSlider.value = 0.5;
                 playTrack();
                 window.removeEventListener('click', initAudioOnInteraction);
@@ -1276,7 +1274,7 @@
         window.addEventListener('scroll', initAudioOnInteraction);
 
         loadTrack(currentTrackIndex);
-        bgAudio.volume = 0.5; // Volum inițial 50%
+        bgAudio.volume = 0.5;
 
         // --- RESTUL FUNCȚIONALITĂȚILOR (Search, Login, Scroll) ---
         const sections = document.querySelectorAll('.section-observer');
