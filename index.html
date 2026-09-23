@@ -66,7 +66,7 @@
         /* --- USER LOGIN / REGISTER POP-UP --- */
         .user-container { position: relative; display: flex; align-items: center; z-index: 1002; }
         .login-popup { 
-            position: absolute; top: 50px; right: 0; width: 320px; 
+            position: absolute; top: 50px; right: 0; width: 330px; 
             background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-red); border-radius: 15px; padding: 25px; 
             box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 20px rgba(255, 0, 60, 0.2); backdrop-filter: blur(10px); 
             transform: translateY(-20px) scale(0.95); opacity: 0; pointer-events: none; 
@@ -81,8 +81,19 @@
         .form-panel.active-form { display: block; }
 
         .login-popup h4 { margin: 0 0 20px 0; font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: #fff; text-align: center; border-bottom: 1px solid #2a2d3d; padding-bottom: 10px; }
-        .login-popup input[type="text"], .login-popup input[type="password"], .login-popup input[type="email"] { width: 100%; padding: 10px 15px; margin-bottom: 15px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; transition: 0.3s; }
+        
+        .input-group { position: relative; width: 100%; margin-bottom: 15px; }
+        .login-popup input[type="text"], .login-popup input[type="password"], .login-popup input[type="email"] { width: 100%; padding: 10px 45px 10px 15px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; transition: 0.3s; }
         .login-popup input:focus { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+
+        /* Butonul de ochi pentru vizibilitate parolă */
+        .toggle-password {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: var(--text-muted); cursor: pointer;
+            font-size: 1.2rem; padding: 0; transition: color 0.3s;
+        }
+        .toggle-password:hover { color: var(--neon-blue); }
+
         .login-options { display: flex; justify-content: space-between; align-items: center; font-size: 1rem; color: var(--text-muted); margin-bottom: 20px; }
         .login-options label { display: flex; align-items: center; gap: 5px; }
         
@@ -209,8 +220,13 @@
                     <div id="login-form-panel" class="form-panel active-form">
                         <h4>Conectare Cont</h4>
                         <form onsubmit="event.preventDefault(); alert('Conectare reușită! (Demo)');">
-                            <input type="text" placeholder="Email / Utilizator" required>
-                            <input type="password" placeholder="Parolă" required>
+                            <div class="input-group">
+                                <input type="text" placeholder="Email / Utilizator" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="login-password" placeholder="Parolă" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('login-password', this)">👁️</button>
+                            </div>
                             <div class="login-options">
                                 <label><input type="checkbox"> Rămâi conectat</label>
                                 <a href="#" style="color:var(--neon-blue); text-decoration:none;">Ai uitat parola?</a>
@@ -226,10 +242,20 @@
                     <div id="register-form-panel" class="form-panel">
                         <h4>Creare Cont Nou</h4>
                         <form onsubmit="event.preventDefault(); alert('Cont creat cu succes! (Demo)');">
-                            <input type="text" placeholder="Nume complet" required>
-                            <input type="email" placeholder="Adresă Email" required>
-                            <input type="password" placeholder="Parolă" required>
-                            <input type="password" placeholder="Confirmă Parola" required>
+                            <div class="input-group">
+                                <input type="text" placeholder="Nume complet" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" placeholder="Adresă Email" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="reg-password" placeholder="Parolă" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('reg-password', this)">👁️</button>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="reg-confirm-password" placeholder="Confirmă Parola" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('reg-confirm-password', this)">👁️</button>
+                            </div>
                             <button type="submit" class="btn-auth">ÎNREGISTRARE</button>
                         </form>
                         <div class="switch-form">
@@ -438,6 +464,18 @@
                 searchResults.style.display = 'none';
             }
         });
+
+        // Funcție pentru a arăta / ascunde parola (Toggle Password)
+        function togglePassword(fieldId, btn) {
+            const passwordInput = document.getElementById(fieldId);
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                btn.textContent = "🙈"; // Schimbă iconița când e vizibilă
+            } else {
+                passwordInput.type = "password";
+                btn.textContent = "👁️"; // Revine la ochi normal
+            }
+        }
 
         // Login & Register Pop-up Toggle Logic
         const userIcon = document.getElementById('user-icon');
