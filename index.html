@@ -284,7 +284,6 @@
         }
         .btn-control-bar:hover { background: rgba(0, 240, 255, 0.15); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
 
-        /* --- POP-UP FILTREAZĂ PE DEASUPRA --- */
         .filter-menu {
             position: absolute; top: calc(100% + 10px); left: 0; background: rgba(9, 10, 15, 0.98); border: 1px solid var(--neon-blue);
             border-radius: 12px; width: 220px; display: none; list-style: none; padding: 10px 0; margin: 0; z-index: 1000;
@@ -450,7 +449,7 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- AUDIO PLAYER CMX RADIO -->
+    <!-- AUDIO PLAYER CMX RADIO (Volum 50% & Autoplay la prima interacțiune) -->
     <div class="music-player-widget" id="music-widget">
         <div class="copyright-popup" id="copyright-popup">
             <button class="close-cp" id="close-cp-btn">✕</button>
@@ -468,7 +467,7 @@
             <div class="volume-container">
                 <button class="music-btn" title="Volum">🔊</button>
                 <div class="volume-slider-popup">
-                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.8">
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5">
                 </div>
             </div>
         </div>
@@ -657,6 +656,7 @@
         </div>
 
         <div class="shop-controls">
+            <!-- Pop-up Filtrează pe deasupra -->
             <div class="filter-dropdown-container">
                 <button class="btn-control-bar" id="filter-btn">
                     ⚙️ Filtrează <span id="current-filter-label" style="color:var(--neon-blue); margin-left:5px;">(Toate serviciile)</span>
@@ -786,7 +786,7 @@
                 </div>
 
                 <div class="product-description-box" id="detail-desc-container">
-                    <!-- Dinamic injectat conform textului tău -->
+                    <!-- Dinamic injectat -->
                 </div>
             </div>
         </div>
@@ -846,7 +846,7 @@
         }, 60);
 
         // ==========================================
-        // DATE SERVICII HARDWARE (Inclusiv textul tău exact pentru Asamblare PC)
+        // DATE SERVICII HARDWARE
         // ==========================================
         const servicesData = {
             "asamblare-pc": {
@@ -971,7 +971,7 @@
                     "Curățare profundă de praf și aerisiri",
                     "Înlocuire metal lichid (la PS5) sau pastă termică",
                     "Remediere zgomot excesiv / supraîncălzire",
-                    "Reparații stick drift controllere"
+                    "Reparații controllere (Stick drift)"
                 ],
                 extraInfo: "⚡ Transport rapid prin curier - execuție în 24-72 de ore!"
             }
@@ -1148,7 +1148,7 @@
         });
 
         // ==========================================
-        // CMX RADIO - PLAYER AUDIO CU DETALII NCS
+        // CMX RADIO - PLAYER AUDIO (Volum 50% & Autoplay la interacțiune)
         // ==========================================
         const playlist = [
             { 
@@ -1261,9 +1261,12 @@
             playTrack();
         });
 
+        // Autoplay la prima interacțiune pe pagină (click sau scroll) pe volum 50%
         function initAudioOnInteraction() {
             if (!isPlaying) {
                 loadTrack(currentTrackIndex);
+                bgAudio.volume = 0.5; // Setat la 50% conform cerinței
+                volumeSlider.value = 0.5;
                 playTrack();
                 window.removeEventListener('click', initAudioOnInteraction);
                 window.removeEventListener('scroll', initAudioOnInteraction);
@@ -1273,7 +1276,7 @@
         window.addEventListener('scroll', initAudioOnInteraction);
 
         loadTrack(currentTrackIndex);
-        bgAudio.volume = 0.8;
+        bgAudio.volume = 0.5; // Volum inițial 50%
 
         // --- RESTUL FUNCȚIONALITĂȚILOR (Search, Login, Scroll) ---
         const sections = document.querySelectorAll('.section-observer');
