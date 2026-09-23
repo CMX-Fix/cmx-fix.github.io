@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMX Fix | Service IT & Console</title>
+    <!-- Fonturi -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Biblioteca AOS (Animate On Scroll) pentru efecte de intrare -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090a0f;
+            --panel-bg: rgba(18, 20, 29, 0.85); /* Fundal ușor transparent pentru a vedea efectul din spate */
+            --neon-blue: #00f0ff;
+            --neon-red: #ff003c;
+            --text-main: #e0e6ed;
+            --text-muted: #8b949e;
+        }
+
+        * {
+            box-sizing: border-box;
+            cursor: none; /* Ascundem cursorul default pentru a-l folosi pe cel custom */
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- Cursor Custom cu efect --- */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--neon-blue);
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--neon-blue);
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
+        }
+        /* Când e pe link-uri/butoane */
+        a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline {
+            width: 60px;
+            height: 60px;
+            border-color: var(--neon-red);
+            background-color: rgba(255, 0, 60, 0.1);
+        }
+
+        /* --- Fundal Interactiv (Particule) --- */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%);
+        }
+
+        /* Zona de antet (Hero) */
+        .hero {
+            text-align: center;
+            padding: 150px 20px;
+            border-bottom: 2px solid var(--neon-blue);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.15);
+            position: relative;
+            background: linear-gradient(to bottom, rgba(9, 10, 15, 0.2), rgba(9, 10, 15, 0.9));
+        }
+
+        /* Animație puls pentru titlu */
+        @keyframes neonPulse {
+            0%, 100% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue); }
+            50% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 6rem;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: 6px;
+            animation: neonPulse 2s infinite;
+        }
+
+        .slogan {
+            font-size: 2rem;
+            color: var(--neon-red);
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: slideUp 1s forwards 0.5s; /* Efect de intrare întârziat */
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Containerul principal */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            position: relative; /* Pentru a sta peste particule */
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+        .section-title span {
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        /* Grila cu servicii */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background-color: var(--panel-bg);
+            border: 1px solid rgba(42, 45, 61, 0.5);
+            border-radius: 15px;
+            padding: 40px;
+            backdrop-filter: blur(10px); /* Efect de geam mat */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animație bounce fină */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efect de lumină care se plimbă pe marginea cardului la hover */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.6s;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .card.red-glow::before {
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 60, 0.1), transparent);
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--neon-blue);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 255, 0.4);
+            z-index: 10;
+        }
+        .card:hover::before {
+            opacity: 1;
+            left: 100%;
+        }
+
+        .card.red-glow:hover {
+            border-color: var(--neon-red);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 0, 60, 0.4);
+        }
+
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            margin-top: 0;
+            color: #fff;
+            border-bottom: 2px solid #2a2d3d;
+            padding-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover h3 { color: var(--neon-blue); }
+        .card.red-glow:hover h3 { color: var(--neon-red); text-shadow: 0 0 10px rgba(255, 0, 60, 0.5);}
+
+        .card ul {
+            list-style: none;
+            padding: 0; margin: 0;
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        .card ul li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .card:hover ul li {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .card ul li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--neon-blue);
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .card.red-glow ul li::before { color: var(--neon-red); }
+
+        .card:hover ul li::before {
+            text-shadow: 0 0 8px var(--neon-blue);
+        }
+        .card.red-glow:hover ul li::before {
+            text-shadow: 0 0 8px var(--neon-red);
+        }
+
+        /* Secțiunea de contact / footer */
+        .contact-footer {
+            background-color: rgba(18, 20, 29, 0.9);
+            border-top: 2px solid var(--neon-red);
+            padding: 80px 20px;
+            text-align: center;
+            box-shadow: 0 -10px 40px rgba(255, 0, 60, 0.15);
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-info {
+            font-size: 1.6rem;
+            margin: 25px 0;
+            transition: transform 0.3s;
+        }
+        .contact-info:hover {
+            transform: scale(1.05);
+        }
+        .contact-info span {
+            color: var(--neon-blue);
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Buton animat */
+        .btn-call {
+            display: inline-block;
+            background: transparent;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            padding: 18px 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-call::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--neon-blue);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-call:hover {
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+        
+        .btn-call:hover::before {
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container pentru efectul de fundal (particule) -->
+    <div id="particles-js"></div>
+
+    <!-- Cursor Custom (HTML-ul pt el) -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="hero">
+        <!-- data-aos e comanda pentru animația de intrare (Fade Down) -->
+        <h1 data-aos="fade-down" data-aos-duration="1000">CMX FIX</h1>
+        <div class="slogan">Tu vii cu problema, noi venim cu soluția.</div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title" data-aos="zoom-in" data-aos-duration="800">Portofoliu <span>Servicii</span></h2>
+        
+        <div class="services-grid">
+            
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <h3>💻 Mentenanță Laptop & PC</h3>
+                <ul>
+                    <li>Curățare profesională de praf</li>
+                    <li>Înlocuire pastă termoconductoare (Grizzly / MX-6)</li>
+                    <li>Schimbare display, tastatură, baterie</li>
+                    <li>Reparații balamale & carcase</li>
+                </ul>
+            </div>
+
+            <div class="card red-glow" data-aos="fade-up" data-aos-delay="200">
+                <h3>⚙️ Custom Builds & Asamblare</h3>
+                <ul>
+                    <li>Asamblare PC din piesele clientului</li>
+                    <li>Cable management premium</li>
+                    <li>Montare sisteme răcire (AIO / Custom)</li>
+                    <li>Teste de stres & termale</li>
+                </ul>
+            </div>
+
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+                <h3>📀 Software & Optimizări</h3>
+                <ul>
+                    <li>Instalare / Reinstalare Windows</li>
+                    <li>Instalare drivere și Office</li>
+                    <li>Update BIOS</li>
+                    <li>Optimizări maxime pentru Gaming</li>
+                </ul>
+            </div>
+
+            <div class="card red-glow" data-aos="fade-up" data-aos-delay="400">
+                <h3>🎮 Mentenanță Console</h3>
+                <ul>
+                    <li>Curățare PS4/PS5 și Xbox</li>
+                    <li>Schimbare pastă / metal lichid</li>
+                    <li>Remediere supraîncălzire</li>
+                    <li>Reparații controllere (Stick drift)</li>
+                </ul>
+            </div>
+
+            <div class="card" data-aos="fade-up" data-aos-delay="500">
+                <h3>📦 Piese & Accesorii</h3>
+                <ul>
+                    <li>Vânzare SSD-uri și RAM</li>
+                    <li>Cabluri, adaptoare și periferice</li>
+                    <li>Piese de schimb la comandă</li>
+                    <li>Upgrade-uri hardware rapide</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-footer" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="section-title">Ai o urgență tehnică? <span>Contactează-ne</span></h2>
+        
+        <div class="contact-info">
+            Telefon: <span>[Aici pui numărul tău]</span>
+        </div>
+        <div class="contact-info">
+            Email: <span>[Aici pui adresa de email]</span>
+        </div>
+        <div class="contact-info" style="color: var(--text-muted); font-size: 1.3rem;">
+            📍 Locație: [Aici pui locația service-ului]
+        </div>
+
+        <a href="#" class="btn-call">Sună Acum</a>
+    </div>
+
+    <!-- Scripturi pentru animații și particule -->
+    <!-- Biblioteca AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Biblioteca Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Inițializare AOS (animațiile de intrare la scroll)
+        AOS.init({
+            once: false, // animațiile se repetă când dai scroll sus/jos
+            offset: 100
+        });
+
+        // Configurare Particule Interactive
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#00f0ff", "#ff003c"] }, // Culori neon
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00f0ff",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                }
+            },
+            "interactivity": {
+                "detect_on": "window",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" }, // Se conectează la cursor
+                    "onclick": { "enable": true, "mode": "push" }, // Adaugă particule la click
+                    "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } },
+                    "push": { "particles_nb": 4 }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Logica pentru Cursor Custom
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            // Animatie smooth pentru cerculetul exterior
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 150, fill: "forwards" });
+        });
+    </script>
+</body>
+</html>
