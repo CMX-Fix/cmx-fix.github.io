@@ -35,21 +35,43 @@
             box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
         }
 
-        /* Particule de fum lăsate de cursor */
         .cursor-smoke {
-            position: fixed;
-            pointer-events: none;
-            border-radius: 50%;
+            position: fixed; pointer-events: none; border-radius: 50%;
             background: radial-gradient(circle, rgba(0,240,255,0.6) 0%, rgba(255,0,60,0.2) 50%, transparent 80%);
-            z-index: 9998;
-            transform: translate(-50%, -50%);
+            z-index: 9998; transform: translate(-50%, -50%);
             animation: smokeFade 0.8s linear forwards;
         }
-
         @keyframes smokeFade {
             0% { width: 10px; height: 10px; opacity: 0.8; filter: blur(2px); }
             100% { width: 45px; height: 45px; opacity: 0; filter: blur(6px); transform: translate(-50%, -50%) scale(1.5); }
         }
+
+        /* --- MUSIC PLAYER AMBIENTAL --- */
+        .music-player-widget {
+            position: fixed; bottom: 20px; right: 20px; z-index: 9997;
+            background: rgba(10, 10, 15, 0.9); border: 1px solid var(--neon-blue);
+            border-radius: 30px; padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+            backdrop-filter: blur(10px); box-shadow: 0 5px 25px rgba(0, 240, 255, 0.3);
+            transition: 0.3s;
+        }
+        .music-player-widget:hover { box-shadow: 0 5px 30px rgba(0, 240, 255, 0.6); border-color: #fff; }
+        .music-btn {
+            background: var(--neon-blue); border: none; width: 36px; height: 36px; border-radius: 50%;
+            color: #000; font-size: 1rem; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s; font-weight: bold;
+        }
+        .music-btn:hover { background: #fff; transform: scale(1.1); box-shadow: 0 0 15px #fff; }
+        .music-info { font-family: 'Orbitron', sans-serif; font-size: 0.85px; color: #fff; display: flex; flex-direction: column; }
+        .music-title { font-size: 0.8rem; color: var(--neon-blue); letter-spacing: 1px; }
+        .music-status { font-size: 0.7rem; color: var(--text-muted); }
+
+        /* Egalizator animat */
+        .equalizer { display: flex; align-items: flex-end; gap: 2px; height: 14px; width: 16px; }
+        .equalizer span { display: block; width: 3px; background: var(--neon-blue); animation: eqAnim 0.8s infinite ease-in-out alternate; }
+        .equalizer span:nth-child(2) { animation-delay: 0.2s; }
+        .equalizer span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes eqAnim { 0% { height: 4px; } 100% { height: 14px; } }
+        .paused .equalizer span { animation-play-state: paused; height: 3px !important; }
 
         /* --- FUNDALURI DINAMICE & TECH GRID --- */
         #dynamic-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%); transition: background 1.5s ease-in-out; }
@@ -149,56 +171,29 @@
 
         /* --- HERO & EFECT DE FUM NEON PE CASETĂ --- */
         .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 140px 20px 60px 20px;
+            position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 140px 20px 60px 20px;
             background: linear-gradient(rgba(5, 5, 8, 0.65), rgba(5, 5, 8, 0.85)), 
                         url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
             border-bottom: 2px solid rgba(0, 240, 255, 0.3);
         }
 
         .hero-banner {
-            position: relative;
-            background: rgba(10, 10, 15, 0.88);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            border-radius: 16px;
-            padding: 40px 50px;
-            max-width: 750px;
-            width: 100%;
+            position: relative; background: rgba(10, 10, 15, 0.88); border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 16px; padding: 40px 50px; max-width: 750px; width: 100%;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.15);
-            backdrop-filter: blur(12px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 2;
+            backdrop-filter: blur(12px); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2;
         }
 
         .hero-banner::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 105%; height: 105%;
-            transform: translate(-50%, -50%) rotate(0deg);
-            border-radius: 20px;
-            background: transparent;
-            z-index: -1;
-            opacity: 0;
-            pointer-events: none;
-            box-shadow: 
-                0 0 30px 15px rgba(0, 240, 255, 0.4),
-                0 0 60px 30px rgba(255, 0, 60, 0.3),
-                0 0 90px 45px rgba(138, 43, 226, 0.2);
-            filter: blur(15px);
-            transition: opacity 0.5s ease;
+            content: ''; position: absolute; top: 50%; left: 50%; width: 105%; height: 105%;
+            transform: translate(-50%, -50%) rotate(0deg); border-radius: 20px; background: transparent;
+            z-index: -1; opacity: 0; pointer-events: none;
+            box-shadow: 0 0 30px 15px rgba(0, 240, 255, 0.4), 0 0 60px 30px rgba(255, 0, 60, 0.3), 0 0 90px 45px rgba(138, 43, 226, 0.2);
+            filter: blur(15px); transition: opacity 0.5s ease;
         }
 
-        .hero-banner:hover::before {
-            opacity: 1;
-            animation: bannerSmoke 4s linear infinite;
-        }
-
+        .hero-banner:hover::before { opacity: 1; animation: bannerSmoke 4s linear infinite; }
         @keyframes bannerSmoke {
             0% { filter: blur(15px) hue-rotate(0deg); transform: translate(-50%, -50%) scale(1); }
             50% { filter: blur(20px) hue-rotate(180deg); transform: translate(-50%, -50%) scale(1.02); }
@@ -206,27 +201,16 @@
         }
 
         .hero-banner:hover {
-            transform: translateY(-8px) scale(1.01);
-            border-color: var(--neon-blue);
+            transform: translateY(-8px) scale(1.01); border-color: var(--neon-blue);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 240, 255, 0.4);
         }
 
         .hero-banner h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            color: #fff;
-            margin: 0 0 20px 0;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+            font-family: 'Orbitron', sans-serif; font-size: 3rem; color: #fff; margin: 0 0 20px 0;
+            letter-spacing: 2px; text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
         }
 
-        .hero-banner p {
-            font-size: 1.35rem;
-            color: var(--text-main);
-            line-height: 1.6;
-            margin: 0;
-            font-weight: 500;
-        }
+        .hero-banner p { font-size: 1.35rem; color: var(--text-main); line-height: 1.6; margin: 0; font-weight: 500; }
 
         /* --- SECTIUNI --- */
         .section-padding { padding-top: 140px; padding-bottom: 60px; min-height: 80vh; }
@@ -242,7 +226,7 @@
         .card.red-glow::before { background: linear-gradient(45deg, transparent, rgba(255, 0, 60, 0.2), transparent); }
         .card:hover { border-color: var(--neon-blue); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.3); }
         .card:hover::before { opacity: 1; left: 100%; }
-        .card.red-glow:hover { border-color: var(--neon-red); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 0, 60, 0.3); }
+        .card.red-glow:hover { border-color: var(--neon-red); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 0, 60, 0.4); }
         .card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #fff; border-bottom: 2px solid #2a2d3d; padding-bottom: 15px; transform: translateZ(30px); }
         .card:hover h3 { color: var(--neon-blue); }
         .card.red-glow:hover h3 { color: var(--neon-red); }
@@ -280,6 +264,7 @@
             .hero-banner p { font-size: 1.1rem; }
             .services-grid { grid-template-columns: 1fr; }
             .search-box.active { width: 150px; }
+            .music-player-widget { bottom: 10px; right: 10px; padding: 8px 15px; }
         }
     </style>
 </head>
@@ -291,6 +276,22 @@
     
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
+
+    <!-- AUDIO PLAYER WIDGET (Muzică ambientală de fundal) -->
+    <div class="music-player-widget" id="music-widget">
+        <button class="music-btn" id="music-toggle-btn" title="Play/Pause">▶</button>
+        <div class="equalizer paused" id="eq-bars">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="music-info">
+            <span class="music-title">CMX Chill Vibe</span>
+            <span class="music-status" id="music-status-text">Apasă pentru sunet</span>
+        </div>
+        <!-- Link direct către un mix audio ambiental stabil (Lofi / Chill) -->
+        <audio id="bg-audio" loop>
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
     <nav class="navbar">
         <div class="nav-top">
@@ -381,7 +382,7 @@
         </ul>
     </nav>
 
-    <!-- ACASĂ (Hero cu Casetă și Efect Neon Smoked la Hover) -->
+    <!-- ACASĂ -->
     <div id="acasa" class="hero section-observer" data-bg="radial-gradient(circle at center, #1a1c29 0%, #090a0f 100%)">
         <div class="hero-banner" data-aos="zoom-in" data-aos-duration="1000">
             <h1>Bine ai venit la CMX!</h1>
@@ -496,7 +497,7 @@
             "interactivity": { "detect_on": "window", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } } }, "retina_detect": true
         });
 
-        // Cursor custom și generator de fum la mișcare
+        // Cursor custom și fum neon
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         
@@ -506,23 +507,61 @@
             
             cursorDot.style.left = `${posX}px`; 
             cursorDot.style.top = `${posY}px`;
-            
             cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 150, fill: "forwards" });
 
-            // Generare dâră de fum fină în spatele cursorului
-            if (Math.random() < 0.3) { // controlează frecvența fumului
+            if (Math.random() < 0.3) {
                 const smoke = document.createElement('div');
                 smoke.classList.add('cursor-smoke');
                 smoke.style.left = `${posX}px`;
                 smoke.style.top = `${posY}px`;
                 document.body.appendChild(smoke);
-
-                // Șterge elementul după ce animația de fade s-a terminat
-                setTimeout(() => {
-                    smoke.remove();
-                }, 800);
+                setTimeout(() => { smoke.remove(); }, 800);
             }
         });
+
+        // --- PLAYER AUDIO LOGIC ---
+        const bgAudio = document.getElementById('bg-audio');
+        const musicToggleBtn = document.getElementById('music-toggle-btn');
+        const eqBars = document.getElementById('eq-bars');
+        const musicStatusText = document.getElementById('music-status-text');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgAudio.pause();
+                musicToggleBtn.textContent = "▶";
+                eqBars.classList.add('paused');
+                musicStatusText.textContent = "Muzică Oprită";
+                isPlaying = false;
+            } else {
+                bgAudio.play().then(() => {
+                    musicToggleBtn.textContent = "❚❚";
+                    eqBars.classList.remove('paused');
+                    musicStatusText.textContent = "Redare Ambientală";
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log("Autoplay blocat de browser până la primul gest al utilizatorului.");
+                });
+            }
+        }
+
+        musicToggleBtn.addEventListener('click', toggleMusic);
+
+        // Încearcă să pornească automat la prima interacțiune pe pagină (click sau scroll)
+        function autoPlayAudioOnce() {
+            if (!isPlaying) {
+                bgAudio.play().then(() => {
+                    musicToggleBtn.textContent = "❚❚";
+                    eqBars.classList.remove('paused');
+                    musicStatusText.textContent = "Redare Ambientală";
+                    isPlaying = true;
+                    window.removeEventListener('click', autoPlayAudioOnce);
+                    window.removeEventListener('scroll', autoPlayAudioOnce);
+                }).catch(e => {});
+            }
+        }
+        window.addEventListener('click', autoPlayAudioOnce);
+        window.addEventListener('scroll', autoPlayAudioOnce);
 
         const sections = document.querySelectorAll('.section-observer');
         const dynamicBg = document.getElementById('dynamic-bg');
@@ -587,7 +626,7 @@
             }
         });
 
-        // Vizibilitate Parolă (Toggle)
+        // Vizibilitate Parolă
         function togglePassword(fieldId, btn) {
             const passwordInput = document.getElementById(fieldId);
             if (passwordInput.type === "password") {
