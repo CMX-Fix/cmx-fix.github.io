@@ -25,7 +25,7 @@
 
         body { margin: 0; background-color: var(--bg-dark); color: var(--text-main); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
 
-        /* --- CURSOR CUSTOM (Micșorat, Breathing RGB pe loc & Urmă Neon difuză în mișcare) --- */
+        /* --- CURSOR CUSTOM (Breathing RGB pe loc & Urmă Neon difuză în mișcare) --- */
         .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 99999; pointer-events: none; }
         .cursor-dot { width: 6px; height: 6px; background-color: #e5e7eb; box-shadow: 0 0 8px rgba(229, 231, 235, 0.9); }
         .cursor-outline { width: 28px; height: 28px; border: 2px solid rgba(229, 231, 235, 0.6); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 10px rgba(229, 231, 235, 0.3); }
@@ -35,7 +35,6 @@
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
         }
 
-        /* Efect de respirație (Breathing Effect) colorat RGB când cursorul stă pe loc */
         .cursor-breathing {
             position: fixed; pointer-events: none; border-radius: 50%;
             z-index: 9998; transform: translate(-50%, -50%);
@@ -47,7 +46,6 @@
             100% { width: 20px; height: 20px; opacity: 0.3; background-color: #00f0ff; box-shadow: 0 0 12px #00f0ff, 0 0 20px #00f0ff; transform: translate(-50%, -50%) scale(1); }
         }
 
-        /* Urmă de led / neon RGB difuză în mișcare */
         .cursor-rgb-trail {
             position: fixed; pointer-events: none; border-radius: 50%;
             z-index: 9998; transform: translate(-50%, -50%);
@@ -186,7 +184,20 @@
         .table-qty-box button:hover { background: rgba(0,240,255,0.2); color: var(--neon-blue); }
         .table-qty-box span { width: 35px; text-align: center; font-size: 1.1rem; font-family: 'Rajdhani', sans-serif; color: #fff; }
 
-        /* --- SECȚIUNE BUYBACK --- */
+        /* --- BUTOANE VARIANTE MENTENANȚĂ PC --- */
+        .variant-selector { display: flex; gap: 10px; margin: 15px 0 20px 0; flex-wrap: wrap; }
+        .variant-btn {
+            background: #050505; border: 1px solid #2a2d3d; color: var(--text-muted);
+            padding: 8px 18px; border-radius: 20px; font-family: 'Rajdhani', sans-serif; font-size: 1.05rem;
+            cursor: pointer; transition: 0.3s; font-weight: 600;
+        }
+        .variant-btn:hover { border-color: var(--neon-blue); color: #fff; }
+        .variant-btn.active {
+            background: rgba(0, 240, 255, 0.15); border-color: var(--neon-blue); color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        /* --- SECTIUNE BUYBACK --- */
         .buyback-section {
             position: relative; min-height: 450px; display: flex; align-items: center; justify-content: center;
             text-align: center; padding: 80px 20px; margin: 60px 0;
@@ -962,14 +973,14 @@
             </div>
 
             <!-- 2. Mentenanță PC -->
-            <div class="product-card" data-id="mentenanta-pc" data-category="pc" data-price="399.99">
+            <div class="product-card" data-id="mentenanta-pc" data-category="pc" data-price="299.99">
                 <div class="product-img-box">
                     <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=600&auto=format&fit=crop" alt="Murdar" class="img-default">
                     <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=600&auto=format&fit=crop" alt="Curat" class="img-hover">
                 </div>
                 <div class="product-content">
                     <h3 class="product-title">Mentenanță PC</h3>
-                    <p class="product-price">De la 399,99 lei</p>
+                    <p class="product-price">De la 299,99 lei</p>
                 </div>
             </div>
 
@@ -1036,8 +1047,12 @@
             </div>
 
             <div class="product-detail-info">
-                <h2 id="detail-title">Asamblare PC</h2>
-                <div class="product-detail-price" id="detail-price">499,99 lei</div>
+                <h2 id="detail-title">Mentenanță PC</h2>
+                
+                <!-- Selector Variante (Normal, Gaming, High End) -->
+                <div id="variant-selector-container"></div>
+
+                <div class="product-detail-price" id="detail-price">299,99 lei</div>
 
                 <div class="cart-action-box">
                     <div class="quantity-selector">
@@ -1106,7 +1121,7 @@
         });
 
         // ==========================================
-        // LOGICĂ CURSOR: BREATHING EFFECT (STĂ PE LOC) vs URMĂ NEON RGB (ÎN MIȘCARE)
+        // LOGICĂ CURSOR: BREATHING EFFECT vs URMĂ NEON RGB
         // ==========================================
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
@@ -1332,7 +1347,7 @@
         updateCartUI();
 
         // ==========================================
-        // DATE SERVICII HARDWARE
+        // DATE SERVICII HARDWARE (Mentenanță PC: Normal, Gaming, High End)
         // ==========================================
         const servicesData = {
             "asamblare-pc": {
@@ -1372,30 +1387,44 @@
             },
             "mentenanta-pc": {
                 title: "Mentenanță PC",
-                rawPrice: 399.99,
-                price: "De la 399,99 lei",
+                hasVariants: true,
+                variants: [
+                    { name: "Normal", price: 299.99, priceStr: "299,99 lei" },
+                    { name: "Gaming", price: 399.99, priceStr: "399,99 lei" },
+                    { name: "High end (piese scumpe)", price: 499.99, priceStr: "499,99 lei" }
+                ],
                 images: [
+                    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop",
                     "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=800&auto=format&fit=crop",
                     "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=800&auto=format&fit=crop"
                 ],
                 isCustomText: false,
-                descTitle: "Pachet Curățare & Revizie Generală PC:",
-                items: [
-                    "Curățare profesională completă de praf (Before & After)",
-                    "Înlocuire pastă termoconductoare procesor și placă video",
-                    "Curățare ventilatoare și radiatoare",
-                    "Verificare temperaturi și teste de stres",
-                    "Optimizare sistem operare"
-                ],
-                extraInfo: "⚡ Transport rapid prin curier - execuție în 24-72 de ore!"
+                htmlContentTemplate: `
+                    <p style="margin-bottom:8px; color:var(--neon-blue); font-weight:bold;">PC-ul tău nu mai funcționează cum ar trebui? 🤔</p>
+                    <ul style="padding-left:20px; color:var(--text-muted); margin-bottom:15px;">
+                        <li>Se mișcă greu și s-a încetinit brusc?</li>
+                        <li>Scoate zgomot sau se oprește random?</li>
+                        <li>Se încălzește prea tare și nu se mai răcește?</li>
+                    </ul>
+                    <p style="margin-bottom:15px;">Dacă ai aceste probleme, PC-ul tău are nevoie urgent de o mentenanță de top! 🛠️</p>
+                    <h4 style="font-family:'Orbitron',sans-serif; font-size:1.1rem; color:#fff; margin-top:15px;">🛠️ Ce include mentenanța?</h4>
+                    <ul style="padding-left:20px; color:var(--text-muted); margin-bottom:15px;">
+                        <li>Curățare completă (carcasă, ventilatoare, placă de bază etc.)</li>
+                        <li>Schimbare pastă termoconductoare</li>
+                        <li>Remediere erori hardware: (de ex. modulele RAM, coolere sau surse poziționate greșit)</li>
+                    </ul>
+                    <p style="color:var(--neon-yellow); font-size:0.95rem; margin-bottom:15px;">❗Înlocuirea pad-urilor termice de la placa video implică un cost adițional, depinde de modelul ei.</p>
+                    <p style="color:var(--neon-blue); font-weight:bold; margin-bottom:5px;">⚡ Transport rapid prin curier – reparație în 24-48h!</p>
+                    <p style="color:#fff; font-weight:bold;">✓ PC-ul tău merită să meargă ca nou! Scrie-ne acum!</p>
+                `
             },
             "inlocuire-componente-pc": {
                 title: "Înlocuire componente - PC",
                 rawPrice: 29.99,
                 price: "De la 29,99 lei",
                 images: [
-                    "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=800&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop"
+                    "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop"
                 ],
                 isCustomText: false,
                 descTitle: "Upgrade & Schimb Piese Hardware:",
@@ -1412,8 +1441,8 @@
                 rawPrice: 249.99,
                 price: "De la 249,99 lei",
                 images: [
-                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=800&auto=format&fit=crop"
+                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=600&auto=format&fit=crop"
                 ],
                 isCustomText: false,
                 descTitle: "Revizie Laptop (Curățare & Răcire):",
@@ -1430,8 +1459,8 @@
                 rawPrice: 99.99,
                 price: "De la 99,99 lei",
                 images: [
-                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=800&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop"
+                    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=600&auto=format&fit=crop"
                 ],
                 isCustomText: false,
                 descTitle: "Intervenții Hardware Laptop:",
@@ -1464,6 +1493,7 @@
         };
 
         let currentActiveServiceId = "asamblare-pc";
+        let selectedVariantIndex = 0;
 
         // ==========================================
         // COMUTARE PAGINI
@@ -1493,6 +1523,7 @@
 
         function showProductDetail(serviceId) {
             currentActiveServiceId = serviceId;
+            selectedVariantIndex = 0;
             hardwarePageWrapper.classList.remove('active');
             mainHomeWrapper.classList.add('hidden');
             cartPageWrapper.classList.remove('active');
@@ -1503,11 +1534,27 @@
             if (!data) return;
 
             document.getElementById('detail-title').textContent = data.title;
-            document.getElementById('detail-price').textContent = data.price;
+            
+            const variantContainer = document.getElementById('variant-selector-container');
+            variantContainer.innerHTML = "";
+
+            if (data.hasVariants) {
+                let varHtml = `<div class="variant-selector">`;
+                data.variants.forEach((v, idx) => {
+                    varHtml += `<button class="variant-btn ${idx === 0 ? 'active' : ''}" onclick="selectVariant('${serviceId}', ${idx})">${v.name}</button>`;
+                });
+                varHtml += `</div>`;
+                variantContainer.innerHTML = varHtml;
+                document.getElementById('detail-price').textContent = data.variants[0].priceStr;
+            } else {
+                document.getElementById('detail-price').textContent = data.price;
+            }
             
             const descContainer = document.getElementById('detail-desc-container');
             if (data.isCustomText) {
                 descContainer.innerHTML = data.htmlContent;
+            } else if (data.hasVariants) {
+                descContainer.innerHTML = data.htmlContentTemplate;
             } else {
                 let html = `<h4 style="font-family:'Orbitron',sans-serif; font-size:1.2rem; color:#fff; margin-top:0;">${data.descTitle}</h4>`;
                 html += `<ul style="padding-left:20px; color:var(--text-muted); margin-bottom:15px;">`;
@@ -1535,6 +1582,18 @@
             });
 
             document.getElementById('qty-input').value = "1";
+        }
+
+        window.selectVariant = function(serviceId, idx) {
+            selectedVariantIndex = idx;
+            const data = servicesData[serviceId];
+            document.getElementById('detail-price').textContent = data.variants[idx].priceStr;
+            
+            const buttons = document.querySelectorAll('.variant-btn');
+            buttons.forEach((b, i) => {
+                if (i === idx) b.classList.add('active');
+                else b.classList.remove('active');
+            });
         }
 
         navHardware.addEventListener('click', (e) => { e.preventDefault(); showHardwarePage(); });
@@ -1565,14 +1624,23 @@
             const data = servicesData[currentActiveServiceId];
             const qty = parseInt(qtyInput.value);
 
-            const existingItem = cart.find(item => item.id === currentActiveServiceId);
+            let itemTitle = data.title;
+            let itemPrice = data.rawPrice;
+
+            if (data.hasVariants) {
+                const selectedVar = data.variants[selectedVariantIndex];
+                itemTitle = `${data.title} - ${selectedVar.name}`;
+                itemPrice = selectedVar.price;
+            }
+
+            const existingItem = cart.find(item => item.title === itemTitle);
             if (existingItem) {
                 existingItem.qty += qty;
             } else {
                 cart.push({
                     id: currentActiveServiceId,
-                    title: data.title,
-                    price: data.rawPrice,
+                    title: itemTitle,
+                    price: itemPrice,
                     qty: qty
                 });
             }
