@@ -10,14 +10,14 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #12151f; /* Fundal general mai luminos și modern */
-            --panel-bg: rgba(26, 30, 43, 0.75); /* Carduri și panouri mai deschise */
+            --bg-dark: #0f121a; /* Fundal puțin mai luminos față de cel inițial */
+            --panel-bg: rgba(18, 20, 29, 0.7);
             --neon-blue: #00f0ff;
             --neon-red: #ff003c;
             --neon-green: #25D366;
             --neon-yellow: #fce803;
-            --text-main: #f0f4f8; /* Text principal foarte luminos */
-            --text-muted: #9da8b5; /* Text secundar clar vizibil */
+            --text-main: #e0e6ed;
+            --text-muted: #8b949e;
         }
 
         * { box-sizing: border-box; cursor: none; }
@@ -25,7 +25,7 @@
 
         body { margin: 0; background-color: var(--bg-dark); color: var(--text-main); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
 
-        /* --- CURSOR CUSTOM (Breathing RGB pe loc & Urmă Neon difuză în mișcare) --- */
+        /* --- CURSOR CUSTOM (Micșorat, Breathing RGB pe loc & Urmă Neon difuză în mișcare) --- */
         .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 99999; pointer-events: none; }
         .cursor-dot { width: 6px; height: 6px; background-color: #e5e7eb; box-shadow: 0 0 8px rgba(229, 231, 235, 0.9); }
         .cursor-outline { width: 28px; height: 28px; border: 2px solid rgba(229, 231, 235, 0.6); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 10px rgba(229, 231, 235, 0.3); }
@@ -35,6 +35,7 @@
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
         }
 
+        /* Efect de respirație (Breathing Effect) colorat RGB când cursorul stă pe loc */
         .cursor-breathing {
             position: fixed; pointer-events: none; border-radius: 50%;
             z-index: 9998; transform: translate(-50%, -50%);
@@ -46,6 +47,7 @@
             100% { width: 20px; height: 20px; opacity: 0.3; background-color: #00f0ff; box-shadow: 0 0 12px #00f0ff, 0 0 20px #00f0ff; transform: translate(-50%, -50%) scale(1); }
         }
 
+        /* Urmă de led / neon RGB difuză în mișcare */
         .cursor-rgb-trail {
             position: fixed; pointer-events: none; border-radius: 50%;
             z-index: 9998; transform: translate(-50%, -50%);
@@ -59,7 +61,7 @@
         /* --- MUSIC PLAYER CMX RADIO --- */
         .music-player-widget {
             position: fixed; bottom: 20px; right: 20px; z-index: 9997;
-            background: rgba(18, 21, 31, 0.95); border: 1px solid var(--neon-blue);
+            background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-blue);
             border-radius: 20px; padding: 12px 18px; display: flex; align-items: center; gap: 12px;
             backdrop-filter: blur(12px); box-shadow: 0 5px 25px rgba(0, 240, 255, 0.3);
             transition: 0.3s;
@@ -100,7 +102,7 @@
 
         .copyright-popup {
             position: absolute; bottom: 65px; right: 0; width: 300px;
-            background: rgba(18, 21, 31, 0.98); border: 1px solid var(--neon-blue);
+            background: rgba(8, 10, 15, 0.98); border: 1px solid var(--neon-blue);
             border-radius: 12px; padding: 15px; font-family: 'Rajdhani', sans-serif;
             font-size: 0.85rem; color: #fff; box-shadow: 0 15px 40px rgba(0,0,0,0.9);
             display: none; z-index: 9999; line-height: 1.4;
@@ -114,7 +116,7 @@
         .volume-container { position: relative; display: flex; align-items: center; }
         .volume-slider-popup {
             position: absolute; bottom: 45px; left: 50%; transform: translateX(-50%) scaleY(0);
-            transform-origin: bottom; background: rgba(18, 21, 31, 0.95); border: 1px solid var(--neon-blue);
+            transform-origin: bottom; background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-blue);
             padding: 15px 10px; border-radius: 10px; transition: transform 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 8px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.8); z-index: 1000;
         }
@@ -143,7 +145,7 @@
 
         .cart-dropdown-popup {
             position: absolute; top: 55px; right: 0; width: 340px; max-height: 400px;
-            background: rgba(18, 21, 31, 0.98); border: 1px solid var(--neon-blue);
+            background: rgba(10, 10, 15, 0.98); border: 1px solid var(--neon-blue);
             border-radius: 15px; z-index: 9999; box-shadow: 0 15px 40px rgba(0,0,0,0.95), 0 0 25px rgba(0,240,255,0.25);
             display: none; flex-direction: column; padding: 20px; backdrop-filter: blur(15px);
             transform: translateY(-10px); opacity: 0; transition: all 0.3s ease;
@@ -155,7 +157,7 @@
         .close-cart { background: none; border: none; color: var(--neon-red); font-size: 1.1rem; cursor: pointer; font-weight: bold; }
         
         .cart-items-list { flex-grow: 1; overflow-y: auto; max-height: 220px; padding: 10px 0; display: flex; flex-direction: column; gap: 10px; }
-        .cart-item-card { background: #0b0d14; border: 1px solid #2a2d3d; border-radius: 8px; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .cart-item-card { background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
         .cart-item-info h4 { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #fff; margin: 0 0 3px 0; }
         .cart-item-info p { font-size: 0.8rem; color: var(--neon-blue); margin: 0; }
         .remove-cart-item { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
@@ -176,10 +178,10 @@
         .cart-page.active { display: block; }
         .cart-table { width: 100%; border-collapse: collapse; background: var(--panel-bg); border-radius: 12px; overflow: hidden; border: 1px solid #2a2d3d; margin-bottom: 30px; }
         .cart-table th, .cart-table td { padding: 15px; text-align: left; border-bottom: 1px solid #2a2d3d; }
-        .cart-table th { background: #0b0d14; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 0.95rem; }
+        .cart-table th { background: #050505; font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 0.95rem; }
         .cart-table td { font-size: 1.1rem; color: #fff; }
 
-        .table-qty-box { display: inline-flex; align-items: center; background: #0b0d14; border: 1px solid #2a2d3d; border-radius: 6px; overflow: hidden; }
+        .table-qty-box { display: inline-flex; align-items: center; background: #050505; border: 1px solid #2a2d3d; border-radius: 6px; overflow: hidden; }
         .table-qty-box button { background: transparent; border: none; color: #fff; font-size: 1rem; padding: 6px 12px; cursor: pointer; transition: 0.2s; }
         .table-qty-box button:hover { background: rgba(0,240,255,0.2); color: var(--neon-blue); }
         .table-qty-box span { width: 35px; text-align: center; font-size: 1.1rem; font-family: 'Rajdhani', sans-serif; color: #fff; }
@@ -187,7 +189,7 @@
         /* --- BUTOANE VARIANTE MENTENANȚĂ PC --- */
         .variant-selector { display: flex; gap: 10px; margin: 15px 0 20px 0; flex-wrap: wrap; }
         .variant-btn {
-            background: #0b0d14; border: 1px solid #2a2d3d; color: var(--text-muted);
+            background: #050505; border: 1px solid #2a2d3d; color: var(--text-muted);
             padding: 8px 18px; border-radius: 20px; font-family: 'Rajdhani', sans-serif; font-size: 1.05rem;
             cursor: pointer; transition: 0.3s; font-weight: 600;
         }
@@ -201,7 +203,7 @@
         .buyback-section {
             position: relative; min-height: 450px; display: flex; align-items: center; justify-content: center;
             text-align: center; padding: 80px 20px; margin: 60px 0;
-            background: linear-gradient(rgba(18, 21, 31, 0.8), rgba(18, 21, 31, 0.9)), 
+            background: linear-gradient(rgba(15, 18, 26, 0.75), rgba(15, 18, 26, 0.85)), 
                         url('https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
             border-top: 2px solid rgba(0, 240, 255, 0.3); border-bottom: 2px solid rgba(0, 240, 255, 0.3);
             box-shadow: inset 0 0 50px rgba(0,0,0,0.6);
@@ -218,13 +220,13 @@
         .btn-buyback:hover { background: #fff; color: #000; box-shadow: 0 0 25px #fff; transform: scale(1.05); }
 
         .buyback-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85);
             z-index: 10005; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px);
             padding: 20px;
         }
         .buyback-modal.active { display: flex; animation: fadeInPopup 0.3s ease; }
         .buyback-modal-content {
-            background: rgba(18, 21, 31, 0.98); border: 1px solid var(--neon-blue); border-radius: 16px;
+            background: rgba(18, 20, 29, 0.98); border: 1px solid var(--neon-blue); border-radius: 16px;
             padding: 35px; width: 100%; max-width: 550px; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
             position: relative; display: flex; flex-direction: column; gap: 15px; z-index: 10006;
             cursor: auto;
@@ -233,13 +235,13 @@
         .buyback-close { position: absolute; top: 15px; right: 20px; background: none; border: none; color: var(--neon-red); font-size: 1.3rem; font-weight: bold; cursor: pointer; }
 
         /* --- SECȚIUNE PROGRAMARE PROFI --- */
-        .booking-section { background: rgba(26, 30, 43, 0.85); border: 1px solid var(--neon-blue); border-radius: 16px; padding: 40px; max-width: 850px; margin: 60px auto; backdrop-filter: blur(12px); box-shadow: 0 0 30px rgba(0, 240, 255, 0.2); }
+        .booking-section { background: rgba(18, 20, 29, 0.85); border: 1px solid var(--neon-blue); border-radius: 16px; padding: 40px; max-width: 850px; margin: 60px auto; backdrop-filter: blur(12px); box-shadow: 0 0 30px rgba(0, 240, 255, 0.2); }
         .booking-section h3 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 1.8rem; margin-top: 0; text-align: center; }
         
         .booking-container-pro { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 25px; }
         @media (max-width: 768px) { .booking-container-pro { grid-template-columns: 1fr; } }
 
-        .pro-calendar-box { background: #0b0d14; border: 1px solid #2a2d3d; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .pro-calendar-box { background: #050505; border: 1px solid #2a2d3d; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
         .cal-header { display: flex; justify-content: space-between; align-items: center; font-family: 'Orbitron', sans-serif; color: #fff; font-size: 1.1rem; }
         .cal-nav-btn { background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; transition: 0.2s; }
         .cal-nav-btn:hover { background: var(--neon-blue); color: #000; }
@@ -248,10 +250,10 @@
         .cal-day-name { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; padding-bottom: 5px; }
         .cal-day {
             aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-            font-size: 1rem; border-radius: 8px; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.05); color: #fff;
+            font-size: 1rem; border-radius: 8px; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.03); color: #fff;
             position: relative;
         }
-        .cal-day:hover:not(.disabled):not(.weekend) { background: rgba(0, 240, 255, 0.25); color: var(--neon-blue); }
+        .cal-day:hover:not(.disabled):not(.weekend) { background: rgba(0, 240, 255, 0.2); color: var(--neon-blue); }
         .cal-day.weekend, .cal-day.disabled { opacity: 0.25; cursor: not-allowed; background: rgba(255,255,255,0.01); }
         .cal-day.selected { background: var(--neon-blue) !important; color: #000 !important; font-weight: bold; box-shadow: 0 0 10px var(--neon-blue); }
         
@@ -266,19 +268,19 @@
         .pro-form-box { display: flex; flex-direction: column; gap: 15px; justify-content: space-between; }
         .booking-group { display: flex; flex-direction: column; gap: 6px; }
         .booking-group label { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: var(--neon-blue); }
-        .booking-group input, .booking-group select, .booking-group textarea { padding: 10px 12px; background: #0b0d14; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; outline: none; color-scheme: dark; }
+        .booking-group input, .booking-group select, .booking-group textarea { padding: 10px 12px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; outline: none; color-scheme: dark; }
         .booking-group input:focus, .booking-group select:focus, .booking-group textarea:focus { border-color: var(--neon-blue); }
         
         .btn-book { padding: 12px; background: var(--neon-blue); color: #000; font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(0,240,255,0.3); width: 100%; }
         .btn-book:hover { background: #fff; box-shadow: 0 0 25px #fff; }
 
-        /* --- FUNDALURI DINAMICE & TECH GRID --- */
-        #dynamic-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: radial-gradient(circle at center, #1e2336 0%, #12151f 100%); transition: background 1.5s ease-in-out; }
+        /* --- FUNDALURI DINAMICE & TECH GRID (Ajustate mai luminoase) --- */
+        #dynamic-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: radial-gradient(circle at center, #1e2436 0%, #0f121a 100%); transition: background 1.5s ease-in-out; }
         .tech-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; background-image: linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px; }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; pointer-events: none; }
 
         /* --- MENIU PRINCIPAL & RESPONSIVE MOBILE --- */
-        .navbar { position: fixed; top: 0; width: 100%; background: #0c0e14; z-index: 1000; display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #222736; }
+        .navbar { position: fixed; top: 0; width: 100%; background: #0c0e14; z-index: 1000; display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #1a1e29; }
         .nav-top { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1300px; padding: 10px 30px; position: relative; }
         
         .nav-icon { 
@@ -296,11 +298,11 @@
         .search-container { display: flex; align-items: center; position: relative; z-index: 1002; }
         .search-box { display: flex; align-items: center; width: 0; overflow: hidden; transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); margin-left: 10px; position: relative; }
         .search-box.active { width: 200px; }
-        .search-box input { width: 100%; padding: 8px 15px; border-radius: 20px; border: 1px solid var(--neon-blue); background: rgba(18, 21, 31, 0.95); color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+        .search-box input { width: 100%; padding: 8px 15px; border-radius: 20px; border: 1px solid var(--neon-blue); background: rgba(18, 20, 29, 0.95); color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
         .search-box input:focus { box-shadow: 0 0 15px rgba(0, 240, 255, 0.5); }
         
         .search-results { display: none; position: absolute; top: 40px; left: 0; width: 220px; background: #0c0e14; border: 1px solid var(--neon-blue); border-radius: 10px; list-style: none; padding: 5px 0; margin: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.8); }
-        .search-results li { padding: 10px 15px; font-size: 1.1rem; color: #fff; border-bottom: 1px solid #222736; transition: 0.2s; }
+        .search-results li { padding: 10px 15px; font-size: 1.1rem; color: #fff; border-bottom: 1px solid #1a1e29; transition: 0.2s; }
         .search-results li:last-child { border-bottom: none; }
         .search-results li:hover { background: rgba(0, 240, 255, 0.15); color: var(--neon-blue); padding-left: 20px; }
 
@@ -308,7 +310,7 @@
         .user-container { position: relative; display: flex; align-items: center; z-index: 1002; }
         .login-popup { 
             position: absolute; top: 50px; right: 0; width: 300px; 
-            background: rgba(18, 21, 31, 0.98); border: 1px solid var(--neon-red); border-radius: 15px; padding: 20px; 
+            background: rgba(18, 20, 29, 0.98); border: 1px solid var(--neon-red); border-radius: 15px; padding: 20px; 
             box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 20px rgba(255, 0, 60, 0.2); backdrop-filter: blur(10px); 
             transform: translateY(-20px) scale(0.95); opacity: 0; pointer-events: none; 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
@@ -324,7 +326,7 @@
         .login-popup h4 { margin: 0 0 20px 0; font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: #fff; text-align: center; border-bottom: 1px solid #2a2d3d; padding-bottom: 10px; }
         
         .input-group { position: relative; width: 100%; margin-bottom: 15px; }
-        .login-popup input[type="text"], .login-popup input[type="password"], .login-popup input[type="email"] { width: 100%; padding: 10px 45px 10px 15px; background: #0b0d14; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; transition: 0.3s; }
+        .login-popup input[type="text"], .login-popup input[type="password"], .login-popup input[type="email"] { width: 100%; padding: 10px 45px 10px 15px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; transition: 0.3s; }
         .login-popup input:focus { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
 
         .toggle-password {
@@ -361,18 +363,18 @@
         
         .dropdown { position: relative; }
         .dropdown::after { content: ''; position: absolute; top: 100%; left: 0; width: 100%; height: 25px; background: transparent; }
-        .dropdown-content { display: none; position: absolute; top: calc(100% + 15px); left: 50%; transform: translateX(-50%); background: #0c0e14; min-width: 180px; border-radius: 12px; padding: 10px 0; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9); border: 1px solid #222736; z-index: 1001; }
+        .dropdown-content { display: none; position: absolute; top: calc(100% + 15px); left: 50%; transform: translateX(-50%); background: #0c0e14; min-width: 180px; border-radius: 12px; padding: 10px 0; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9); border: 1px solid #1a1e29; z-index: 1001; }
         .dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.25s ease; }
         .dropdown:hover .arrow { transform: rotate(180deg); color: var(--neon-blue); }
         @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, 15px); } to { opacity: 1; transform: translate(-50%, 0); } }
         .dropdown-content a { display: block; color: #fff; text-decoration: none; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; padding: 10px 20px; transition: 0.2s; }
         .dropdown-content a:hover { background: rgba(0, 240, 255, 0.1); color: var(--neon-blue); padding-left: 25px; }
 
-        /* --- HERO & EFECT DE FUM NEON PE CASETĂ --- */
+        /* --- HERO --- */
         .hero {
             position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
             text-align: center; padding: 140px 20px 60px 20px;
-            background: linear-gradient(rgba(18, 21, 31, 0.5), rgba(18, 21, 31, 0.75)), 
+            background: linear-gradient(rgba(18, 21, 31, 0.45), rgba(18, 21, 31, 0.7)), 
                         url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
             border-bottom: 2px solid rgba(0, 240, 255, 0.3);
         }
@@ -580,7 +582,7 @@
 
     <!-- CONȚINUTUL PRINCIPAL (ACASĂ) -->
     <div id="main-home-wrapper" class="main-home-content">
-        <div id="acasa" class="hero section-observer" data-bg="radial-gradient(circle at center, #1e2336 0%, #12151f 100%)">
+        <div id="acasa" class="hero section-observer" data-bg="radial-gradient(circle at center, #1e2436 0%, #0f121a 100%)">
             <div class="hero-banner" data-aos="zoom-in" data-aos-duration="1000">
                 <h1>Bine ai venit la CMX!</h1>
                 <p>Servicii IT pentru oricine — de la pasionații de hardware, calculatoare, laptopuri și console, până la oricine are nevoie de o simplă mentenanță sau o soluție rapidă.<br><br>Curând, deschidem și secțiunea de magazin: componente, accesorii variate, produse de îngrijire și multe altele.</p>
@@ -588,7 +590,7 @@
         </div>
 
         <div class="container" id="servicii">
-            <div id="hardware" class="section-padding section-observer" data-bg="radial-gradient(circle at top right, rgba(255, 0, 60, 0.12) 0%, #12151f 70%)">
+            <div id="hardware" class="section-padding section-observer" data-bg="radial-gradient(circle at top right, rgba(255, 0, 60, 0.12) 0%, #0f121a 70%)">
                 <h2 class="section-title title-red" data-aos="zoom-in">Servicii IT <span>Hardware</span></h2>
                 <div class="services-grid">
                     <div class="card red-glow" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2" id="card-goto-hardware" style="cursor: pointer;">
@@ -613,7 +615,7 @@
                 </div>
             </div>
 
-            <div id="software" class="section-padding section-observer" data-bg="radial-gradient(circle at top left, rgba(0, 240, 255, 0.12) 0%, #12151f 70%)">
+            <div id="software" class="section-padding section-observer" data-bg="radial-gradient(circle at top left, rgba(0, 240, 255, 0.12) 0%, #0f121a 70%)">
                 <h2 class="section-title" data-aos="zoom-in">Servicii IT <span>Software</span></h2>
                 <div class="services-grid">
                     <div class="card" data-aos="fade-up" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
@@ -701,14 +703,14 @@
                 </div>
             </div>
 
-            <div id="faq" class="section-padding section-observer" data-bg="radial-gradient(circle at center, rgba(252, 232, 3, 0.08) 0%, #12151f 80%)">
+            <div id="faq" class="section-padding section-observer" data-bg="radial-gradient(circle at center, rgba(252, 232, 3, 0.08) 0%, #0f121a 80%)">
                 <h2 class="section-title" data-aos="zoom-in" style="color:#fff;">Întrebări <span>Frecvente</span></h2>
                 <div class="placeholder-box">
                     [Aici vom pune întrebările clienților...]
                 </div>
             </div>
             
-            <div id="despre" class="section-padding section-observer" data-bg="radial-gradient(circle at bottom, rgba(37, 211, 102, 0.08) 0%, #12151f 80%)">
+            <div id="despre" class="section-padding section-observer" data-bg="radial-gradient(circle at bottom, rgba(37, 211, 102, 0.08) 0%, #0f121a 80%)">
                 <h2 class="section-title" data-aos="zoom-in" style="color:#fff;">Despre <span>Mine</span></h2>
                 <div class="placeholder-box">
                     [Aici vom pune povestea ta...]
@@ -780,7 +782,7 @@
                 <select id="sort-select">
                     <option value="recomandat">Recomandat</option>
                     <option value="crescator">Preț crescător</option>
-                    <option value="descrescator">Preț descrescator</option>
+                    <option value="descrescator">Preț descrescător</option>
                 </select>
             </div>
 
@@ -923,7 +925,7 @@
     </div>
 
     <!-- CONTACT -->
-    <div id="contact" class="contact-footer section-padding section-observer" data-bg="radial-gradient(circle at bottom, rgba(255, 0, 60, 0.12) 0%, #12151f 100%)">
+    <div id="contact" class="contact-footer section-padding section-observer" data-bg="radial-gradient(circle at bottom, rgba(255, 0, 60, 0.12) 0%, #0f121a 100%)">
         <h2 class="section-title" style="margin-bottom:20px;">Ai o urgență tehnică? <span>Contactează-ne</span></h2>
         
         <p style="font-size:1.3rem; color:var(--text-muted); max-width:600px; margin: 0 auto 30px auto;">
