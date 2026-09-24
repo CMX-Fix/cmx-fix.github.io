@@ -56,7 +56,7 @@
             100% { width: 2px; height: 2px; opacity: 0; background-color: var(--trail-color, #ff003c); box-shadow: 0 0 2px var(--trail-color, #ff003c); transform: translate(-50%, -50%) scale(0.2); }
         }
 
-        /* --- MUSIC PLAYER CMX RADIO (Fixat în dreapta-jos, vizibil complet) --- */
+        /* --- MUSIC PLAYER CMX RADIO --- */
         .music-player-widget {
             position: fixed; bottom: 20px; right: 20px; z-index: 9997;
             background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-blue);
@@ -131,7 +131,6 @@
 
         /* --- COȘ DE CUMPĂRĂTURI & ANIMAȚIE LA HOVER --- */
         .cart-icon-wrapper { position: relative; display: flex; align-items: center; z-index: 1002; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        /* Animație la hover pe iconița cu coșul de cumpărături */
         .cart-icon-wrapper:hover { transform: scale(1.25) rotate(-10deg); filter: drop-shadow(0 0 12px var(--neon-blue)); }
         
         .cart-badge {
@@ -187,7 +186,7 @@
         @media (max-width: 768px) { .booking-form { grid-template-columns: 1fr; } }
         .booking-group { display: flex; flex-direction: column; gap: 8px; }
         .booking-group label { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--neon-blue); }
-        .booking-group input, .booking-group select { padding: 12px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; }
+        .booking-group input, .booking-group select { padding: 12px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; outline: none; color-scheme: dark; }
         .booking-group input:focus, .booking-group select:focus { border-color: var(--neon-blue); }
         .btn-book { grid-column: span 2; padding: 14px; background: var(--neon-blue); color: #000; font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 1.1rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(0,240,255,0.3); }
         .btn-book:hover { background: #fff; box-shadow: 0 0 25px #fff; }
@@ -726,9 +725,9 @@
                 </div>
             </div>
 
-            <!-- SECȚIUNE PROGRAMARE (Luni-Vineri 10:00 - 19:00) -->
+            <!-- SECȚIUNE PROGRAMARE (Simplificată cu calendar și intervale din 30 în 30 min) -->
             <div class="booking-section" data-aos="fade-up">
-                <h3>Programare Service / Intervenție</h3>
+                <h3>Programare</h3>
                 <p style="text-align:center; color:var(--text-muted); margin-top:5px;">Alege data și ora dorită (Program Luni-Vineri, 10:00 - 19:00)</p>
                 <form id="booking-form" class="booking-form">
                     <div class="booking-group">
@@ -744,18 +743,27 @@
                         <input type="date" id="book-date" required>
                     </div>
                     <div class="booking-group">
-                        <label>Interval Orar (10:00 - 19:00)</label>
+                        <label>Interval Orar</label>
                         <select id="book-time" required>
                             <option value="">Alege ora...</option>
-                            <option value="10:00 - 11:00">10:00 - 11:00</option>
-                            <option value="11:00 - 12:00">11:00 - 12:00</option>
-                            <option value="12:00 - 13:00">12:00 - 13:00</option>
-                            <option value="13:00 - 14:00">13:00 - 14:00</option>
-                            <option value="14:00 - 15:00">14:00 - 15:00</option>
-                            <option value="15:00 - 16:00">15:00 - 16:00</option>
-                            <option value="16:00 - 17:00">16:00 - 17:00</option>
-                            <option value="17:00 - 18:00">17:00 - 18:00</option>
-                            <option value="18:00 - 19:00">18:00 - 19:00</option>
+                            <option value="10:00 - 10:30">10:00 - 10:30</option>
+                            <option value="10:30 - 11:00">10:30 - 11:00</option>
+                            <option value="11:00 - 11:30">11:00 - 11:30</option>
+                            <option value="11:30 - 12:00">11:30 - 12:00</option>
+                            <option value="12:00 - 12:30">12:00 - 12:30</option>
+                            <option value="12:30 - 13:00">12:30 - 13:00</option>
+                            <option value="13:00 - 13:30">13:00 - 13:30</option>
+                            <option value="13:30 - 14:00">13:30 - 14:00</option>
+                            <option value="14:00 - 14:30">14:00 - 14:30</option>
+                            <option value="14:30 - 15:00">14:30 - 15:00</option>
+                            <option value="15:00 - 15:30">15:00 - 15:30</option>
+                            <option value="15:30 - 16:00">15:30 - 16:00</option>
+                            <option value="16:00 - 16:30">16:00 - 16:30</option>
+                            <option value="16:30 - 17:00">16:30 - 17:00</option>
+                            <option value="17:00 - 17:30">17:00 - 17:30</option>
+                            <option value="17:30 - 18:00">17:30 - 18:00</option>
+                            <option value="18:00 - 18:30">18:00 - 18:30</option>
+                            <option value="18:30 - 19:00">18:30 - 19:00</option>
                         </select>
                     </div>
                     <button type="submit" class="btn-book">Confirmă Programarea</button>
