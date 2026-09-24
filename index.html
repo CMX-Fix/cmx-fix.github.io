@@ -25,7 +25,7 @@
 
         body { margin: 0; background-color: var(--bg-dark); color: var(--text-main); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
 
-        /* --- CURSOR CUSTOM CU FUM DE LUMÂNARE NATURAL --- */
+        /* --- CURSOR CUSTOM (Fum de lumânare pe loc & Urmă RGB SF în mișcare) --- */
         .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
         .cursor-dot { width: 8px; height: 8px; background-color: #e5e7eb; box-shadow: 0 0 10px rgba(229, 231, 235, 0.9); }
         .cursor-outline { width: 40px; height: 40px; border: 2px solid rgba(229, 231, 235, 0.5); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 12px rgba(229, 231, 235, 0.2); }
@@ -37,41 +37,34 @@
 
         .cursor-smoke {
             position: fixed; pointer-events: none; border-radius: 50%;
-            background: radial-gradient(circle, rgba(200, 205, 215, 0.65) 0%, rgba(120, 130, 145, 0.25) 50%, transparent 85%);
+            background: radial-gradient(circle, rgba(210, 215, 225, 0.7) 0%, rgba(130, 140, 155, 0.3) 50%, transparent 85%);
             z-index: 9998; transform: translate(-50%, -50%);
             animation: candleSmokeEffect 1.8s ease-out forwards;
         }
         @keyframes candleSmokeEffect {
-            0% { width: 12px; height: 12px; opacity: 0.8; filter: blur(3px); transform: translate(-50%, -50%) scale(1); }
-            100% { width: 70px; height: 70px; opacity: 0; filter: blur(10px); transform: translate(calc(-50% + (var(--rand-x, 0) * 30px)), calc(-50% - 50px)) scale(1.8); }
+            0% { width: 14px; height: 14px; opacity: 0.85; filter: blur(3px); transform: translate(-50%, -50%) scale(1); }
+            100% { width: 65px; height: 65px; opacity: 0; filter: blur(12px); transform: translate(calc(-50% + (var(--rand-x, 0) * 25px)), calc(-50% - 55px)) scale(1.9); }
         }
 
-        /* --- MUSIC PLAYER CMX RADIO (Compact, Expandabil la Hover, Movibil / Draggable) --- */
+        .cursor-rgb-trail {
+            position: fixed; pointer-events: none; border-radius: 50%;
+            z-index: 9998; transform: translate(-50%, -50%);
+            animation: rgbTrailAnim 0.6s linear forwards;
+        }
+        @keyframes rgbTrailAnim {
+            0% { width: 12px; height: 12px; opacity: 0.9; background-color: var(--trail-color, #00f0ff); box-shadow: 0 0 15px var(--trail-color, #00f0ff); transform: translate(-50%, -50%) scale(1); }
+            100% { width: 2px; height: 2px; opacity: 0; background-color: var(--trail-color, #ff003c); box-shadow: 0 0 2px var(--trail-color, #ff003c); transform: translate(-50%, -50%) scale(0.2); }
+        }
+
+        /* --- MUSIC PLAYER CMX RADIO (Fixat în dreapta-jos, vizibil complet) --- */
         .music-player-widget {
             position: fixed; bottom: 20px; right: 20px; z-index: 9997;
             background: rgba(10, 10, 15, 0.95); border: 1px solid var(--neon-blue);
-            border-radius: 25px; padding: 10px; display: flex; align-items: center; gap: 0px;
+            border-radius: 20px; padding: 12px 18px; display: flex; align-items: center; gap: 12px;
             backdrop-filter: blur(12px); box-shadow: 0 5px 25px rgba(0, 240, 255, 0.3);
-            transition: width 0.4s ease, padding 0.4s ease, gap 0.4s ease;
-            width: 50px; height: 50px; overflow: hidden; cursor: grab;
+            transition: 0.3s;
         }
-        .music-player-widget:active { cursor: grabbing; }
-        .music-player-widget:hover {
-            width: 320px; padding: 12px 18px; gap: 12px; border-radius: 20px;
-            box-shadow: 0 5px 35px rgba(0, 240, 255, 0.6); border-color: #fff;
-        }
-
-        .player-icon-collapsed {
-            position: absolute; left: 13px; font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.3s; color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue);
-        }
-        .music-player-widget:hover .player-icon-collapsed { opacity: 0; pointer-events: none; }
-
-        .player-expanded-content {
-            display: flex; align-items: center; gap: 12px; width: 100%; opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease 0.1s;
-        }
-        .music-player-widget:hover .player-expanded-content { opacity: 1; pointer-events: auto; }
+        .music-player-widget:hover { box-shadow: 0 5px 35px rgba(0, 240, 255, 0.6); border-color: #fff; }
         
         .music-controls { display: flex; align-items: center; gap: 6px; }
         .music-btn {
@@ -90,7 +83,7 @@
 
         .music-info { 
             font-family: 'Orbitron', sans-serif; color: #fff; display: flex; flex-direction: column; 
-            width: 140px; overflow: hidden; position: relative; cursor: pointer; 
+            width: 160px; overflow: hidden; position: relative; cursor: pointer; 
         }
         
         .music-title-container { width: 100%; overflow: hidden; white-space: nowrap; }
@@ -136,18 +129,19 @@
         @keyframes eqAnim { 0% { height: 3px; } 100% { height: 12px; } }
         .paused .equalizer span { animation-play-state: paused; height: 2px !important; }
 
-        /* --- COȘ DE CUMPĂRĂTURI & POP-UP PLUTITOR DEASUPRA SITE-ULUI --- */
-        .cart-icon-wrapper { position: relative; display: flex; align-items: center; z-index: 1002; cursor: pointer; }
+        /* --- COȘ DE CUMPĂRĂTURI & ANIMAȚIE LA HOVER --- */
+        .cart-icon-wrapper { position: relative; display: flex; align-items: center; z-index: 1002; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        /* Animație la hover pe iconița cu coșul de cumpărături */
+        .cart-icon-wrapper:hover { transform: scale(1.25) rotate(-10deg); filter: drop-shadow(0 0 12px var(--neon-blue)); }
+        
         .cart-badge {
             position: absolute; top: -8px; right: -8px; background: var(--neon-red); color: #fff;
             font-size: 0.75rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px var(--neon-red);
         }
-        /* Animație la iconița coșului când se adaugă produse */
         .cart-icon-wrapper.pulse { animation: cartPulse 0.5s ease; }
         @keyframes cartPulse { 0% { transform: scale(1); } 50% { transform: scale(1.3); filter: drop-shadow(0 0 10px var(--neon-blue)); } 100% { transform: scale(1); } }
 
-        /* Pop-up coș mai mic, deasupra site-ului (nu până jos) */
         .cart-dropdown-popup {
             position: absolute; top: 55px; right: 0; width: 340px; max-height: 400px;
             background: rgba(10, 10, 15, 0.98); border: 1px solid var(--neon-blue);
@@ -516,7 +510,7 @@
             .hero-banner p { font-size: 1rem; }
             .services-grid { grid-template-columns: 1fr; }
             .search-box.active { width: 140px; }
-            .music-player-widget { bottom: 10px; right: 10px; }
+            .music-player-widget { bottom: 10px; right: 10px; padding: 8px 12px; }
             .cart-dropdown-popup { width: 90vw; right: -10px; }
         }
     </style>
@@ -530,43 +524,39 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- AUDIO PLAYER CMX RADIO (Mic, se deschide la hover, se poate muta pe ecran) -->
+    <!-- AUDIO PLAYER CMX RADIO (Formatul original complet, fixat în dreapta-jos) -->
     <div class="music-player-widget" id="music-widget">
-        <div class="player-icon-collapsed">🎵</div>
+        <div class="copyright-popup" id="copyright-popup">
+            <button class="close-cp" id="close-cp-btn">✕</button>
+            <h5 id="cp-song-title">Song: Crushed Candy - Oh My Gawd</h5>
+            <p>Music provided by NoCopyrightSounds</p>
+            <p>Free Download/Stream:<br><a id="cp-link-stream" href="http://ncs.io/CC_OMG" target="_blank" style="color:var(--neon-blue);">http://ncs.io/CC_OMG</a></p>
+            <p>Watch:<br><a id="cp-link-watch" href="http://ncs.link.to/CC_OMGAT/youtube" target="_blank" style="color:var(--neon-blue);">http://ncs.link.to/CC_OMGAT/youtube</a></p>
+        </div>
 
-        <div class="player-expanded-content">
-            <div class="copyright-popup" id="copyright-popup">
-                <button class="close-cp" id="close-cp-btn">✕</button>
-                <h5 id="cp-song-title">Song: Crushed Candy - Oh My Gawd</h5>
-                <p>Music provided by NoCopyrightSounds</p>
-                <p>Free Download/Stream:<br><a id="cp-link-stream" href="http://ncs.io/CC_OMG" target="_blank" style="color:var(--neon-blue);">http://ncs.io/CC_OMG</a></p>
-                <p>Watch:<br><a id="cp-link-watch" href="http://ncs.link.to/CC_OMGAT/youtube" target="_blank" style="color:var(--neon-blue);">http://ncs.link.to/CC_OMGAT/youtube</a></p>
-            </div>
-
-            <div class="music-controls">
-                <button class="music-btn" id="music-prev" title="Melodia Anterioară">⏮</button>
-                <button class="music-btn-main" id="music-toggle-btn" title="Play/Pause">▶</button>
-                <button class="music-btn" id="music-next" title="Melodia Următoare">⏭</button>
-                
-                <div class="volume-container">
-                    <button class="music-btn" title="Volum">🔊</button>
-                    <div class="volume-slider-popup">
-                        <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.25">
-                        <span class="volume-percentage" id="vol-pct">25%</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="equalizer paused" id="eq-bars">
-                <span></span><span></span><span></span>
-            </div>
+        <div class="music-controls">
+            <button class="music-btn" id="music-prev" title="Melodia Anterioară">⏮</button>
+            <button class="music-btn-main" id="music-toggle-btn" title="Play/Pause">▶</button>
+            <button class="music-btn" id="music-next" title="Melodia Următoare">⏭</button>
             
-            <div class="music-info" id="music-info-clickable" title="Apasă pentru detalii Copyright">
-                <div class="music-title-container">
-                    <span class="music-title" id="music-title-text">Crushed Candy - Oh My Gawd</span>
+            <div class="volume-container">
+                <button class="music-btn" title="Volum">🔊</button>
+                <div class="volume-slider-popup">
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.25">
+                    <span class="volume-percentage" id="vol-pct">25%</span>
                 </div>
-                <span class="music-status">CMX Radio</span>
             </div>
+        </div>
+
+        <div class="equalizer paused" id="eq-bars">
+            <span></span><span></span><span></span>
+        </div>
+        
+        <div class="music-info" id="music-info-clickable" title="Apasă pentru detalii Copyright">
+            <div class="music-title-container">
+                <span class="music-title" id="music-title-text">Crushed Candy - Oh My Gawd</span>
+            </div>
+            <span class="music-status">CMX Radio (Info)</span>
         </div>
 
         <audio id="bg-audio"></audio>
@@ -917,7 +907,7 @@
                 <div class="product-gallery-main">
                     <img id="main-product-img" src="" alt="Produs CMX">
                 </div>
-                <div class="product-thumbnails" id="product-thumbs-container"></div>
+                <div class="product-thumbnails" id="product-thumbnails-container"></div>
             </div>
 
             <div class="product-detail-info">
@@ -953,9 +943,7 @@
                     <th>Șterge</th>
                 </tr>
             </thead>
-            <tbody id="cart-full-table-body">
-                <!-- Generat dinamic -->
-            </tbody>
+            <tbody id="cart-full-table-body"></tbody>
         </table>
 
         <div style="display:flex; justify-content:space-between; align-items:center; background:var(--panel-bg); padding:25px; border-radius:12px; border:1px solid #2a2d3d; flex-wrap:wrap; gap:20px;">
@@ -993,11 +981,17 @@
             "interactivity": { "detect_on": "window", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } } }, "retina_detect": true
         });
 
-        // Cursor custom și fum natural de lumânare
+        // ==========================================
+        // LOGICĂ CURSOR: FUM LUMĂNARE (STĂ PE LOC) vs URMĂ SF LED-URI RGB (ÎN MIȘCARE)
+        // ==========================================
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
+        let isMoving = false;
+        let moveTimer = null;
+
+        const rgbColors = ['#00f0ff', '#ff003c', '#25D366', '#fce803', '#8a2be2', '#ff00ff'];
 
         window.addEventListener('mousemove', function(e) {
             mouseX = e.clientX;
@@ -1005,47 +999,34 @@
             cursorDot.style.left = `${mouseX}px`; 
             cursorDot.style.top = `${mouseY}px`;
             cursorOutline.animate({ left: `${mouseX}px`, top: `${mouseY}px` }, { duration: 150, fill: "forwards" });
+
+            isMoving = true;
+            clearTimeout(moveTimer);
+
+            const rgbTrail = document.createElement('div');
+            rgbTrail.classList.add('cursor-rgb-trail');
+            rgbTrail.style.left = `${mouseX}px`;
+            rgbTrail.style.top = `${mouseY}px`;
+            rgbTrail.style.setProperty('--trail-color', rgbColors[Math.floor(Math.random() * rgbColors.length)]);
+            document.body.appendChild(rgbTrail);
+            setTimeout(() => { rgbTrail.remove(); }, 600);
+
+            moveTimer = setTimeout(() => {
+                isMoving = false;
+            }, 100);
         });
 
         setInterval(() => {
-            const smoke = document.createElement('div');
-            smoke.classList.add('cursor-smoke');
-            smoke.style.left = `${mouseX}px`;
-            smoke.style.top = `${mouseY}px`;
-            smoke.style.setProperty('--rand-x', (Math.random() - 0.5));
-            document.body.appendChild(smoke);
-            setTimeout(() => { smoke.remove(); }, 1800);
-        }, 60);
-
-        // ==========================================
-        // DRAG & DROP PENTRU PLAYERUL AUDIO
-        // ==========================================
-        const musicWidget = document.getElementById('music-widget');
-        let isDragging = false;
-        let offsetX, offsetY;
-
-        musicWidget.addEventListener('mousedown', (e) => {
-            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT' || e.target.tagName === 'A' || e.target.closest('.copyright-popup')) return;
-            isDragging = true;
-            offsetX = e.clientX - musicWidget.getBoundingClientRect().left;
-            offsetY = e.clientY - musicWidget.getBoundingClientRect().top;
-            musicWidget.style.cursor = 'grabbing';
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            let x = e.clientX - offsetX;
-            let y = e.clientY - offsetY;
-            musicWidget.style.left = `${x}px`;
-            musicWidget.style.top = `${y}px`;
-            musicWidget.style.bottom = 'auto';
-            musicWidget.style.right = 'auto';
-        });
-
-        window.addEventListener('mouseup', () => {
-            isDragging = false;
-            musicWidget.style.cursor = 'grab';
-        });
+            if (!isMoving) {
+                const smoke = document.createElement('div');
+                smoke.classList.add('cursor-smoke');
+                smoke.style.left = `${mouseX}px`;
+                smoke.style.top = `${mouseY}px`;
+                smoke.style.setProperty('--rand-x', (Math.random() - 0.5));
+                document.body.appendChild(smoke);
+                setTimeout(() => { smoke.remove(); }, 1800);
+            }
+        }, 90);
 
         // ==========================================
         // GESTIONARE COȘ DE CUMPĂRĂTURI & PAGINĂ COȘ
@@ -1354,7 +1335,7 @@
             const mainImg = document.getElementById('main-product-img');
             mainImg.src = data.images[0];
 
-            const thumbsContainer = document.getElementById('product-thumbs-container');
+            const thumbsContainer = document.getElementById('product-thumbnails-container');
             thumbsContainer.innerHTML = "";
             data.images.forEach((imgSrc, idx) => {
                 const thumb = document.createElement('div');
@@ -1414,7 +1395,6 @@
             updateCartUI();
             cartDropdownPopup.classList.add('active');
 
-            // Animație puls pe coș
             cartIconBtn.classList.add('pulse');
             setTimeout(() => cartIconBtn.classList.remove('pulse'), 500);
         });
@@ -1615,6 +1595,7 @@
             playTrack();
         });
 
+        // Autoplay la prima interacțiune pe pagină (volum 25%)
         function initAudioOnInteraction() {
             if (!isPlaying) {
                 loadTrack(currentTrackIndex);
