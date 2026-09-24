@@ -184,6 +184,41 @@
         .table-qty-box button:hover { background: rgba(0,240,255,0.2); color: var(--neon-blue); }
         .table-qty-box span { width: 35px; text-align: center; font-size: 1.1rem; font-family: 'Rajdhani', sans-serif; color: #fff; }
 
+        /* --- SECȚIUNE BUYBACK (Stil NDR PC din imaginea ta) --- */
+        .buyback-section {
+            position: relative; min-height: 450px; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 80px 20px; margin: 60px 0;
+            background: linear-gradient(rgba(5, 5, 8, 0.75), rgba(5, 5, 8, 0.85)), 
+                        url('https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            border-top: 2px solid rgba(0, 240, 255, 0.3); border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+        .buyback-content { max-width: 750px; z-index: 2; }
+        .buyback-content h2 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; color: #fff; margin-bottom: 15px; text-shadow: 0 0 15px rgba(0, 240, 255, 0.5); }
+        .buyback-content p { font-size: 1.2rem; color: var(--text-main); line-height: 1.6; margin-bottom: 25px; font-weight: 500; }
+        .btn-buyback {
+            background: transparent; border: 2px solid #fff; color: #fff;
+            padding: 12px 35px; border-radius: 30px; font-family: 'Orbitron', sans-serif; font-weight: bold;
+            font-size: 1.1rem; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block;
+            backdrop-filter: blur(5px);
+        }
+        .btn-buyback:hover { background: #fff; color: #000; box-shadow: 0 0 25px #fff; transform: scale(1.05); }
+
+        /* Modal / Formular Buyback */
+        .buyback-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85);
+            z-index: 10005; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+        .buyback-modal.active { display: flex; animation: fadeInPopup 0.3s ease; }
+        .buyback-modal-content {
+            background: rgba(10, 10, 15, 0.98); border: 1px solid var(--neon-blue); border-radius: 16px;
+            padding: 35px; width: 100%; max-width: 550px; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            position: relative; display: flex; flex-direction: column; gap: 15px;
+        }
+        .buyback-modal-content h3 { font-family: 'Orbitron', sans-serif; color: #fff; margin-top: 0; font-size: 1.5rem; text-align: center; }
+        .buyback-close { position: absolute; top: 15px; right: 20px; background: none; border: none; color: var(--neon-red); font-size: 1.3rem; font-weight: bold; cursor: pointer; }
+
         /* --- SECȚIUNE PROGRAMARE PROFI --- */
         .booking-section { background: rgba(18, 20, 29, 0.85); border: 1px solid var(--neon-blue); border-radius: 16px; padding: 40px; max-width: 850px; margin: 60px auto; backdrop-filter: blur(12px); box-shadow: 0 0 30px rgba(0, 240, 255, 0.2); }
         .booking-section h3 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 1.8rem; margin-top: 0; text-align: center; }
@@ -218,8 +253,8 @@
         .pro-form-box { display: flex; flex-direction: column; gap: 15px; justify-content: space-between; }
         .booking-group { display: flex; flex-direction: column; gap: 6px; }
         .booking-group label { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: var(--neon-blue); }
-        .booking-group input, .booking-group select { padding: 10px 12px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; outline: none; color-scheme: dark; }
-        .booking-group input:focus, .booking-group select:focus { border-color: var(--neon-blue); }
+        .booking-group input, .booking-group select, .booking-group textarea { padding: 10px 12px; background: #050505; border: 1px solid #2a2d3d; border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; outline: none; color-scheme: dark; }
+        .booking-group input:focus, .booking-group select:focus, .booking-group textarea:focus { border-color: var(--neon-blue); }
         
         .btn-book { padding: 12px; background: var(--neon-blue); color: #000; font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(0,240,255,0.3); width: 100%; }
         .btn-book:hover { background: #fff; box-shadow: 0 0 25px #fff; }
@@ -757,7 +792,16 @@
                 </div>
             </div>
 
-            <!-- SECȚIUNE PROGRAMARE PROFI (Calendar Vizual Interactiv) -->
+            <!-- SECȚIUNE BUYBACK (Inspirată din modelul tău) -->
+            <div class="buyback-section" data-aos="fade-up">
+                <div class="buyback-content">
+                    <h2>Vrei să renunți la dispozitivul tău?</h2>
+                    <p>Trimite-ne mai multe detalii despre acesta (pozele sunt necesare, starea acestuia, ce accesorii mai are plus eventualele defecte) și revenim cu o ofertă cât mai rapid posibil!</p>
+                    <button class="btn-buyback" id="open-buyback-modal">Click aici</button>
+                </div>
+            </div>
+
+            <!-- SECȚIUNE PROGRAMARE PROFI -->
             <div class="booking-section" data-aos="fade-up">
                 <h3>Programare</h3>
                 <p style="text-align:center; color:var(--text-muted); margin-top:5px;">Alege data și ora dorită (Program Luni-Vineri, 10:00 - 19:00)</p>
@@ -836,6 +880,34 @@
                     <button type="submit">Abonează-te</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- MODAL FORMULAR BUYBACK -->
+    <div class="buyback-modal" id="buyback-modal">
+        <div class="buyback-modal-content">
+            <button class="buyback-close" id="close-buyback-modal">✕</button>
+            <h3>Evaluare Dispozitiv (Buyback)</h3>
+            <p style="font-size:0.95rem; color:var(--text-muted); margin:0;">Completează detaliile dispozitivului tău și revenim rapid cu o ofertă.</p>
+            <form id="buyback-form" style="display:flex; flex-direction:column; gap:12px; margin-top:10px;">
+                <div class="booking-group">
+                    <label>Nume și Prenume</label>
+                    <input type="text" id="bb-name" placeholder="Numele tău" required>
+                </div>
+                <div class="booking-group">
+                    <label>Telefon / WhatsApp</label>
+                    <input type="text" id="bb-phone" placeholder="07xxxxxxxx" required>
+                </div>
+                <div class="booking-group">
+                    <label>Modelul Dispozitivului & Specificații</label>
+                    <input type="text" id="bb-model" placeholder="Ex: Laptop ASUS TUF, RTX 3060..." required>
+                </div>
+                <div class="booking-group">
+                    <label>Stare, Accesorii & Defecte</label>
+                    <textarea id="bb-details" rows="3" placeholder="Menționează starea estetică, accesorii incluse și eventuale defecte..." required></textarea>
+                </div>
+                <button type="submit" class="btn-book" style="margin-top:5px;">Trimite Cererea de Buyback</button>
+            </form>
         </div>
     </div>
 
@@ -1078,7 +1150,35 @@
         }, 90);
 
         // ==========================================
-        // GESTIONARE COȘ DE CUMPĂRĂTURI & PAGINĂ COȘ (Cantitate + / -)
+        // MODAL BUYBACK
+        // ==========================================
+        const buybackModal = document.getElementById('buyback-modal');
+        const openBuybackBtn = document.getElementById('open-buyback-modal');
+        const closeBuybackBtn = document.getElementById('close-buyback-modal');
+        const buybackForm = document.getElementById('buyback-form');
+
+        openBuybackBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            buybackModal.classList.add('active');
+        });
+
+        closeBuybackBtn.addEventListener('click', () => {
+            buybackModal.classList.remove('active');
+        });
+
+        buybackForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('bb-name').value;
+            const phone = document.getElementById('bb-phone').value;
+            const model = document.getElementById('bb-model').value;
+
+            alert(`Cererea de Buyback pentru "${model}" a fost trimisă cu succes de către ${name} (${phone})!\n\nVom analiza detaliile și vă vom contacta în cel mai scurt timp cu o ofertă.`);
+            buybackForm.reset();
+            buybackModal.classList.remove('active');
+        });
+
+        // ==========================================
+        // GESTIONARE COȘ DE CUMPĂRĂTURI & PAGINĂ COȘ
         // ==========================================
         let cart = JSON.parse(localStorage.getItem('cmx_cart')) || [];
         const cartDropdownPopup = document.getElementById('cart-dropdown-popup');
@@ -1325,8 +1425,8 @@
                 rawPrice: 199.99,
                 price: "De la 199,99 lei",
                 images: [
-                    "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=800&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop"
+                    "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop"
                 ],
                 isCustomText: false,
                 descTitle: "Service Specializat PS5 / Xbox / PS4:",
