@@ -25,35 +25,37 @@
 
         body { margin: 0; background-color: var(--bg-dark); color: var(--text-main); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
 
-        /* --- CURSOR CUSTOM (Fum de lumânare pe loc & Urmă RGB SF în mișcare) --- */
-        .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
-        .cursor-dot { width: 8px; height: 8px; background-color: #e5e7eb; box-shadow: 0 0 10px rgba(229, 231, 235, 0.9); }
-        .cursor-outline { width: 40px; height: 40px; border: 2px solid rgba(229, 231, 235, 0.5); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 12px rgba(229, 231, 235, 0.2); }
+        /* --- CURSOR CUSTOM (Micșorat, Breathing RGB pe loc & Urmă Neon difuză în mișcare) --- */
+        .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 99999; pointer-events: none; }
+        .cursor-dot { width: 6px; height: 6px; background-color: #e5e7eb; box-shadow: 0 0 8px rgba(229, 231, 235, 0.9); }
+        .cursor-outline { width: 28px; height: 28px; border: 2px solid rgba(229, 231, 235, 0.6); transition: width 0.2s, height 0.2s, border-color 0.2s; box-shadow: 0 0 10px rgba(229, 231, 235, 0.3); }
         
         a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .card:hover ~ .cursor-outline, .product-card:hover ~ .cursor-outline, .nav-icon:hover ~ .cursor-outline, .nav-logo-link:hover ~ .cursor-outline, input:hover ~ .cursor-outline { 
-            width: 60px; height: 60px; border-color: var(--neon-blue); background-color: rgba(0, 240, 255, 0.1); 
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            width: 45px; height: 45px; border-color: var(--neon-blue); background-color: rgba(0, 240, 255, 0.1); 
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
         }
 
-        .cursor-smoke {
+        /* Efect de respirație (Breathing Effect) colorat RGB când cursorul stă pe loc */
+        .cursor-breathing {
             position: fixed; pointer-events: none; border-radius: 50%;
-            background: radial-gradient(circle, rgba(210, 215, 225, 0.7) 0%, rgba(130, 140, 155, 0.3) 50%, transparent 85%);
             z-index: 9998; transform: translate(-50%, -50%);
-            animation: candleSmokeEffect 1.8s ease-out forwards;
+            animation: breathingGlow 2.2s ease-in-out infinite;
         }
-        @keyframes candleSmokeEffect {
-            0% { width: 14px; height: 14px; opacity: 0.85; filter: blur(3px); transform: translate(-50%, -50%) scale(1); }
-            100% { width: 65px; height: 65px; opacity: 0; filter: blur(12px); transform: translate(calc(-50% + (var(--rand-x, 0) * 25px)), calc(-50% - 55px)) scale(1.9); }
+        @keyframes breathingGlow {
+            0% { width: 20px; height: 20px; opacity: 0.3; background-color: #00f0ff; box-shadow: 0 0 12px #00f0ff, 0 0 20px #00f0ff; transform: translate(-50%, -50%) scale(1); }
+            50% { width: 45px; height: 45px; opacity: 0.75; background-color: #ff003c; box-shadow: 0 0 22px #ff003c, 0 0 40px #ff003c; transform: translate(-50%, -50%) scale(1.15); }
+            100% { width: 20px; height: 20px; opacity: 0.3; background-color: #00f0ff; box-shadow: 0 0 12px #00f0ff, 0 0 20px #00f0ff; transform: translate(-50%, -50%) scale(1); }
         }
 
+        /* Urmă de led / neon RGB difuză în mișcare */
         .cursor-rgb-trail {
             position: fixed; pointer-events: none; border-radius: 50%;
             z-index: 9998; transform: translate(-50%, -50%);
-            animation: rgbTrailAnim 0.6s linear forwards;
+            animation: rgbNeonTrail 0.5s ease-out forwards;
         }
-        @keyframes rgbTrailAnim {
-            0% { width: 12px; height: 12px; opacity: 0.9; background-color: var(--trail-color, #00f0ff); box-shadow: 0 0 15px var(--trail-color, #00f0ff); transform: translate(-50%, -50%) scale(1); }
-            100% { width: 2px; height: 2px; opacity: 0; background-color: var(--trail-color, #ff003c); box-shadow: 0 0 2px var(--trail-color, #ff003c); transform: translate(-50%, -50%) scale(0.2); }
+        @keyframes rgbNeonTrail {
+            0% { width: 14px; height: 14px; opacity: 0.9; background-color: var(--trail-color, #00f0ff); box-shadow: 0 0 18px var(--trail-color, #00f0ff), 0 0 30px var(--trail-color, #00f0ff); filter: blur(2px); transform: translate(-50%, -50%) scale(1); }
+            100% { width: 4px; height: 4px; opacity: 0; background-color: var(--trail-color, #ff003c); box-shadow: 0 0 6px var(--trail-color, #ff003c); filter: blur(4px); transform: translate(-50%, -50%) scale(0.2); }
         }
 
         /* --- MUSIC PLAYER CMX RADIO --- */
@@ -184,7 +186,7 @@
         .table-qty-box button:hover { background: rgba(0,240,255,0.2); color: var(--neon-blue); }
         .table-qty-box span { width: 35px; text-align: center; font-size: 1.1rem; font-family: 'Rajdhani', sans-serif; color: #fff; }
 
-        /* --- SECȚIUNE BUYBACK (Stil NDR PC din imaginea ta) --- */
+        /* --- SECȚIUNE BUYBACK --- */
         .buyback-section {
             position: relative; min-height: 450px; display: flex; align-items: center; justify-content: center;
             text-align: center; padding: 80px 20px; margin: 60px 0;
@@ -204,7 +206,6 @@
         }
         .btn-buyback:hover { background: #fff; color: #000; box-shadow: 0 0 25px #fff; transform: scale(1.05); }
 
-        /* Modal / Formular Buyback */
         .buyback-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85);
             z-index: 10005; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px);
@@ -214,7 +215,8 @@
         .buyback-modal-content {
             background: rgba(10, 10, 15, 0.98); border: 1px solid var(--neon-blue); border-radius: 16px;
             padding: 35px; width: 100%; max-width: 550px; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            position: relative; display: flex; flex-direction: column; gap: 15px;
+            position: relative; display: flex; flex-direction: column; gap: 15px; z-index: 10006;
+            cursor: auto;
         }
         .buyback-modal-content h3 { font-family: 'Orbitron', sans-serif; color: #fff; margin-top: 0; font-size: 1.5rem; text-align: center; }
         .buyback-close { position: absolute; top: 15px; right: 20px; background: none; border: none; color: var(--neon-red); font-size: 1.3rem; font-weight: bold; cursor: pointer; }
@@ -727,6 +729,7 @@
                     <a href="#software">Software</a>
                 </div>
             </li>
+            <li><a href="#" id="nav-buyback">Buyback</a></li>
             <li><a href="#faq">Întrebări frecvente</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#despre">Despre mine</a></li>
@@ -792,8 +795,8 @@
                 </div>
             </div>
 
-            <!-- SECȚIUNE BUYBACK (Inspirată din modelul tău) -->
-            <div class="buyback-section" data-aos="fade-up">
+            <!-- SECȚIUNE BUYBACK -->
+            <div id="buyback-section-anchor" class="buyback-section" data-aos="fade-up">
                 <div class="buyback-content">
                     <h2>Vrei să renunți la dispozitivul tău?</h2>
                     <p>Trimite-ne mai multe detalii despre acesta (pozele sunt necesare, starea acestuia, ce accesorii mai are plus eventualele defecte) și revenim cu o ofertă cât mai rapid posibil!</p>
@@ -1103,7 +1106,7 @@
         });
 
         // ==========================================
-        // LOGICĂ CURSOR: FUM LUMĂNARE vs URMĂ NEON RGB
+        // LOGICĂ CURSOR: BREATHING EFFECT (STĂ PE LOC) vs URMĂ NEON RGB (ÎN MIȘCARE)
         // ==========================================
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
@@ -1111,6 +1114,7 @@
         let mouseY = window.innerHeight / 2;
         let isMoving = false;
         let moveTimer = null;
+        let breathingElement = null;
 
         const rgbColors = ['#00f0ff', '#ff003c', '#25D366', '#fce803', '#8a2be2', '#ff00ff'];
 
@@ -1124,42 +1128,61 @@
             isMoving = true;
             clearTimeout(moveTimer);
 
+            if (breathingElement) {
+                breathingElement.remove();
+                breathingElement = null;
+            }
+
             const rgbTrail = document.createElement('div');
             rgbTrail.classList.add('cursor-rgb-trail');
             rgbTrail.style.left = `${mouseX}px`;
             rgbTrail.style.top = `${mouseY}px`;
             rgbTrail.style.setProperty('--trail-color', rgbColors[Math.floor(Math.random() * rgbColors.length)]);
             document.body.appendChild(rgbTrail);
-            setTimeout(() => { rgbTrail.remove(); }, 600);
+            setTimeout(() => { rgbTrail.remove(); }, 500);
 
             moveTimer = setTimeout(() => {
                 isMoving = false;
-            }, 100);
+            }, 120);
         });
 
         setInterval(() => {
-            if (!isMoving) {
-                const smoke = document.createElement('div');
-                smoke.classList.add('cursor-smoke');
-                smoke.style.left = `${mouseX}px`;
-                smoke.style.top = `${mouseY}px`;
-                smoke.style.setProperty('--rand-x', (Math.random() - 0.5));
-                document.body.appendChild(smoke);
-                setTimeout(() => { smoke.remove(); }, 1800);
+            if (!isMoving && !breathingElement) {
+                breathingElement = document.createElement('div');
+                breathingElement.classList.add('cursor-breathing');
+                breathingElement.style.left = `${mouseX}px`;
+                breathingElement.style.top = `${mouseY}px`;
+                document.body.appendChild(breathingElement);
+            } else if (isMoving && breathingElement) {
+                breathingElement.remove();
+                breathingElement = null;
+            } else if (breathingElement) {
+                breathingElement.style.left = `${mouseX}px`;
+                breathingElement.style.top = `${mouseY}px`;
             }
-        }, 90);
+        }, 50);
 
         // ==========================================
-        // MODAL BUYBACK
+        // MODAL BUYBACK & NAVIGARE
         // ==========================================
         const buybackModal = document.getElementById('buyback-modal');
         const openBuybackBtn = document.getElementById('open-buyback-modal');
         const closeBuybackBtn = document.getElementById('close-buyback-modal');
         const buybackForm = document.getElementById('buyback-form');
+        const navBuyback = document.getElementById('nav-buyback');
 
         openBuybackBtn.addEventListener('click', (e) => {
             e.preventDefault();
             buybackModal.classList.add('active');
+        });
+
+        navBuyback.addEventListener('click', (e) => {
+            e.preventDefault();
+            showHomePage();
+            const buybackSec = document.getElementById('buyback-section-anchor');
+            if (buybackSec) {
+                buybackSec.scrollIntoView({ behavior: 'smooth' });
+            }
         });
 
         closeBuybackBtn.addEventListener('click', () => {
